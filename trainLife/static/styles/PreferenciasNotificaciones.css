@@ -1,0 +1,6 @@
+/* PreferenciasNotificaciones.css - estilos para PreferenciasNotificaciones.html */
+body{font-family:Segoe UI, Roboto, Arial, sans-serif;background:#fafafa;margin:0;color:#222}
+.container{max-width:900px;margin:20px auto;padding:16px}
+.pref-list{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pref-item{background:#fff;padding:12px;border-radius:6px;border:1px solid #eee}
+.toggle{float:right}

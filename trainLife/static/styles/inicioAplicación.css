@@ -1,0 +1,222 @@
+:root {
+    /* Colores personalizados de Tailwind (ahora como variables CSS) */
+    --color-primary: #0f49bd;
+    --color-background-light: #f6f6f8;
+    --color-background-dark: #101622;
+    --color-accent: #4d90fe;
+    --color-gray-200: #e5e7eb; /* Equivalente aproximado para el texto secundario */
+}
+
+/* Estilos de fuentes y cuerpo */
+html {
+    /* La clase 'dark' se usa aquí */
+    /* En un entorno de producción, esto debería ser manejado por JS, pero lo simulamos con CSS */
+    background-color: var(--color-background-light); 
+}
+html.dark {
+    background-color: var(--color-background-dark);
+}
+
+.page-body {
+    font-family: 'Public Sans', sans-serif; /* font-display */
+    background-color: var(--color-background-light); /* bg-background-light */
+}
+.dark .page-body {
+    background-color: var(--color-background-dark); /* dark:bg-background-dark */
+}
+
+/* Configuración de íconos de Material Symbols */
+.material-symbols-outlined {
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24;
+}
+
+.main-root {
+    position: relative;
+    display: flex;
+    height: auto;
+    min-height: 100vh;
+    width: 100%;
+    flex-direction: column;
+    /* group/design-root overflow-x-hidden (no necesario si se limpia el diseño) */
+    overflow-x: hidden;
+}
+
+.hero-section {
+    position: relative;
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem; /* p-4 */
+    
+    /* Fondo e overlay (traducción del estilo inline) */
+    background-image: linear-gradient(rgba(10, 25, 47, 0.7) 0%, rgba(10, 25, 47, 0.9) 100%), url("../img/tren_pantalla_inicio.png");
+    background-size: cover; /* bg-cover */
+    background-position: center; /* bg-center */
+    background-repeat: no-repeat; /* bg-no-repeat */
+}
+
+.page-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1rem; /* p-4 */
+    z-index: 10; /* Asegura que esté sobre el fondo */
+}
+@media (min-width: 768px) { /* md: */
+    .page-header {
+        padding: 1.5rem; /* md:p-6 */
+    }
+}
+@media (min-width: 1024px) { /* lg: */
+    .page-header {
+        padding: 2rem; /* lg:p-8 */
+    }
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem; /* gap-3 */
+}
+
+.logo-icon-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo-icon {
+    color: white; /* text-white */
+    font-size: 1.875rem; /* text-3xl */
+}
+@media (min-width: 768px) { /* md: */
+    .logo-icon {
+        font-size: 2.25rem; /* md:text-4xl */
+    }
+}
+
+.logo-line {
+    height: 0.25rem; /* h-1 */
+    width: 100%; /* w-full */
+    border-radius: 9999px; /* rounded-full */
+    background-color: var(--color-accent); /* bg-accent */
+}
+
+.logo-text {
+    color: white; /* text-white */
+    font-size: 1.25rem; /* text-xl */
+    font-weight: 700; /* font-bold */
+}
+@media (min-width: 768px) { /* md: */
+    .logo-text {
+        font-size: 1.5rem; /* md:text-2xl */
+    }
+}
+
+.page-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* gap-4 */
+    max-width: 42rem; /* max-w-2xl */
+}
+
+.hero-title {
+    color: white; /* text-white */
+    font-size: 2.25rem; /* text-4xl */
+    font-weight: 900; /* font-black */
+    line-height: 1.25; /* leading-tight */
+    letter-spacing: -0.033em; /* tracking-[-0.033em] */
+}
+@media (min-width: 640px) { /* sm: */
+    .hero-title {
+        font-size: 3rem; /* sm:text-5xl */
+    }
+}
+@media (min-width: 768px) { /* md: */
+    .hero-title {
+        font-size: 3.75rem; /* md:text-6xl */
+    }
+}
+
+.hero-subtitle {
+    color: var(--color-gray-200); /* text-gray-200 */
+    font-size: 1rem; /* text-base */
+    font-weight: 400; /* font-normal */
+    line-height: 1.5; /* leading-normal */
+}
+@media (min-width: 640px) { /* sm: */
+    .hero-subtitle {
+        font-size: 1.125rem; /* sm:text-lg */
+    }
+}
+
+.primary-button {
+    margin-top: 2rem;
+    display: flex;
+    min-width: 84px;
+    max-width: 480px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    height: 2.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    
+    background-color: var(--color-primary);
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+    
+    font-size: 0.875rem;
+    font-weight: 700;
+    line-height: 1.5;
+    letter-spacing: 0.015em;
+    transition-property: background-color, color, border-color;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+}
+@media (min-width: 640px) {
+    .primary-button {
+        height: 3rem;
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+        font-size: 1rem;
+    }
+}
+
+.primary-button:hover {
+    background-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+.primary-button:focus {
+    outline: none; /* focus:outline-none - Esto quita el outline nativo del navegador */
+    /* CAMBIO AQUÍ: Eliminar el box-shadow que crea el "borde" morado/azul al enfocar */
+    /* Antes: box-shadow: 0 0 0 2px var(--color-background-dark), 0 0 0 4px var(--color-accent); */
+    box-shadow: none; /* O puedes dejar un box-shadow más sutil si lo prefieres */
+}
+
+.truncate-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-decoration: none;
+    color: white;
+}

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Avisos y Notificaciones - App de Trenes</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#137fec",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101922",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {
+              "DEFAULT": "0.25rem",
+              "lg": "0.5rem",
+              "xl": "0.75rem",
+              "full": "9999px"
+            },
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-row bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden">
+<aside class="flex w-64 flex-col gap-4 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 p-4 transition-all duration-300 ease-in-out md:w-64">
+<div class="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-3xl text-primary">train</span>
+<h1 class="text-xl font-bold text-slate-900 dark:text-slate-50">TrainApp</h1>
+</div>
+<button class="p-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-2xl text-slate-600 dark:text-slate-400">menu</span>
+</button>
+</div>
+<nav class="flex flex-col gap-2 flex-grow pt-2">
+<a class="flex items-center gap-3 rounded-lg px-4 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-medium">Inicio</span>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-4 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60" href="#">
+<span class="material-symbols-outlined">work</span>
+<span class="font-medium">Mis Viajes</span>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-4 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60" href="#">
+<span class="material-symbols-outlined">route</span>
+<span class="font-medium">Rutas</span>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-4 py-2.5 text-white dark:text-white bg-primary font-medium" href="#">
+<span class="material-symbols-outlined">notifications</span>
+<span class="font-medium">Avisos</span>
+</a>
+</nav>
+<div class="flex flex-col gap-4 border-t border-slate-200 dark:border-slate-800 pt-4">
+<a class="flex items-center gap-3 rounded-lg px-4 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-medium">Cerrar Sesión</span>
+</a>
+</div>
+</aside>
+<main class="flex flex-1 flex-col">
+<div class="flex flex-1 flex-col px-4 py-5 sm:px-6 md:px-10 lg:px-12 xl:px-20">
+<div class="mx-auto flex w-full max-w-[960px] flex-1 flex-col">
+<h1 class="text-slate-900 dark:text-slate-50 text-3xl font-bold leading-tight tracking-[-0.033em]">Avisos y Notificaciones</h1>
+<div class="mt-8 flex flex-col gap-4">
+<div class="flex items-start gap-4 rounded-xl border border-yellow-500/50 bg-yellow-50 dark:bg-yellow-500/10 p-4 shadow-sm">
+<span class="material-symbols-outlined mt-1 text-2xl text-yellow-600 dark:text-yellow-400">warning</span>
+<div class="flex flex-col">
+<h2 class="font-bold text-slate-900 dark:text-slate-50">Cambio de Andén</h2>
+<p class="text-slate-700 dark:text-slate-300">Tu tren a Zaragoza saldrá desde el andén 8.</p>
+</div>
+</div>
+<div class="flex items-start gap-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/70 p-4 shadow-sm">
+<span class="material-symbols-outlined mt-1 text-2xl text-primary">calendar_today</span>
+<div class="flex flex-col">
+<h2 class="font-bold text-slate-900 dark:text-slate-50">Recordatorio</h2>
+<p class="text-slate-700 dark:text-slate-300">Tu viaje a Barcelona es mañana.</p>
+</div>
+</div>
+<div class="flex items-start gap-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/70 p-4 shadow-sm">
+<span class="material-symbols-outlined mt-1 text-2xl text-slate-600 dark:text-slate-400">info</span>
+<div class="flex flex-col">
+<h2 class="font-bold text-slate-900 dark:text-slate-50">Aviso General</h2>
+<p class="text-slate-700 dark:text-slate-300">Servicios mínimos el próximo lunes.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

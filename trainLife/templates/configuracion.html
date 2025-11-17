@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración - TrainLife</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/configuracion.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/confirmModal.css') }}">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-menu-toggle" aria-label="Toggle menu">
+            <i data-lucide="menu"></i>
+        </button>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-content">
+                <!-- Logo -->
+                <div class="logo-section">
+                    <i data-lucide="train" class="logo-icon"></i>
+                    <h1 class="logo-title">TrainLife</h1>
+                </div>
+
+                <!-- Navigation -->
+                <nav class="nav-menu">
+                    <a href="/homeUsuario" class="nav-item">
+                        <i data-lucide="home"></i>
+                        <span>Home</span>
+                    </a>
+                    <a href="/Viajes" class="nav-item">
+                        <i data-lucide="ticket"></i>
+                        <span>Viajes</span>
+                    </a>
+                    <a href="/MisRutas" class="nav-item">
+                        <i data-lucide="map-pin"></i>
+                        <span>Mis Rutas</span>
+                    </a>
+                    <a href="/buscarRutas" class="nav-item">
+                        <i data-lucide="search"></i>
+                        <span>Buscar Rutas</span>
+                    </a>
+                    <a href="/notificaciones" class="nav-item">
+                        <i data-lucide="bell"></i>
+                        <span>Notificaciones</span>
+                    </a>
+                    <a href="/configuracion" class="nav-item active">
+                        <i data-lucide="settings"></i>
+                        <span>Configuración</span>
+                    </a>
+                </nav>
+
+                <!-- Logout Button -->
+                <button class="logout-btn" onclick="window.location.href='/salir'" aria-label="Cerrar sesión">
+                    <i data-lucide="log-out"></i>
+                    <span>Cerrar Sesión</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="content-wrapper">
+                <!-- Breadcrumbs -->
+                <nav class="breadcrumbs" aria-label="Breadcrumb">
+                    <a href="/homeUsuario" class="breadcrumb-link">Home</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <span class="breadcrumb-current">Configuración</span>
+                </nav>
+
+                <!-- Page Title -->
+                <h1 class="page-title">Configuración</h1>
+
+                <!-- Personal Information Section -->
+                <h2 class="section-title">Información Personal</h2>
+                <p class="section-subtitle">
+                    Aquí puedes ver y actualizar tu información personal.
+                </p>
+
+                <!-- Form Card -->
+                <div class="form-card">
+                    <form id="personalInfoForm" aria-label="Formulario de información personal">
+                        <!-- Nombre -->
+                        <div class="form-group">
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <div class="input-wrapper">
+                                <input
+                                    type="text"
+                                    id="nombre"
+                                    class="form-input"
+                                    value="Laura"
+                                    aria-required="true"
+                                />
+                                <i data-lucide="edit" class="input-icon"></i>
+                            </div>
+                        </div>
+
+                        <!-- Apellidos Row -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="primerApellido" class="form-label">Primer Apellido</label>
+                                <div class="input-wrapper">
+                                    <input
+                                        type="text"
+                                        id="primerApellido"
+                                        class="form-input"
+                                        value="Martínez"
+                                        aria-required="true"
+                                    />
+                                    <i data-lucide="edit" class="input-icon"></i>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="segundoApellido" class="form-label">Segundo Apellido</label>
+                                <div class="input-wrapper">
+                                    <input
+                                        type="text"
+                                        id="segundoApellido"
+                                        class="form-input"
+                                        value="García"
+                                    />
+                                    <i data-lucide="edit" class="input-icon"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Contact Info Row -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="telefono" class="form-label">Número de Teléfono</label>
+                                <div class="input-wrapper">
+                                    <input
+                                        type="tel"
+                                        id="telefono"
+                                        class="form-input"
+                                        value="+34 600 123 456"
+                                        aria-required="true"
+                                    />
+                                    <i data-lucide="edit" class="input-icon"></i>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email" class="form-label">Correo Electrónico</label>
+                                <div class="input-wrapper">
+                                    <input
+                                        type="email"
+                                        id="email"
+                                        class="form-input"
+                                        value="laura@gmail.com"
+                                        aria-required="true"
+                                    />
+                                    <i data-lucide="edit" class="input-icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Notifications Section -->
+                <h2 class="section-title section-title-spaced">Configuración de Notificaciones</h2>
+                <p class="section-subtitle">
+                    Gestiona cómo y cuándo te notificamos sobre tus viajes y la aplicación.
+                </p>
+
+                <!-- Info Banner -->
+                <div class="info-banner" role="note" aria-label="Información sobre notificaciones">
+                    <i data-lucide="info" class="info-icon"></i>
+                    <p class="info-text">
+                        Para una mejor experiencia, te recomendamos mantener las notificaciones activas. Así
+                        recibirás información importante sobre tus viajes en tiempo real.
+                    </p>
+                </div>
+
+                <!-- Settings Card -->
+                <div class="settings-card" role="group" aria-labelledby="notif-viajes-rutas">
+                    <h3 class="settings-heading" id="notif-viajes-rutas">
+                        Notificaciones de Viajes y Rutas
+                    </h3>
+
+                    <!-- Toggle 1 -->
+                    <div class="toggle-item">
+                        <div class="toggle-content">
+                            <label for="travelToggle" class="toggle-label" id="travel-label">
+                                Modificaciones en mis viajes
+                            </label>
+                            <p class="toggle-description">
+                                Recibe alertas sobre cambios, retrasos o cancelaciones.
+                            </p>
+                        </div>
+                        <div class="toggle-switch-wrapper">
+                            <input
+                                type="checkbox"
+                                id="travelToggle"
+                                class="toggle-input"
+                                role="switch"
+                                aria-checked="true"
+                                aria-labelledby="travel-label"
+                                checked
+                            />
+                            <div class="toggle-switch">
+                                <div class="toggle-slider"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-divider"></div>
+
+                    <!-- Toggle 2 -->
+                    <div class="toggle-item">
+                        <div class="toggle-content">
+                            <label for="routeToggle" class="toggle-label">
+                                Modificaciones en mis rutas
+                            </label>
+                            <p class="toggle-description">
+                                Notificaciones sobre cambios en tus rutas guardadas.
+                            </p>
+                        </div>
+                        <div class="toggle-switch-wrapper">
+                            <input
+                                type="checkbox"
+                                id="routeToggle"
+                                class="toggle-input"
+                            />
+                            <div class="toggle-switch">
+                                <div class="toggle-slider"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-divider"></div>
+
+                    <h3 class="settings-heading">Notificaciones Generales</h3>
+
+                    <!-- Toggle 3 -->
+                    <div class="toggle-item">
+                        <div class="toggle-content">
+                            <label for="generalToggle" class="toggle-label">
+                                Avisos generales de TrainLife
+                            </label>
+                            <p class="toggle-description">
+                                Promociones, noticias y actualizaciones de la app.
+                            </p>
+                        </div>
+                        <div class="toggle-switch-wrapper">
+                            <input
+                                type="checkbox"
+                                id="generalToggle"
+                                class="toggle-input"
+                                checked
+                            />
+                            <div class="toggle-switch">
+                                <div class="toggle-slider"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Save Button -->
+                <div class="button-container">
+                    <button
+                        id="saveBtn"
+                        class="save-btn"
+                        aria-label="Guardar todos los cambios realizados en la configuración"
+                    >
+                        Guardar Cambios
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="{{ url_for('static', filename='js/confirmModal.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/configuracion.js') }}"></script>
+</body>
+</html>

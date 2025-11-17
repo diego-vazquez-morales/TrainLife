@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>TrainLife - Home</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    
+    <!-- Lucide Icons CSS -->
+    <link href="https://unpkg.com/lucide-static@latest/font/lucide.css" rel="stylesheet"/>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/homeUsuario.css') }}"/>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar" role="navigation" aria-label="Menú de navegación principal">
+            <div class="sidebar-content">
+                <!-- Logo -->
+                <div class="logo-section">
+                    <i data-lucide="train" class="logo-icon"></i>
+                    <h1 class="logo-title">TrainLife</h1>
+                </div>
+
+                <!-- Navigation Menu -->
+                <nav class="nav-menu" aria-label="Menú principal">
+                    <a href="/home-usuario" class="nav-item active" aria-current="page" aria-label="Inicio (página actual)">
+                        <i data-lucide="home"></i>
+                        <span>Inicio</span>
+                    </a>
+                    <a href="/Viajes" class="nav-item" aria-label="Ir a Viajes">
+                        <i data-lucide="ticket"></i>
+                        <span>Viajes</span>
+                    </a>
+                    <a href="/MisRutas" class="nav-item" aria-label="Ir a Mis Rutas">
+                        <i data-lucide="map-pin"></i>
+                        <span>Mis Rutas</span>
+                    </a>
+                    <a href="/buscarRutas" class="nav-item" aria-label="Ir a Buscar Rutas">
+                        <i data-lucide="search"></i>
+                        <span>Buscar Rutas</span>
+                    </a>
+                    <a href="/notificaciones" class="nav-item" aria-label="Ir a Notificaciones">
+                        <i data-lucide="bell"></i>
+                        <span>Notificaciones</span>
+                    </a>
+                    <a href="/configuracion" class="nav-item" aria-label="Ir a Configuración">
+                        <i data-lucide="settings"></i>
+                        <span>Configuración</span>
+                    </a>
+                </nav>
+
+                <!-- Logout Button -->
+                <button class="logout-btn" id="logoutBtn" aria-label="Cerrar sesión y salir de la aplicación">
+                    <i data-lucide="log-out"></i>
+                    <span>Cerrar Sesión</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Mobile Sidebar Toggle -->
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Menú">
+            <i data-lucide="menu"></i>
+        </button>
+
+        <!-- Main Content -->
+        <main class="main-content" role="main" aria-label="Contenido principal del dashboard">
+            <div class="content-wrapper">
+                <!-- Breadcrumbs -->
+                <nav class="breadcrumbs" aria-label="Breadcrumb">
+                    <span class="breadcrumb-item active">Home</span>
+                </nav>
+
+                <!-- Header -->
+                <header class="page-header">
+                    <h1 class="page-title">Bienvenido a TrainLife</h1>
+                    <p class="page-subtitle">Tu plataforma completa para gestionar y planificar todos tus viajes en tren</p>
+                </header>
+
+                <!-- Main Actions Section -->
+                <section class="section">
+                    <h2 class="section-title">Acciones Principales</h2>
+                    
+                    <div class="cards-grid">
+                        <!-- Card 1: Planifica tu Viaje -->
+                        <article class="action-card" tabindex="0" data-navigate="/misViajes" role="button" aria-label="Ir a Planifica tu Viaje - Accede a tu sección de Mis Viajes">
+                            <div class="card-header card-header-blue">
+                                <i data-lucide="train" class="card-icon"></i>
+                            </div>
+                            <div class="card-body">
+                                <h3 class="card-title">Planifica tu Viaje</h3>
+                                <p class="card-text">
+                                    Accede a tu sección de Mis Viajes donde podrás consultar todos tus billetes activos, 
+                                    ver detalles de reservas, gestionar tus próximos trayectos y comprar nuevos billetes 
+                                    de forma rápida y sencilla.
+                                </p>
+                                <div class="card-link">
+                                    <span>Ir a Viajes</span>
+                                    <i data-lucide="arrow-right"></i>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Card 2: Consulta Horarios -->
+                        <article class="action-card" tabindex="0" data-navigate="/MisRutas" role="button" aria-label="Ir a Consultar Horarios - Explora Mis Rutas guardadas">
+                            <div class="card-header card-header-green">
+                                <i data-lucide="route" class="card-icon"></i>
+                            </div>
+                            <div class="card-body">
+                                <h3 class="card-title">Consultar Horarios</h3>
+                                <p class="card-text">
+                                    Explora Mis Rutas para ver todas tus rutas guardadas favoritas, consultar horarios 
+                                    detallados con andenes, gestionar múltiples transbordos y acceder rápidamente a tus 
+                                    trayectos habituales.
+                                </p>
+                                <div class="card-link card-link-green">
+                                    <span>Ir a Mis Rutas</span>
+                                    <i data-lucide="arrow-right"></i>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Card 3: Ver Avisos del Servicio -->
+                        <article class="action-card" tabindex="0" data-navigate="/notificaciones" role="button" aria-label="Ir a Ver Avisos del Servicio - Mantén informado con notificaciones">
+                            <div class="card-header card-header-red">
+                                <i data-lucide="bell" class="card-icon"></i>
+                            </div>
+                            <div class="card-body">
+                                <h3 class="card-title">Ver Avisos del Servicio</h3>
+                                <p class="card-text">
+                                    Mantente informado con Notificaciones en tiempo real sobre retrasos, cambios de andén, 
+                                    cancelaciones, obras programadas y alertas importantes que puedan afectar tus viajes.
+                                </p>
+                                <div class="card-link card-link-red">
+                                    <span>Ir a Notificaciones</span>
+                                    <i data-lucide="arrow-right"></i>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <!-- About TrainLife Section -->
+                <section class="section">
+                    <h2 class="section-title">¿Qué es TrainLife?</h2>
+                    
+                    <div class="info-box">
+                        <p class="info-text">
+                            <strong>TrainLife</strong> es tu compañero de viaje definitivo, 
+                            diseñado para simplificar y mejorar tu experiencia con los trenes. Nuestra plataforma te 
+                            permite gestionar todos los aspectos de tus viajes ferroviarios desde un solo lugar, 
+                            ahorrándote tiempo y reduciendo el estrés de la planificación.
+                        </p>
+                        <p class="info-text">
+                            Ya sea que viajes diariamente al trabajo, explores nuevos destinos o planifiques una 
+                            aventura por todo el país, TrainLife te proporciona las herramientas necesarias para 
+                            que cada viaje sea perfecto.
+                        </p>
+                    </div>
+
+                    <!-- Features Grid -->
+                    <div class="features-grid">
+                        <!-- Feature 1 -->
+                        <div class="feature-card feature-card-blue">
+                            <div class="feature-icon feature-icon-blue">
+                                <i data-lucide="ticket"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h3 class="feature-title">Gestión de Billetes</h3>
+                                <p class="feature-text">
+                                    Accede a todos tus billetes digitales en un solo lugar. Consulta detalles de 
+                                    reservas, horarios, andenes y códigos QR para embarcar sin complicaciones.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Feature 2 -->
+                        <div class="feature-card feature-card-green">
+                            <div class="feature-icon feature-icon-green">
+                                <i data-lucide="star"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h3 class="feature-title">Rutas Favoritas</h3>
+                                <p class="feature-text">
+                                    Guarda tus rutas más utilizadas para acceder rápidamente a horarios, transbordos 
+                                    y toda la información necesaria para tus trayectos habituales.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Feature 3 -->
+                        <div class="feature-card feature-card-red">
+                            <div class="feature-icon feature-icon-red">
+                                <i data-lucide="bell"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h3 class="feature-title">Alertas en Tiempo Real</h3>
+                                <p class="feature-text">
+                                    Recibe notificaciones instantáneas sobre cambios en tu servicio: retrasos, 
+                                    cambios de andén, cancelaciones y actualizaciones importantes.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Feature 4 -->
+                        <div class="feature-card feature-card-yellow">
+                            <div class="feature-icon feature-icon-yellow">
+                                <i data-lucide="map-pin"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h3 class="feature-title">Planificación Inteligente</h3>
+                                <p class="feature-text">
+                                    Busca rutas optimizadas con información detallada de andenes, transbordos, 
+                                    tiempos de conexión y opciones alternativas para cada destino.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Why Choose TrainLife -->
+                <section class="section">
+                    <div class="why-trainlife-box">
+                        <h2 class="why-trainlife-title">¿Por qué elegir TrainLife?</h2>
+                        <div class="why-trainlife-grid">
+                            <div class="why-trainlife-item">
+                                <h3 class="why-trainlife-subtitle">Simple y Rápido</h3>
+                                <p class="why-trainlife-text">
+                                    Interfaz intuitiva diseñada para que encuentres lo que necesitas en segundos, 
+                                    sin complicaciones ni pasos innecesarios.
+                                </p>
+                            </div>
+                            <div class="why-trainlife-item">
+                                <h3 class="why-trainlife-subtitle">Siempre Actualizado</h3>
+                                <p class="why-trainlife-text">
+                                    Información en tiempo real directamente de las estaciones. Mantente al día con 
+                                    los últimos cambios y actualizaciones.
+                                </p>
+                            </div>
+                            <div class="why-trainlife-item">
+                                <h3 class="why-trainlife-subtitle">Todo en Uno</h3>
+                                <p class="why-trainlife-text">
+                                    Una sola plataforma para planificar, reservar, gestionar y recibir alertas sobre 
+                                    todos tus viajes en tren.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Getting Started Section -->
+                <section class="section">
+                    <div class="getting-started-box">
+                        <h2 class="getting-started-title">Comienza tu Viaje</h2>
+                        <p class="getting-started-text">
+                            TrainLife está diseñado para ser tu asistente personal de viajes. Utiliza el menú lateral 
+                            para navegar entre las diferentes secciones, guarda tus rutas favoritas, gestiona tus billetes 
+                            y mantente siempre informado con nuestras notificaciones en tiempo real.
+                        </p>
+                        <div class="getting-started-buttons">
+                            <button class="btn btn-primary-custom" data-navigate="/buscarRutas">
+                                Buscar Rutas
+                            </button>
+                            <button class="btn btn-secondary-custom" data-navigate="/misViajes">
+                                Ver Mis Viajes
+                            </button>
+                            <button class="btn btn-tertiary-custom" data-navigate="/notificaciones">
+                                Ver Notificaciones
+                            </button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/homeUsuario.js') }}"></script>
+</body>
+</html>

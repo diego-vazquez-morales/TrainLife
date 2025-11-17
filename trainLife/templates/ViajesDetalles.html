@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>TrainLife - Detalles del Viaje</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    
+    <!-- Lucide Icons CSS -->
+    <link href="https://unpkg.com/lucide-static@latest/font/lucide.css" rel="stylesheet"/>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/ViajesDetalles.css') }}"/>
+</head>
+<body>
+    <div class="page-container">
+        <!-- Header - Solo visible en desktop -->
+        <header class="page-header" role="banner">
+            <div class="logo-container">
+                <i data-lucide="train" class="logo-icon" aria-hidden="true"></i>
+                <div class="logo-title">TrainLife</div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-container" role="main" aria-label="Detalles del viaje">
+            <div class="content-wrapper">
+                <!-- Page Title (visually hidden but accessible) -->
+                <h1 class="sr-only">Detalles del Viaje</h1>
+                
+                <!-- Breadcrumbs -->
+                <nav class="breadcrumbs" aria-label="Breadcrumb">
+                    <a href="/homeUsuario" class="breadcrumb-link">Home</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <a href="/Viajes" class="breadcrumb-link">Viajes</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <a href="/misViajes" class="breadcrumb-link">Mis Viajes</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <span class="breadcrumb-current" id="breadcrumbRuta">Madrid - Barcelona</span>
+                </nav>
+
+                <!-- Alert Warning -->
+                <div class="alert-box" id="alertBox" style="display: none;" role="alert" aria-live="assertive">
+                    <i data-lucide="alert-triangle" class="alert-icon" aria-hidden="true"></i>
+                    <div class="alert-content">
+                        <p class="alert-title" id="alertTitle">Alerta</p>
+                        <p class="alert-message" id="alertMessage">Información del viaje</p>
+                    </div>
+                </div>
+
+                <!-- Ticket Card -->
+                <div class="ticket-card" role="article" aria-label="Información del billete de tren">
+                    <!-- Ticket Header -->
+                    <div class="ticket-header">
+                        <div class="ticket-header-content">
+                            <div class="ticket-left">
+                                <p class="ticket-date" id="ticketDate">Fecha</p>
+                                <h2 class="ticket-route" id="ticketRoute">Ruta</h2>
+                            </div>
+                            <div class="ticket-right">
+                                <p class="ticket-train" id="ticketTrain">Tren</p>
+                                <span class="status-badge" id="statusBadge">Estado</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ticket Body -->
+                    <div class="ticket-body">
+                        <div class="ticket-grid">
+                            <!-- Left Column - Main Details -->
+                            <div class="main-details-col">
+                                <!-- Time Details Grid -->
+                                <div class="time-details-grid">
+                                    <!-- Platform Box -->
+                                    <div class="detail-box detail-box-platform">
+                                        <div class="detail-label">Andén</div>
+                                        <div class="detail-value-large" id="platform">--</div>
+                                    </div>
+                                    
+                                    <!-- Departure Box -->
+                                    <div class="detail-box">
+                                        <div class="detail-label">Salida</div>
+                                        <div class="detail-value-medium" id="departure">--:--</div>
+                                    </div>
+                                </div>
+
+                                <!-- Passenger Info Grid -->
+                                <div class="passenger-info-grid">
+                                    <div class="info-item">
+                                        <p class="info-label">Embarque</p>
+                                        <p class="info-value" id="boarding">--:--</p>
+                                    </div>
+                                    <div class="info-item">
+                                        <p class="info-label">Coche / Asiento</p>
+                                        <p class="info-value" id="seatInfo">-- / --</p>
+                                    </div>
+                                    <div class="info-item">
+                                        <p class="info-label">Clase</p>
+                                        <p class="info-value" id="class">--</p>
+                                    </div>
+                                    <div class="info-item">
+                                        <p class="info-label">Pasajero</p>
+                                        <p class="info-value" id="passenger">--</p>
+                                    </div>
+                                </div>
+
+                                <!-- Notifications Toggle -->
+                                <div class="notifications-toggle">
+                                    <label for="notificationsToggle" class="toggle-label-wrapper">
+                                        <i data-lucide="bell" class="toggle-icon" aria-hidden="true"></i>
+                                        <span class="toggle-label" id="toggleLabel">Notificaciones del viaje</span>
+                                    </label>
+                                    <div class="toggle-switch">
+                                        <input type="checkbox" id="notificationsToggle" checked role="switch" aria-checked="true" aria-labelledby="toggleLabel"/>
+                                        <span class="toggle-slider"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right Column - Itinerary -->
+                            <div class="itinerary-col">
+                                <h3 class="itinerary-title" id="itineraryTitle">Itinerario del Viaje</h3>
+                                <ul class="itinerary-list" id="itineraryList" role="list" aria-labelledby="itineraryTitle">
+                                    <!-- Items will be added by JavaScript -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/ViajesDetalles.js') }}"></script>
+</body>
+</html>

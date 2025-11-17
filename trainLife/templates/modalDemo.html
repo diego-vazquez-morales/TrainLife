@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Modal de Confirmación - TrainLife</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/confirmModal.css') }}">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: #f5f5f5;
+            padding: 2rem;
+        }
+        
+        .demo-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .demo-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 1rem;
+        }
+        
+        .demo-subtitle {
+            font-size: 1rem;
+            color: #666666;
+            margin-bottom: 2rem;
+        }
+        
+        .demo-section {
+            margin-bottom: 2rem;
+        }
+        
+        .demo-section h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 1rem;
+        }
+        
+        .demo-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .demo-btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+        
+        .demo-btn-danger {
+            background-color: #dc2626;
+            color: white;
+        }
+        
+        .demo-btn-danger:hover {
+            background-color: #b91c1c;
+        }
+        
+        .demo-btn-warning {
+            background-color: #d97706;
+            color: white;
+        }
+        
+        .demo-btn-warning:hover {
+            background-color: #b45309;
+        }
+        
+        .demo-btn-info {
+            background-color: #2563eb;
+            color: white;
+        }
+        
+        .demo-btn-info:hover {
+            background-color: #1d4ed8;
+        }
+        
+        .demo-code {
+            background-color: #f9f9fb;
+            border: 1px solid #e5e5e5;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container" role="main" aria-labelledby="demo-title">
+        <h1 class="demo-title" id="demo-title">Modal de Confirmación - Demo</h1>
+        <p class="demo-subtitle">
+            Ejemplos de modales de confirmación con diferentes tipos y configuraciones.
+        </p>
+        
+        <!-- Modal de Peligro -->
+        <div class="demo-section">
+            <h2>Modal de Peligro (Danger)</h2>
+            <p style="color: #666; margin-bottom: 1rem;">
+                Utiliza este tipo para acciones destructivas como eliminar o cancelar.
+            </p>
+            <div class="demo-buttons">
+                <button class="demo-btn demo-btn-danger" onclick="showDangerModal()" aria-label="Mostrar modal para eliminar ruta">
+                    Eliminar Ruta
+                </button>
+                <button class="demo-btn demo-btn-danger" onclick="showDeleteAccountModal()" aria-label="Mostrar modal para eliminar cuenta">
+                    Eliminar Cuenta
+                </button>
+            </div>
+            <div class="demo-code">
+window.showConfirmModal({
+    title: '¿Eliminar ruta?',
+    message: '¿Estás seguro de que deseas eliminar esta ruta?',
+    confirmText: 'Eliminar',
+    cancelText: 'Cancelar',
+    type: 'danger',
+    onConfirm: () => console.log('Eliminado')
+});
+            </div>
+        </div>
+        
+        <!-- Modal de Advertencia -->
+        <div class="demo-section">
+            <h2>Modal de Advertencia (Warning)</h2>
+            <p style="color: #666; margin-bottom: 1rem;">
+                Utiliza este tipo para acciones que requieren atención especial.
+            </p>
+            <div class="demo-buttons">
+                <button class="demo-btn demo-btn-warning" onclick="showWarningModal()" aria-label="Mostrar modal para cambiar configuración">
+                    Cambiar Configuración
+                </button>
+                <button class="demo-btn demo-btn-warning" onclick="showCancelTripModal()" aria-label="Mostrar modal para cancelar viaje">
+                    Cancelar Viaje
+                </button>
+            </div>
+            <div class="demo-code">
+window.showConfirmModal({
+    title: '¿Cambiar configuración?',
+    message: 'Cambiar esta configuración afectará tus preferencias.',
+    confirmText: 'Continuar',
+    cancelText: 'Cancelar',
+    type: 'warning',
+    onConfirm: () => console.log('Cambiado')
+});
+            </div>
+        </div>
+        
+        <!-- Modal de Información -->
+        <div class="demo-section">
+            <h2>Modal de Información (Info)</h2>
+            <p style="color: #666; margin-bottom: 1rem;">
+                Utiliza este tipo para confirmaciones generales y acciones informativas.
+            </p>
+            <div class="demo-buttons">
+                <button class="demo-btn demo-btn-info" onclick="showInfoModal()" aria-label="Mostrar modal para guardar cambios">
+                    Guardar Cambios
+                </button>
+                <button class="demo-btn demo-btn-info" onclick="showComprarBilleteModal()" aria-label="Mostrar modal para comprar billete">
+                    Comprar Billete
+                </button>
+            </div>
+            <div class="demo-code">
+window.showConfirmModal({
+    title: '¿Guardar cambios?',
+    message: '¿Deseas guardar los cambios realizados?',
+    confirmText: 'Guardar',
+    cancelText: 'Cancelar',
+    type: 'info',
+    onConfirm: () => console.log('Guardado')
+});
+            </div>
+        </div>
+        
+        <!-- Ejemplo con Promise -->
+        <div class="demo-section">
+            <h2>Uso con Async/Await</h2>
+            <p style="color: #666; margin-bottom: 1rem;">
+                El modal puede usarse con Promises y async/await.
+            </p>
+            <div class="demo-buttons">
+                <button class="demo-btn demo-btn-info" onclick="showAsyncModal()">
+                    Confirmar con Async
+                </button>
+            </div>
+            <div class="demo-code">
+async function confirmarAccion() {
+    const confirmed = await showConfirmModal({
+        title: 'Confirmar',
+        message: '¿Continuar?',
+        type: 'info'
+    });
+    
+    if (confirmed) {
+        console.log('Usuario confirmó');
+    } else {
+        console.log('Usuario canceló');
+    }
+}
+            </div>
+        </div>
+        
+        <div style="margin-top: 2rem; padding: 1rem; background: #eff6ff; border: 1px solid #2563eb; border-radius: 0.5rem;">
+            <strong style="color: #2563eb;">💡 Nota:</strong>
+            <p style="margin: 0.5rem 0 0 0; color: #1e40af; font-size: 0.875rem;">
+                Los modales se cierran automáticamente al hacer clic fuera del contenido, presionar Escape, o hacer clic en los botones.
+            </p>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="{{ url_for('static', filename='js/confirmModal.js') }}"></script>
+    
+    <script>
+        // Inicializar iconos de Lucide
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+        });
+        
+        // Ejemplos de modales
+        function showDangerModal() {
+            window.showConfirmModal({
+                title: '¿Eliminar ruta?',
+                message: '¿Estás seguro de que deseas eliminar "Madrid → Barcelona" de tus rutas guardadas? Esta acción no se puede deshacer.',
+                confirmText: 'Eliminar',
+                cancelText: 'Cancelar',
+                type: 'danger',
+                onConfirm: () => {
+                    console.log('✓ Ruta eliminada');
+                    alert('✓ Ruta eliminada correctamente');
+                },
+                onCancel: () => {
+                    console.log('✗ Eliminación cancelada');
+                }
+            });
+        }
+        
+        function showDeleteAccountModal() {
+            window.showConfirmModal({
+                title: '⚠️ Eliminar cuenta',
+                message: 'Esta acción es permanente. Se eliminarán todos tus datos, viajes guardados y preferencias. ¿Estás completamente seguro?',
+                confirmText: 'Sí, eliminar mi cuenta',
+                cancelText: 'No, mantener mi cuenta',
+                type: 'danger',
+                onConfirm: () => {
+                    console.log('✓ Cuenta eliminada');
+                    alert('✓ Cuenta eliminada (simulación)');
+                }
+            });
+        }
+        
+        function showWarningModal() {
+            window.showConfirmModal({
+                title: '¿Cambiar configuración?',
+                message: 'Al cambiar esta configuración, tus preferencias de notificación se restablecerán a los valores predeterminados.',
+                confirmText: 'Continuar',
+                cancelText: 'Cancelar',
+                type: 'warning',
+                onConfirm: () => {
+                    console.log('✓ Configuración cambiada');
+                    alert('✓ Configuración actualizada');
+                }
+            });
+        }
+        
+        function showCancelTripModal() {
+            window.showConfirmModal({
+                title: 'Cancelar viaje',
+                message: '¿Deseas cancelar tu viaje a Barcelona? Se aplicará una tarifa de cancelación del 10%.',
+                confirmText: 'Sí, cancelar viaje',
+                cancelText: 'No, mantener viaje',
+                type: 'warning',
+                onConfirm: () => {
+                    console.log('✓ Viaje cancelado');
+                    alert('✓ Viaje cancelado correctamente');
+                }
+            });
+        }
+        
+        function showInfoModal() {
+            window.showConfirmModal({
+                title: '¿Guardar cambios?',
+                message: '¿Estás seguro de que deseas guardar los cambios realizados en tu información personal y configuración de notificaciones?',
+                confirmText: 'Guardar',
+                cancelText: 'Cancelar',
+                type: 'info',
+                onConfirm: () => {
+                    console.log('✓ Cambios guardados');
+                    alert('✓ Cambios guardados exitosamente');
+                }
+            });
+        }
+        
+        function showComprarBilleteModal() {
+            window.showConfirmModal({
+                title: 'Confirmar compra',
+                message: '¿Deseas comprar un billete para el tren AVE Madrid → Barcelona el 20 de noviembre a las 09:00? Precio: €47.00',
+                confirmText: 'Comprar',
+                cancelText: 'Cancelar',
+                type: 'info',
+                onConfirm: () => {
+                    console.log('✓ Billete comprado');
+                    alert('✓ Billete comprado exitosamente');
+                }
+            });
+        }
+        
+        async function showAsyncModal() {
+            const confirmed = await window.showConfirmModal({
+                title: 'Confirmación async',
+                message: 'Este modal usa Promises. ¿Deseas continuar?',
+                confirmText: 'Continuar',
+                cancelText: 'Cancelar',
+                type: 'info'
+            });
+            
+            if (confirmed) {
+                console.log('✓ Usuario confirmó (async)');
+                alert('✓ Usuario confirmó la acción');
+            } else {
+                console.log('✗ Usuario canceló (async)');
+                alert('✗ Usuario canceló la acción');
+            }
+        }
+    </script>
+</body>
+</html>

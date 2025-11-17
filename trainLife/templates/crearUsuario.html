@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Crear Cuenta - TrainApp</title>
+
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+    <link rel="stylesheet" href="../static/styles/crearUsuario.css" />
+
+</head>
+
+<body class="page-body">
+    <div class="main-wrapper">
+        <div class="layout-container">
+            <main class="form-card" role="main" aria-labelledby="page-title">
+                <div class="form-header">
+                    <div class="logo-icon-wrap">
+                        <span class="material-symbols-outlined logo-icon">train</span>
+                    </div>
+                    <p class="title" id="page-title">Crear Cuenta</p>
+                    <p class="subtitle">Únete a TrainLife para empezar.</p>
+                </div>
+                <form class="form-layout" role="form" aria-labelledby="page-title">
+                    <label class="form-label-container">
+                        <p class="input-label" id="nombre-label">Nombre</p>
+                        <input class="form-input-field" placeholder="Introduce tu nombre" value="" aria-labelledby="nombre-label" aria-required="true" />
+                    </label>
+                    <label class="form-label-container">
+                        <p class="input-label" id="apellido1-label">Primer Apellido</p>
+                        <input class="form-input-field" placeholder="Introduce tu apellido" value="" aria-labelledby="apellido1-label" aria-required="true" />
+                    </label>
+                    <label class="form-label-container">
+                        <p class="input-label" id="apellido2-label">Segundo Apellido</p>
+                        <input class="form-input-field" placeholder="Opcional" value="" aria-labelledby="apellido2-label" aria-required="false" />
+                    </label>
+                    <label class="form-label-container">
+                        <p class="input-label" id="telefono-label">Teléfono</p>
+                        <input class="form-input-field" placeholder="+34 600 000 000" value="" aria-labelledby="telefono-label" aria-required="true" />
+                    </label>
+                    <label class="form-label-container">
+                        <p class="input-label" id="email-label">Correo Electrónico</p>
+                        <input class="form-input-field" placeholder="tu.correo@ejemplo.com" type="email" value="" aria-labelledby="email-label" aria-required="true" />
+                    </label>
+                    <label class="form-label-container">
+                        <p class="input-label" id="password-label">Contraseña</p>
+                        <div class="password-input-wrap">
+                            <input class="form-input-field password-input" placeholder="Introduce tu contraseña"
+                                type="password" value="" aria-labelledby="password-label" aria-required="true" />
+                            <button class="toggle-password-button" type="button" aria-label="Mostrar contraseña">
+                                <span class="material-symbols-outlined icon-visibility" aria-hidden="true">visibility</span>
+                            </button>
+                        </div>
+                    </label>
+                    <label class="form-label-container">
+                        <p class="input-label" id="confirm-password-label">Confirmar Contraseña</p>
+                        <div class="password-input-wrap">
+                            <input class="form-input-field password-input" placeholder="Confirma tu contraseña"
+                                type="password" value="" aria-labelledby="confirm-password-label" aria-required="true" />
+                            <button class="toggle-password-button" type="button" aria-label="Mostrar contraseña de confirmación">
+                                <span class="material-symbols-outlined icon-visibility" aria-hidden="true">visibility_off</span>
+                            </button>
+                        </div>
+                    </label>
+                    <div class="terms-checkbox-wrap">
+                        <input class="form-checkbox-field" id="terms" type="checkbox" aria-required="true" />
+                        <label class="terms-text" for="terms">
+                            Acepto los <a class="terms-link" href="#">Términos y Condiciones</a> y la <a
+                                class="terms-link" href="#">Política de Privacidad</a>.
+                        </label>
+                    </div>
+                    <button class="primary-submit-button" type="submit" aria-label="Crear nueva cuenta">
+                        <span class="truncate">Crear Cuenta</span>
+                    </button>
+                </form>
+            </main>
+            <footer class="page-footer">
+                <p class="footer-text">
+                    ¿Ya tienes una cuenta? <a class="footer-link" href="#">Iniciar Sesión</a>
+                </p>
+            </footer>
+        </div>
+    </div>
+</body>
+
+</html>

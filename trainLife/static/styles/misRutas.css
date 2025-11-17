@@ -1,0 +1,509 @@
+/* Reset y estilos base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Lexend', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background-color: #f5f5f5;
+    color: #1a1a1a;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Container principal */
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* === Sidebar === */
+.sidebar {
+    width: 280px;
+    background-color: #ffffff;
+    border-right: 1px solid #e5e5e5;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 1000;
+    transition: transform 0.3s ease;
+}
+
+.sidebar-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 1.5rem;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 0;
+    margin-bottom: 2rem;
+}
+
+.logo-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    color: #0f49bd;
+}
+
+.logo-text {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+.nav-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem 1rem;
+    border-radius: 0.5rem;
+    color: #666666;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.nav-item i {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.nav-item:hover {
+    background-color: #f5f5f5;
+    color: #1a1a1a;
+}
+
+.nav-item.active {
+    background-color: #0f49bd;
+    color: white;
+}
+
+.user-profile {
+    margin-top: auto;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e5e5e5;
+}
+
+.user-avatar {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background-color: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.75rem;
+}
+
+.user-avatar i {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: #666666;
+}
+
+.user-name {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #1a1a1a;
+}
+
+.logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    background: none;
+    border: 1px solid #e5e5e5;
+    border-radius: 0.375rem;
+    color: #666666;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: 100%;
+}
+
+.logout-btn i {
+    width: 1rem;
+    height: 1rem;
+}
+
+.logout-btn:hover {
+    background-color: #f5f5f5;
+    border-color: #666666;
+}
+
+/* Mobile Menu Toggle */
+.mobile-menu-toggle {
+    display: none;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 1100;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0.5rem;
+    background-color: #ffffff;
+    border: 1px solid #e5e5e5;
+    color: #1a1a1a;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+}
+
+.mobile-menu-toggle i {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+/* Contenido principal */
+.main-content {
+    flex: 1;
+    margin-left: 280px;
+    padding: 32px;
+    overflow-y: auto;
+    background-color: #f5f5f5;
+}
+
+.content-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    font-size: 14px;
+}
+
+.breadcrumb-item {
+    color: #0d3a94;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.breadcrumb-item:hover {
+    transform: scale(1.1);
+}
+
+.breadcrumb-current {
+    color: #1a1a1a;
+    font-weight: 500;
+}
+
+.breadcrumb-separator {
+    color: #0d3a94;
+}
+
+.page-title {
+    font-size: 32px;
+    font-weight: 900;
+    color: #1a1a1a;
+    margin-bottom: 32px;
+}
+
+/* Container de rutas */
+.routes-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Tarjetas de ruta */
+.route-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e5e5;
+}
+
+.route-card-selected {
+    border: 2px solid #1049bd;
+}
+
+.route-header {
+    display: flex;
+    gap: 24px;
+    justify-content: space-between;
+}
+
+.route-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.route-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 4px;
+}
+
+.route-subtitle {
+    font-size: 14px;
+    color: #666666;
+}
+
+.route-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+
+/* Botones */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+}
+
+.btn .material-symbols-outlined {
+    font-size: 18px;
+}
+
+.btn-primary {
+    background-color: #1049bd;
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    background-color: #0d3a94;
+}
+
+.btn-secondary {
+    background-color: rgba(16, 73, 189, 0.15);
+    color: #1049bd;
+}
+
+.btn-secondary:hover {
+    background-color: rgba(16, 73, 189, 0.25);
+}
+
+.btn-delete {
+    background-color: #ffffff;
+    color: #dc2626;
+    border: 1px solid #dc2626;
+}
+
+.btn-delete:hover {
+    background-color: #dc2626;
+    color: #ffffff;
+}
+
+/* Mapa de ruta */
+.route-map {
+    width: 180px;
+    height: 140px;
+    border-radius: 8px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    flex-shrink: 0;
+}
+
+.route-map-main {
+    background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBFCZR0x8VcnqT6RG2hA_4pFoIXX7WWwQOkCXsHQJpAUymAZ6xp8bsylSIydPH_lk3Jg27IB4roVP0nMGsjc3QR-1AM5FN9dMNJi_uM2JrsfWscwAM4wsAT1RwDyqVcjgHn6PzY-Zb42pmB5OAgqFaYvfYGgJj7zBEqeT_-8WgccY3dsnNFMz90MZ_qg6AJFJWY000TTad9N2id_XW4MxUgvKNjnbHpraVKHjcncMg4ljZ-MKGxsw_840FA0MJTmCLtxXNx3Qtg7PU");
+}
+
+.route-map-beach {
+    background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB05PK7K3XozI8n-JQ6EZ1JpfANPOP7_RTHDT6Ef_2sl5Z7wm1X4tM8H20JuvDLXA26T89QE9XnnusZd77CA5FQn5NM2fs85XP-8jAc9Ynz5Bpycls508nvnkM0euhkFa4RQusLN-q40L0Ac4SsQF0gpPtsBZPbq-6JjRgZSAn-FoiRrNBZGaiyiSqxdXIJ0w1ryrfHkzgRRUEYqtipyyMrkGdyncsKOMJB4YFRkBtwJt6DSkRE8qLHsGSsi20EOFK_FlCzcEr1dhY");
+}
+
+.route-map-mountain {
+    background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBqIyLzJ7BMuoS3v7j9wBBykCoT-9aBIQD4AKEqy7-mjfZRwx2z0ByV2VKSoEiWnRXmAZpf9jCCSjd3w0UO0aAYqC3e9uWnyiVrlAxBLCRE0wPp85xfrrpTIbnfDpFDQ1IngD6-Ujzh3kAknXaJkSnkWAkzHn7jOxpepV_PbTpae-nTa_zrC8Yu7GepRP957HxywCvfGiTA57kvODVxP0q6Dr2GiEb4PPR8XlqhNTtvoreq1ssS4DTvu4Hdya0qoIwdSMC5YLgwGsQ");
+}
+
+/* Detalles de ruta */
+.route-details {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid #e5e5e5;
+    flex-direction: column;
+    gap: 24px;
+    display: none;
+}
+
+.route-details-expanded {
+    display: flex;
+}
+
+.transfers-badge {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+}
+
+.transfers-label {
+    color: #666666;
+}
+
+.transfers-count {
+    background-color: #dbeafe;
+    color: #1e40af;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+}
+
+/* Secciones de línea */
+.line-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.line-section + .line-section {
+    padding-top: 24px;
+    border-top: 1px solid #e5e5e5;
+}
+
+.line-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+.line-content {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+}
+
+.line-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.info-label {
+    font-size: 13px;
+    color: #666666;
+}
+
+.info-value {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+.line-image-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 200px;
+}
+
+.image-label {
+    font-size: 13px;
+    color: #666666;
+}
+
+.line-route-image {
+    width: 200px;
+    height: 120px;
+    border-radius: 8px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #f0f0f0;
+}
+
+.line-route-image-1 {
+    background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCzEs0c8srBu_IlRyp-ypVz6cgzwDexbf9Ioz_ea8nAIs8WZHugS4Sw8I0ZfuWrNl9P6KpkvtGLx6-wsXglCcATyTZz7dfebU7mH2DudXLj3h61MruB-x35E918ch3Xc0hsrbTsgK85RO9Yrgi2dABeS2mSxFZUVsu-jftDynBlbW8tZ8zu3vI4UEhWh8FuynPo-0s8Pu8jVY9XfJCtXnRYIJWyyv-2xznrHFz97a3k8-vrmGujsH1epki3XF5YNw7Y4DK8Bw77Mvs");
+}
+
+.line-route-image-2 {
+    background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCzEs0c8srBu_IlRyp-ypVz6cgzwDexbf9Ioz_ea8nAIs8WZHugS4Sw8I0ZfuWrNl9P6KpkvtGLx6-wsXglCcATyTZz7dfebU7mH2DudXLj3h61MruB-x35E918ch3Xc0hsrbTsgK85RO9Yrgi2dABeS2mSxFZUVsu-jftDynBlbW8tZ8zu3vI4UEhWh8FuynPo-0s8Pu8jVY9XfJCtXnRYIJWyyv-2xznrHFz97a3k8-vrmGujsH1epki3XF5YNw7Y4DK8Bw77Mvs");
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+    }
+
+    .mobile-menu-toggle {
+        display: flex;
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding: 5rem 1.5rem 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        padding: 5rem 20px 20px;
+    }
+    
+    .route-header {
+        flex-direction: column;
+    }
+    
+    .route-map {
+        width: 100%;
+        height: 200px;
+    }
+    
+    .line-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .line-info-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .line-image-container {
+        width: 100%;
+        min-width: 100%;
+    }
+    
+    .line-route-image {
+        width: 100%;
+    }
+}

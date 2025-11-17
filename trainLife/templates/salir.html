@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Confirmación de Cierre de Sesión</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+
+    <!-- Referencias externas a CSS y JS locales -->
+    <script src="{{ url_for('static', filename='js/salir.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/salir.css') }}">
+
+</head>
+
+<body class="font-display">
+    <div class="relative flex min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBTt--HrVdy4GLnBxWJPTiNrdlbgDdm_ick3bqnJ1oM2N7OkaMSvOl7UXW8ETVH_jbdG_3Wlq9gWPXmfGsW2ek0qQhdJcR1gRKDU0MLfUKKDSOsC0SGYHOzmQOOJa9LWdo1ttjhfqC0WNq38YQw0dS2lEoOduq8uNJnXq4i-4Vw28M5VZgwYQU61CD-YzwIyc4HuhICoS4y6vUzUg_WJr9UZExRNj0b_4rNmTGssYIyaqTQStoUYENmb9P7gu5WxctlgkI8YkNp-Yk'); background-size: cover; background-position: center;">
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+            <div class="relative flex h-full grow flex-col items-center justify-center p-4">
+                <div class="w-full max-w-md rounded-xl bg-white dark:bg-slate-900 shadow-2xl overflow-hidden" role="dialog" aria-labelledby="dialog-title" aria-modal="true">
+                    <div class="flex flex-col items-center p-6 sm:p-8 text-center">
+                        <div class="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/30">
+                            <span class="material-symbols-outlined text-4xl text-red-500 dark:text-red-400" aria-hidden="true">
+                                logout
+                            </span>
+                        </div>
+                        <h3 class="text-slate-900 dark:text-slate-50 tracking-tight text-2xl font-bold leading-tight" id="dialog-title">¿Estás seguro de que quieres cerrar tu sesión?</h3>
+                        <p class="mt-2 text-slate-600 dark:text-slate-400">Se cerrará tu sesión actual y tendrás que volver a iniciarla para acceder a la aplicación.</p>
+                    </div>
+                    <div class="flex flex-col sm:flex-row-reverse gap-3 bg-slate-50 dark:bg-slate-900/50 p-6 sm:px-8">
+                        <button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-red-600 hover:bg-red-700 text-white text-base font-bold leading-normal tracking-[0.015em] w-full sm:w-auto transition-colors duration-200" aria-label="Confirmar cierre de sesión">
+                            <span class="truncate">Sí, cerrar sesión</span>
+                        </button>
+                        <button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-900 dark:text-slate-50 text-base font-bold leading-normal tracking-[0.015em] w-full sm:w-auto transition-colors duration-200" aria-label="Cancelar y volver a la aplicación">
+                            <span class="truncate">Cancelar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viajes - TrainLife</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/Viajes.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/confirmModal.css') }}">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-menu-toggle" aria-label="Toggle menu">
+            <i data-lucide="menu"></i>
+        </button>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-content">
+                <!-- Logo -->
+                <div class="logo-section">
+                    <i data-lucide="train" class="logo-icon"></i>
+                    <h1 class="logo-title">TrainLife</h1>
+                </div>
+
+                <!-- Navigation -->
+                <nav class="nav-menu">
+                    <a href="/homeUsuario" class="nav-item">
+                        <i data-lucide="home"></i>
+                        <span>Home</span>
+                    </a>
+                    <a href="/Viajes" class="nav-item active" aria-current="page">
+                        <i data-lucide="ticket"></i>
+                        <span>Viajes</span>
+                    </a>
+                    <a href="/MisRutas" class="nav-item">
+                        <i data-lucide="map-pin"></i>
+                        <span>Mis Rutas</span>
+                    </a>
+                    <a href="/buscarRutas" class="nav-item">
+                        <i data-lucide="search"></i>
+                        <span>Buscar Rutas</span>
+                    </a>
+                    <a href="/notificaciones" class="nav-item">
+                        <i data-lucide="bell"></i>
+                        <span>Notificaciones</span>
+                    </a>
+                    <a href="/configuracion" class="nav-item">
+                        <i data-lucide="settings"></i>
+                        <span>Configuración</span>
+                    </a>
+                </nav>
+
+                <!-- Logout Button -->
+                <button class="logout-btn" onclick="window.location.href='/salir'" aria-label="Cerrar sesión">
+                    <i data-lucide="log-out"></i>
+                    <span>Cerrar Sesión</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="content-wrapper">
+                <!-- Breadcrumbs -->
+                <nav class="breadcrumbs" aria-label="breadcrumb">
+                    <a href="/homeUsuario" class="breadcrumb-link">Home</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <span class="breadcrumb-current">Viajes</span>
+                </nav>
+
+                <!-- Page Header -->
+                <div class="page-header">
+                    <h1 class="page-title">Viajes</h1>
+                    <p class="page-subtitle">Gestiona tus viajes existentes o planifica uno nuevo</p>
+                </div>
+
+                <!-- Options Grid -->
+                <div class="options-grid" role="list" aria-label="Opciones de viajes">
+                    <!-- Mis Viajes Card -->
+                    <div class="option-card card-gradient-blue" role="listitem">
+                        <!-- Decorative Background -->
+                        <div class="card-decoration"></div>
+
+                        <div class="card-content">
+                            <!-- Icon -->
+                            <div class="card-icon">
+                                <i data-lucide="calendar"></i>
+                            </div>
+
+                            <!-- Content -->
+                            <h2 class="card-title">Mis Viajes</h2>
+                            <p class="card-description">
+                                Consulta todos tus viajes programados, revisa detalles de billetes, horarios y andenes.
+                            </p>
+
+                            <!-- Button -->
+                            <button class="card-btn" onclick="window.location.href='/misViajes'" aria-label="Ver todos mis viajes programados">
+                                <span>Ver mis viajes</span>
+                                <i data-lucide="arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Comprar Billete Card -->
+                    <div class="option-card card-gradient-lightblue" role="listitem">
+                        <!-- Decorative Background -->
+                        <div class="card-decoration"></div>
+
+                        <div class="card-content">
+                            <!-- Icon -->
+                            <div class="card-icon">
+                                <i data-lucide="shopping-cart"></i>
+                            </div>
+
+                            <!-- Content -->
+                            <h2 class="card-title">Comprar Nuevo Billete</h2>
+                            <p class="card-description">
+                                Busca rutas disponibles, compara horarios y precios, y reserva tu próximo viaje en tren.
+                            </p>
+
+                            <!-- Button -->
+                            <button class="card-btn" onclick="window.location.href='/buscarRutas'" aria-label="Buscar rutas disponibles para comprar un nuevo billete">
+                                <span>Buscar rutas</span>
+                                <i data-lucide="arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="stats-grid" role="list" aria-label="Estadísticas rápidas de viajes">
+                    <!-- Próximo Viaje -->
+                    <div class="stat-card" role="listitem">
+                        <div class="stat-header">
+                            <div class="stat-icon stat-icon-blue">
+                                <i data-lucide="calendar"></i>
+                            </div>
+                            <span class="stat-badge badge-blue">Próximo</span>
+                        </div>
+                        <h3 class="stat-title">Próximo Viaje</h3>
+                        <p class="stat-route">Madrid → Barcelona</p>
+                        <p class="stat-date">25 Dic, 2023 - 14:30h</p>
+                    </div>
+
+                    <!-- Viajes Activos -->
+                    <div class="stat-card" role="listitem">
+                        <div class="stat-icon stat-icon-blue">
+                            <i data-lucide="ticket"></i>
+                        </div>
+                        <h3 class="stat-title">Viajes Activos</h3>
+                        <div class="stat-number">3</div>
+                        <p class="stat-date">Billetes confirmados</p>
+                    </div>
+
+                    <!-- Rutas Guardadas -->
+                    <div class="stat-card" role="listitem">
+                        <div class="stat-icon stat-icon-purple">
+                            <i data-lucide="map-pin"></i>
+                        </div>
+                        <h3 class="stat-title">Rutas Guardadas</h3>
+                        <div class="stat-number">3</div>
+                        <p class="stat-date">Rutas favoritas</p>
+                    </div>
+                </div>
+
+                <!-- Help Section -->
+                <div class="help-section">
+                    <div class="help-icon">
+                        <i data-lucide="train"></i>
+                    </div>
+                    <div class="help-content">
+                        <h3 class="help-title">¿Primera vez viajando con TrainLife?</h3>
+                        <p class="help-text">
+                            Consulta nuestra guía rápida para aprender a gestionar tus viajes, recibir notificaciones en tiempo real y aprovechar al máximo todas las funcionalidades.
+                        </p>
+                        <a href="#" class="help-link">
+                            Ver guía de usuario
+                            <i data-lucide="arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="{{ url_for('static', filename='js/confirmModal.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/Viajes.js') }}"></script>
+</body>
+</html>

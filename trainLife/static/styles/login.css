@@ -1,0 +1,411 @@
+/* login.css - Estilos para login.html */
+
+/* === Variables CSS === */
+:root {
+    --primary-color: #0f49bd;
+    --primary-hover: rgba(15, 73, 189, 0.9);
+    --bg-light: #ffffff;
+    --bg-dark: #101922;
+    --text-dark: #0d141b;
+    --text-light: #ffffff;
+    --text-gray: #64748b;
+    --border-color: #cfdbe7;
+    --border-dark: #334155;
+    --input-bg: #f1f5f9;
+    --input-bg-dark: rgba(51, 65, 85, 0.5);
+    --error-color: #dc2626;
+    --error-bg: #fef2f2;
+    --error-bg-dark: rgba(220, 38, 38, 0.1);
+    --overlay-color: rgba(17, 24, 39, 0.6);
+}
+
+/* === Reset y Base === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+}
+
+/* === Container Principal === */
+.login-container {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    overflow-x: hidden;
+}
+
+/* === Background Image === */
+.background-image {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://images.unsplash.com/photo-1527498913931-c3024438f226?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wzNjAzNTV8MHwxfGFsbHx8fHx8fHx8fDE3MTc1MTAzOTZ8&ixlib=rb-4.0.3&q=80&w=1080');
+    background-size: cover;
+    background-position: center;
+}
+
+.background-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: var(--overlay-color);
+}
+
+/* === Back Button === */
+.back-button {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    color: var(--text-light);
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.back-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-light);
+}
+
+.back-button i {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.back-text {
+    display: none;
+    color: rgb(0, 0, 0);
+}
+
+@media (min-width: 640px) {
+    .back-text {
+        display: inline;
+    }
+}
+
+/* === Login Card Container === */
+.login-card-container {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 28rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* === Login Card === */
+.login-card {
+    width: 100%;
+    border-radius: 0.75rem;
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 2rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(8px);
+}
+
+/* === Logo Section === */
+.logo-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.logo-icon {
+    color: var(--primary-color);
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.logo-title {
+    color: var(--text-dark);
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0;
+}
+
+.subtitle {
+    color: #475569;
+    margin-bottom: 2rem;
+}
+
+/* === Form Styles === */
+.form-label {
+    color: var(--text-dark);
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.input-icon-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.input-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #64748b;
+    width: 1.25rem;
+    height: 1.25rem;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.form-control {
+    width: 100%;
+    height: 3.5rem;
+    padding: 0.9375rem;
+    padding-left: 3rem;
+    font-size: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    background-color: var(--input-bg);
+    color: var(--text-dark);
+    transition: all 0.2s;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(15, 73, 189, 0.1);
+    background-color: var(--bg-light);
+}
+
+.form-control::placeholder {
+    color: #64748b;
+}
+
+.input-with-toggle {
+    padding-right: 3rem;
+}
+
+/* === Password Toggle === */
+.password-toggle {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 3.5rem;
+    width: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    color: #64748b;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.password-toggle:hover {
+    color: var(--primary-color);
+}
+
+.password-toggle i {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+/* === Error States === */
+.form-control.is-invalid {
+    border-color: var(--error-color);
+    background-color: var(--error-bg);
+}
+
+.form-control.is-invalid:focus {
+    border-color: var(--error-color);
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+.is-invalid .input-icon {
+    color: var(--error-color);
+}
+
+.is-invalid .password-toggle {
+    color: var(--error-color);
+}
+
+.is-invalid .password-toggle:hover {
+    color: #b91c1c;
+}
+
+/* === Error Message === */
+.error-message {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.25rem;
+    margin-top: 0.5rem;
+    color: var(--error-color);
+    font-size: 0.875rem;
+}
+
+.error-icon {
+    display: inline-block;
+    margin-top: 0.125rem;
+}
+
+/* === Forgot Password Link === */
+.forgot-password-link {
+    color: #0d3a8c;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.forgot-password-link:hover {
+    text-decoration: underline;
+    color: #0a2d6e;
+}
+
+/* === Submit Button === */
+.btn-primary-custom {
+    width: 100%;
+    height: 3rem;
+    padding: 0.75rem 1.25rem;
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.015em;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-primary-custom:hover {
+    background-color: var(--primary-hover);
+}
+
+.btn-primary-custom:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(15, 73, 189, 0.3);
+}
+
+.btn-primary-custom:active {
+    transform: translateY(1px);
+}
+
+/* === Register Section === */
+.register-section {
+    margin-top: 2rem;
+}
+
+.register-text {
+    color: rgb(0, 0, 0);
+    font-size: 0.9375rem;
+    margin: 0;
+}
+
+.register-link {
+    font-weight: 600;
+    color: var(--text-light);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 2px;
+    transition: color 0.2s;
+    color : rgb(0, 0, 0);
+}
+
+.register-link:hover {
+    color: var(--primary-color);
+}
+
+.register-link:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(15, 73, 189, 0.7);
+    border-radius: 0.125rem;
+}
+
+/* === Help Button === */
+.help-button {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background-color: #475569;
+    color: var(--text-light);
+    border: none;
+    font-size: 1.25rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s;
+    z-index: 1000;
+}
+
+.help-button:hover {
+    background-color: #334155;
+    transform: scale(1.05);
+}
+
+/* === Dark Mode (opcional, si implementas toggle) === */
+@media (prefers-color-scheme: dark) {
+    .login-card {
+        background-color: rgba(16, 25, 34, 0.95);
+    }
+    
+    .logo-title,
+    .form-label {
+        color: var(--text-light);
+    }
+    
+    .form-control {
+        background-color: var(--input-bg-dark);
+        border-color: var(--border-dark);
+        color: var(--text-light);
+    }
+    
+    .form-control:focus {
+        background-color: var(--bg-dark);
+    }
+    
+    .form-control.is-invalid {
+        background-color: var(--error-bg-dark);
+    }
+}
+
+/* === Responsive === */
+@media (max-width: 640px) {
+    .login-card {
+        padding: 1.5rem;
+    }
+    
+    .logo-title {
+        font-size: 1.75rem;
+    }
+    
+    .help-button {
+        bottom: 1rem;
+        right: 1rem;
+        width: 2.5rem;
+        height: 2.5rem;
+        font-size: 1rem;
+    }
+}
