@@ -1,124 +1,128 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TrainLife - Iniciar Sesión</title>
-    
+
     <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
-    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+
     <!-- Lucide Icons CSS -->
-    <link href="https://unpkg.com/lucide-static@latest/font/lucide.css" rel="stylesheet"/>
-    
+    <link href="https://unpkg.com/lucide-static@latest/font/lucide.css" rel="stylesheet" />
+
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/login.css') }}"/>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles/login.css' %}" />
 </head>
+
 <body>
     <main role="main" aria-label="Página de inicio de sesión">
-    <div class="login-container">
-        <!-- Background Image with Overlay -->
-        <div class="background-image">
-            <div class="background-overlay"></div>
-        </div>
+        <div class="login-container">
+            <!-- Background Image with Overlay -->
+            <div class="background-image">
+                <div class="background-overlay"></div>
+            </div>
 
-        <!-- Back to Home Button -->
-        <a href="/" class="back-button" aria-label="Volver al inicio">
-            <i data-lucide="arrow-left"></i>
-            <span class="back-text">Volver</span>
-        </a>
+            <!-- Back to Home Button -->
+            <a href="/" class="back-button" aria-label="Volver al inicio">
+                <i data-lucide="arrow-left"></i>
+                <span class="back-text">Volver</span>
+            </a>
 
-        <!-- Login Card -->
-        <div class="login-card-container">
-            <div class="login-card">
-                <div class="text-center mb-4">
-                    <!-- Logo -->
-                    <div class="logo-section">
-                        <i data-lucide="train" class="logo-icon"></i>
-                        <h1 class="logo-title">TrainLife</h1>
-                    </div>
-                    <p class="subtitle">Bienvenido de nuevo</p>
-                </div>
-
-                <form id="loginForm" aria-label="Formulario de inicio de sesión" novalidate>
-                    <!-- Email Input -->
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Correo electrónico</label>
-                        <div class="input-icon-wrapper">
-                            <i data-lucide="mail" class="input-icon" aria-hidden="true"></i>
-                            <input 
-                                type="email" 
-                                class="form-control input-with-icon" 
-                                id="email" 
-                                name="email"
-                                placeholder="Introduce tu correo electrónico"
-                                aria-required="true"
-                                aria-invalid="false"
-                                required
-                            />
+            <!-- Login Card -->
+            <div class="login-card-container">
+                <div class="login-card">
+                    <div class="text-center mb-4">
+                        <!-- Logo -->
+                        <div class="logo-section">
+                            <i data-lucide="train" class="logo-icon"></i>
+                            <h1 class="logo-title">TrainLife</h1>
                         </div>
+                        <p class="subtitle">Bienvenido de nuevo</p>
                     </div>
 
-                    <!-- Password Input -->
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Contraseña</label>
-                        <div class="input-icon-wrapper">
-                            <i data-lucide="lock" class="input-icon" aria-hidden="true"></i>
-                            <input 
-                                type="password" 
-                                class="form-control input-with-icon input-with-toggle" 
-                                id="password" 
-                                name="password"
-                                placeholder="Introduce tu contraseña"
-                                aria-required="true"
-                                aria-invalid="false"
-                                required
-                            />
-                            <button 
-                                type="button" 
-                                class="password-toggle" 
-                                id="togglePassword"
-                                aria-label="Mostrar contraseña"
-                            >
-                                <i data-lucide="eye" id="toggleIcon"></i>
+                    <form id="loginForm" method="post" aria-label="Formulario de inicio de sesión" novalidate>
+                        {% csrf_token %}
+                        
+                        <!-- Mensajes de Django -->
+                        {% if messages %}
+                            {% for message in messages %}
+                            <div class="error-message" role="alert" aria-live="assertive" aria-atomic="true" style="display: flex; margin-bottom: 1rem;">
+                                <span class="error-icon">⚠</span>
+                                <span>{{ message }}</span>
+                            </div>
+                            {% endfor %}
+                        {% endif %}
+
+                        <!-- Email Input -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Correo electrónico</label>
+                            <div class="input-icon-wrapper">
+                                <i data-lucide="mail" class="input-icon" aria-hidden="true"></i>
+                                <input type="email" class="form-control input-with-icon" id="email" name="email"
+                                    placeholder="Introduce tu correo electrónico" aria-required="true"
+                                    aria-invalid="false" required />
+                            </div>
+                            <!-- Mensaje de error para email -->
+                            <div class="error-message" id="errorMessageEmail" role="alert" aria-live="assertive"
+                                aria-atomic="true" style="display: none;">
+                                <span class="error-icon">⚠</span>
+                                <span id="errorTextEmail"></span>
+                            </div>
+                        </div>
+
+                        <!-- Password Input -->
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Contraseña</label>
+                            <div class="input-icon-wrapper">
+                                <i data-lucide="lock" class="input-icon" aria-hidden="true"></i>
+                                <input type="password" class="form-control input-with-icon input-with-toggle"
+                                    id="password" name="contrasenia" placeholder="Introduce tu contraseña"
+                                    aria-required="true" aria-invalid="false" required />
+                                <button type="button" class="password-toggle" id="togglePassword"
+                                    aria-label="Mostrar contraseña">
+                                    <i data-lucide="eye" id="toggleIcon"></i>
+                                </button>
+                            </div>
+                            <!-- Mensaje de error para contraseña -->
+                            <div class="error-message" id="errorMessagePassword" role="alert" aria-live="assertive"
+                                aria-atomic="true" style="display: none;">
+                                <span class="error-icon">⚠</span>
+                                <span id="errorTextPassword"></span>
+                            </div>
+                        </div>
+
+                        <!-- Forgot Password Link -->
+                        <div class="text-end mb-3">
+                            <a href="#" class="forgot-password-link">¿Has olvidado tu contraseña?</a>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary-custom">
+                                Iniciar Sesión
                             </button>
                         </div>
-                        
-                        <!-- Error Message -->
-                        <div class="error-message" id="errorMessage" role="alert" aria-live="assertive" aria-atomic="true" style="display: none;">
-                            <span class="error-icon">⚠</span>
-                            <span id="errorText"></span>
-                        </div>
-                    </div>
+                    </form>
+                </div>
 
-                    <!-- Forgot Password Link -->
-                    <div class="text-end mb-3">
-                        <a href="#" class="forgot-password-link">¿Has olvidado tu contraseña?</a>
-                    </div>
-
-                    <!-- Submit Button -->
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-primary-custom">
-                            Iniciar Sesión
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Register Link -->
-            <div class="register-section text-center">
-                <p class="register-text">
-                    ¿No tienes una cuenta? 
-                    <a href="/crearUsuario" class="register-link">
-                        Regístrate
-                    </a>
-                </p>
+                <!-- Register Link -->
+                <div class="register-section text-center">
+                    <p class="register-text">
+                        ¿No tienes una cuenta?
+                        <a href="/crearUsuario" class="register-link">
+                            Regístrate
+                        </a>
+                    </p>
+                </div>
             </div>
         </div>
-    </div>
     </main>
 
     <!-- Help Button -->
@@ -128,11 +132,12 @@
 
     <!-- Bootstrap 5 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    
+
     <!-- Custom JS -->
-    <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+    <script src="{% static 'js/login.js' %}"></script>
 </body>
+
 </html>

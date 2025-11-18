@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+{% load static %}
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -15,7 +16,7 @@
     <link href="https://unpkg.com/lucide-static@latest/font/lucide.css" rel="stylesheet"/>
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/homeUsuario.css') }}"/>
+    <link rel="stylesheet" href="{% static 'styles/homeUsuario.css' %}"/>
 </head>
 <body>
     <div class="dashboard-container">
@@ -30,11 +31,11 @@
 
                 <!-- Navigation Menu -->
                 <nav class="nav-menu" aria-label="Menú principal">
-                    <a href="/home-usuario" class="nav-item active" aria-current="page" aria-label="Inicio (página actual)">
+                    <a href="{% url 'inicio_usuario' usuario.id %}" class="nav-item active" aria-current="page" aria-label="Inicio (página actual)">
                         <i data-lucide="home"></i>
                         <span>Inicio</span>
                     </a>
-                    <a href="/Viajes" class="nav-item" aria-label="Ir a Viajes">
+                    <a href="{% url 'viajes_usuario' usuario.id %}" class="nav-item" aria-label="Ir a Viajes">
                         <i data-lucide="ticket"></i>
                         <span>Viajes</span>
                     </a>
@@ -57,7 +58,7 @@
                 </nav>
 
                 <!-- Logout Button -->
-                <button class="logout-btn" id="logoutBtn" aria-label="Cerrar sesión y salir de la aplicación">
+                <button class="logout-btn" onclick="window.location.href='{% url 'salir' usuario.id %}'" aria-label="Cerrar sesión y salir de la aplicación">
                     <i data-lucide="log-out"></i>
                     <span>Cerrar Sesión</span>
                 </button>
@@ -89,7 +90,7 @@
                     
                     <div class="cards-grid">
                         <!-- Card 1: Planifica tu Viaje -->
-                        <article class="action-card" tabindex="0" data-navigate="/misViajes" role="button" aria-label="Ir a Planifica tu Viaje - Accede a tu sección de Mis Viajes">
+                        <article class="action-card" tabindex="0" onclick="window.location.href='{% url 'viajes_usuario' usuario.id %}'" role="button" aria-label="Ir a Planifica tu Viaje - Accede a tu sección de Mis Viajes">
                             <div class="card-header card-header-blue">
                                 <i data-lucide="train" class="card-icon"></i>
                             </div>
@@ -267,7 +268,7 @@
                             <button class="btn btn-primary-custom" data-navigate="/buscarRutas">
                                 Buscar Rutas
                             </button>
-                            <button class="btn btn-secondary-custom" data-navigate="/misViajes">
+                            <button class="btn btn-secondary-custom" onclick="window.location.href='{% url 'mis_viajes' usuario.id %}'">
                                 Ver Mis Viajes
                             </button>
                             <button class="btn btn-tertiary-custom" data-navigate="/notificaciones">
@@ -287,6 +288,6 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <!-- Custom JS -->
-    <script src="{{ url_for('static', filename='js/homeUsuario.js') }}"></script>
+    <script src="{% static 'js/homeUsuario.js' %}"></script>
 </body>
 </html>

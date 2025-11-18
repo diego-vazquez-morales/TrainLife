@@ -5,9 +5,13 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('login/', views.loginUsuario, name='login'),
+    path('login/', views.login, name='login'),
+    path('loginUsuario/', views.loginUsuario, name='login_usuario'),
     path('inicio/', views.inicioRedirect, name='inicio_redirect'),
     path('inicio/<int:usuario_id>/', views.inicioUsuario, name='inicio_usuario'),
     path('registro/', views.registroUsuario, name='registro_usuario'),
-    
+    path('viajes/<int:usuario_id>/', views.viajesUsuario, name='viajes_usuario'),
+    path('misViajes/<int:usuario_id>/', views.misViajes, name='mis_viajes'),
+    path('salir/<int:usuario_id>/', views.salir, name='salir'),
+    path('viajesDetalles/<int:usuario_id>/<int:viaje_id>/', views.verDetallesViaje, name='detalles_viaje'),
 ]

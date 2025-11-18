@@ -88,19 +88,8 @@ document.addEventListener('DOMContentLoaded', function () {
   }
   
   // === LOGOUT ===
-  
-  const logoutBtn = document.getElementById('logoutBtn');
-  
-  if (logoutBtn) {
-    logoutBtn.addEventListener('click', function() {
-      // Limpiar sesión
-      sessionStorage.clear();
-      localStorage.clear();
-      
-      // Redirigir al login
-      window.location.href = '/login';
-    });
-  }
+  // Nota: El botón de logout ahora maneja la redirección directamente en el HTML
+  // usando onclick con la URL de Django. No se necesita JavaScript adicional.
   
   // === VERIFICAR SESIÓN ===
   
@@ -214,6 +203,7 @@ document.addEventListener('DOMContentLoaded', function () {
   window.addEventListener('unhandledrejection', function(e) {
     console.error('Promise rechazada:', e.reason);
   });
+    
 });
 
 // === FUNCIONES AUXILIARES ===

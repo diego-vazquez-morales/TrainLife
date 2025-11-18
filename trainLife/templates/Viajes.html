@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,8 +10,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/Viajes.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/confirmModal.css') }}">
+    <link rel="stylesheet" href="{% static 'styles/Viajes.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/confirmModal.css' %}">
     
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -33,11 +34,11 @@
 
                 <!-- Navigation -->
                 <nav class="nav-menu">
-                    <a href="/homeUsuario" class="nav-item">
+                    <a href="{% url 'inicio_usuario' usuario.id %}" class="nav-item">
                         <i data-lucide="home"></i>
                         <span>Home</span>
                     </a>
-                    <a href="/Viajes" class="nav-item active" aria-current="page">
+                    <a href="{% url 'viajes_usuario' usuario.id %}" class="nav-item active" aria-current="page">
                         <i data-lucide="ticket"></i>
                         <span>Viajes</span>
                     </a>
@@ -72,7 +73,7 @@
             <div class="content-wrapper">
                 <!-- Breadcrumbs -->
                 <nav class="breadcrumbs" aria-label="breadcrumb">
-                    <a href="/homeUsuario" class="breadcrumb-link">Home</a>
+                    <a href="{% url 'inicio_usuario' usuario.id %}" class="breadcrumb-link">Home</a>
                     <span class="breadcrumb-separator">/</span>
                     <span class="breadcrumb-current">Viajes</span>
                 </nav>
@@ -103,7 +104,7 @@
                             </p>
 
                             <!-- Button -->
-                            <button class="card-btn" onclick="window.location.href='/misViajes'" aria-label="Ver todos mis viajes programados">
+                            <button class="card-btn" onclick="window.location.href='{% url 'mis_viajes' usuario.id %}'" aria-label="Ver todos mis viajes programados">
                                 <span>Ver mis viajes</span>
                                 <i data-lucide="arrow-right"></i>
                             </button>
@@ -147,8 +148,13 @@
                             <span class="stat-badge badge-blue">Próximo</span>
                         </div>
                         <h3 class="stat-title">Próximo Viaje</h3>
-                        <p class="stat-route">Madrid → Barcelona</p>
-                        <p class="stat-date">25 Dic, 2023 - 14:30h</p>
+                        {% if proximo_viaje %}
+                            <p class="stat-route">{{ proximo_viaje.origenEstacion }} → {{ proximo_viaje.destinoEstacion }}</p>
+                            <p class="stat-date">{{ proximo_viaje.fechaViaje|date:"d M, Y" }} - {{ proximo_viaje.horaSalidaOrigen|time:"H:i" }}h</p>
+                        {% else %}
+                            <p class="stat-route">No hay viajes programados</p>
+                            <p class="stat-date">-</p>
+                        {% endif %}
                     </div>
 
                     <!-- Viajes Activos -->
@@ -157,7 +163,7 @@
                             <i data-lucide="ticket"></i>
                         </div>
                         <h3 class="stat-title">Viajes Activos</h3>
-                        <div class="stat-number">3</div>
+                        <div class="stat-number">{{ num_viajes }}</div>
                         <p class="stat-date">Billetes confirmados</p>
                     </div>
 
@@ -196,7 +202,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <!-- Custom JavaScript -->
-    <script src="{{ url_for('static', filename='js/confirmModal.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/Viajes.js') }}"></script>
+    <script src="{% static 'js/confirmModal.js' %}"></script>
+    <script src="{% static 'js/Viajes.js' %}"></script>
 </body>
 </html>

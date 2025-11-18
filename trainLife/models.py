@@ -44,6 +44,8 @@ class Viaje(models.Model):
     # Fecha de creación
     fechaCreacion = models.DateTimeField(auto_now_add=True)
 
+    estadoViaje = models.CharField(max_length=50, default="confirmado")  # Ej: "Programado", "Completado", "Cancelado"
+
     class Meta:
         ordering = ['-fechaViaje', '-horaSalidaOrigen']
         verbose_name = 'Viaje'
@@ -53,3 +55,85 @@ class Viaje(models.Model):
         return f"{self.origenEstacion} → {self.destinoEstacion} - {self.fechaViaje} ({self.nombrePasajero})"
     
 
+class Ruta(models.Model):
+    # Relación con usuario (opcional - puede ser null para rutas públicas)
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='rutas', null=True, blank=True)
+    
+    # Información de la ruta
+    nombre = models.CharField(max_length=200)  # Nombre descriptivo de la ruta
+    descripcion = models.TextField(blank=True, null=True)  # Descripción opcional
+    
+    # Tipo de ruta
+    esPublica = models.BooleanField(default=True)  # Rutas públicas disponibles para todos
+    
+    # Fechas
+    fechaCreacion = models.DateTimeField(auto_now_add=True)
+    fechaActualizacion = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        ordering = ['-fechaCreacion']
+        verbose_name = 'Ruta'
+        verbose_name_plural = 'Rutas'
+    
+    def __str__(self):
+        if self.usuario:
+            return f"{self.nombre} ({self.usuario.nombreUsuario})"
+        return f"{self.nombre} (Pública)"
+
+
+class RutaFavorita(models.Model):
+    # Relación muchos a muchos entre Usuario y Ruta
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='rutas_favoritas')
+    ruta = models.ForeignKey(Ruta, on_delete=models.CASCADE, related_name='favoritos')
+    
+    # Fecha cuando se agregó a favoritos
+    fechaAgregado = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        unique_together = ['usuario', 'ruta']  # Un usuario no puede agregar la misma ruta dos veces
+        verbose_name = 'Ruta Favorita'
+        verbose_name_plural = 'Rutas Favoritas'
+        ordering = ['-fechaAgregado']
+    
+    def __str__(self):
+        return f"{self.usuario.nombreUsuario} - {self.ruta.nombre}"
+
+
+class Trayecto(models.Model):
+    # Relación con ruta
+    ruta = models.ForeignKey(Ruta, on_delete=models.CASCADE, related_name='trayectos')
+    
+    # Información del trayecto
+    orden = models.PositiveIntegerField(default=1)  # Orden del trayecto en la ruta
+    
+    # Estaciones
+    estacionSalida = models.CharField(max_length=200)  # Ej: "Estación Central"
+    andenSalida = models.CharField(max_length=10, blank=True, null=True)  # Ej: "3B"
+    
+    estacionLlegada = models.CharField(max_length=200)  # Ej: "Estación Intermedia"
+    andenLlegada = models.CharField(max_length=10, blank=True, null=True)  # Ej: "1A"
+    
+    # Horarios
+    horaSalida = models.TimeField()  # Hora de salida
+    horaLlegada = models.TimeField()  # Hora de llegada
+    
+    # Línea de transporte
+    nombreLinea = models.CharField(max_length=100)  # Ej: "Línea 1 (Roja)"
+    colorLinea = models.CharField(max_length=50, blank=True, null=True)  # Ej: "Roja", "Azul"
+    
+    # Imagen del mapa del trayecto
+    imagenMapa = models.ImageField(upload_to='trayectos/mapas/', blank=True, null=True)
+    
+    # Número de transbordos antes de este trayecto
+    numeroTransbordos = models.PositiveIntegerField(default=0)
+    
+    # Fechas
+    fechaCreacion = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        ordering = ['ruta', 'orden']
+        verbose_name = 'Trayecto'
+        verbose_name_plural = 'Trayectos'
+    
+    def __str__(self):
+        return f"{self.estacionSalida} → {self.estacionLlegada} ({self.nombreLinea})"

@@ -3,12 +3,6 @@
    Incluye validación de formulario, toggle de contraseña y navegación
 */
 
-// Usuarios simulados para pruebas (en producción esto vendría del backend)
-const MOCK_USERS = [
-  { email: 'usuario@trainlife.com', password: 'password123' },
-  { email: 'test@test.com', password: 'test123' }
-];
-
 // Estado del formulario
 let showPassword = false;
 let hasError = false;
@@ -28,8 +22,12 @@ document.addEventListener('DOMContentLoaded', function () {
   const passwordInput = document.getElementById('password');
   const togglePasswordBtn = document.getElementById('togglePassword');
   const toggleIcon = document.getElementById('toggleIcon');
-  const errorMessage = document.getElementById('errorMessage');
-  const errorText = document.getElementById('errorText');
+  const errorMessageEmail = document.getElementById('errorMessageEmail');
+  const errorTextEmail = document.getElementById('errorTextEmail');
+  const errorMessagePassword = document.getElementById('errorMessagePassword');
+  const errorTextPassword = document.getElementById('errorTextPassword');
+
+
   
   // === Toggle Password Visibility ===
   if (togglePasswordBtn && passwordInput && toggleIcon) {
@@ -55,74 +53,60 @@ document.addEventListener('DOMContentLoaded', function () {
   // === Limpiar errores al escribir ===
   if (emailInput) {
     emailInput.addEventListener('input', function () {
-      if (hasError) {
-        clearError();
-      }
+      clearEmailError();
     });
   }
   
   if (passwordInput) {
     passwordInput.addEventListener('input', function () {
-      if (hasError) {
-        clearError();
-      }
+      clearPasswordError();
     });
   }
   
   // === Manejo del submit del formulario ===
   if (form) {
     form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      
       // Limpiar errores previos
-      clearError();
+      clearAllErrors();
       
       // Obtener valores
       const email = emailInput ? emailInput.value.trim() : '';
       const password = passwordInput ? passwordInput.value.trim() : '';
       
-      // Validaciones
+      let hasValidationError = false;
+      
+      // Validación de email
       if (!email) {
-        showError('El correo electrónico es requerido');
-        emailInput.focus();
-        return;
+        e.preventDefault();
+        showEmailError('El correo electrónico es requerido');
+        hasValidationError = true;
+        if (!hasValidationError) emailInput.focus();
+      } else if (!isValidEmail(email)) {
+        e.preventDefault();
+        showEmailError('Por favor, introduce un correo electrónico válido');
+        hasValidationError = true;
+        if (!password) emailInput.focus();
       }
       
-      if (!isValidEmail(email)) {
-        showError('Por favor, introduce un correo electrónico válido');
-        emailInput.focus();
-        return;
-      }
-      
+      // Validación de contraseña
       if (!password) {
-        showError('La contraseña es requerida');
-        passwordInput.focus();
+        e.preventDefault();
+        showPasswordError('La contraseña es requerida');
+        hasValidationError = true;
+        if (!email || isValidEmail(email)) passwordInput.focus();
+      } else if (password.length < 6) {
+        e.preventDefault();
+        showPasswordError('La contraseña debe tener al menos 6 caracteres');
+        hasValidationError = true;
+      }
+      
+      // Si hay errores, detener el envío
+      if (hasValidationError) {
         return;
       }
       
-      if (password.length < 6) {
-        showError('La contraseña debe tener al menos 6 caracteres');
-        passwordInput.focus();
-        return;
-      }
-      
-      // Intentar login
-      const success = attemptLogin(email, password);
-      
-      if (success) {
-        // Login exitoso - redirigir a home
-        console.log('Login exitoso');
-        
-        // Guardar datos de sesión (en producción usar tokens seguros)
-        sessionStorage.setItem('userEmail', email);
-        sessionStorage.setItem('isLoggedIn', 'true');
-        
-        // Redirigir a home
-        window.location.href = '/home';
-      } else {
-        // Login fallido
-        showError('Usuario o contraseña incorrectos');
-      }
+      // Si todo está bien, el formulario se enviará a Django
+      console.log('Enviando formulario al servidor...');
     });
   }
   
@@ -137,34 +121,30 @@ document.addEventListener('DOMContentLoaded', function () {
   }
   
   /**
-   * Intenta hacer login con las credenciales
-   * En producción, esto haría una llamada al backend
+   * Muestra mensaje de error para el campo de email
    */
-  function attemptLogin(email, password) {
-    // Simulación de login - en producción hacer POST al backend
-    const user = MOCK_USERS.find(u => u.email === email && u.password === password);
-    return !!user;
-  }
-  
-  /**
-   * Muestra mensaje de error
-   */
-  function showError(message) {
-    hasError = true;
-    
-    // Mostrar mensaje de error
-    if (errorMessage && errorText) {
-      errorText.textContent = message;
-      errorMessage.style.display = 'flex';
+  function showEmailError(message) {
+    if (errorMessageEmail && errorTextEmail) {
+      errorTextEmail.textContent = message;
+      errorMessageEmail.style.display = 'flex';
     }
     
-    // Añadir clase de error a los inputs
     if (emailInput) {
       emailInput.classList.add('is-invalid');
       const emailWrapper = emailInput.closest('.input-icon-wrapper');
       if (emailWrapper) {
         emailWrapper.classList.add('is-invalid');
       }
+    }
+  }
+  
+  /**
+   * Muestra mensaje de error para el campo de contraseña
+   */
+  function showPasswordError(message) {
+    if (errorMessagePassword && errorTextPassword) {
+      errorTextPassword.textContent = message;
+      errorMessagePassword.style.display = 'flex';
     }
     
     if (passwordInput) {
@@ -177,27 +157,36 @@ document.addEventListener('DOMContentLoaded', function () {
   }
   
   /**
-   * Limpia los mensajes de error
+   * Limpia el mensaje de error del email
    */
-  function clearError() {
-    hasError = false;
-    
-    // Ocultar mensaje de error
-    if (errorMessage) {
-      errorMessage.style.display = 'none';
+  function clearEmailError() {
+    if (errorMessageEmail) {
+      errorMessageEmail.style.display = 'none';
     }
     
-    if (errorText) {
-      errorText.textContent = '';
+    if (errorTextEmail) {
+      errorTextEmail.textContent = '';
     }
     
-    // Quitar clase de error de los inputs
     if (emailInput) {
       emailInput.classList.remove('is-invalid');
       const emailWrapper = emailInput.closest('.input-icon-wrapper');
       if (emailWrapper) {
         emailWrapper.classList.remove('is-invalid');
       }
+    }
+  }
+  
+  /**
+   * Limpia el mensaje de error de la contraseña
+   */
+  function clearPasswordError() {
+    if (errorMessagePassword) {
+      errorMessagePassword.style.display = 'none';
+    }
+    
+    if (errorTextPassword) {
+      errorTextPassword.textContent = '';
     }
     
     if (passwordInput) {
@@ -208,14 +197,12 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
   }
-});
-
-// Verificar si el usuario ya está logueado al cargar la página
-window.addEventListener('load', function() {
-  const isLoggedIn = sessionStorage.getItem('isLoggedIn');
-  if (isLoggedIn === 'true') {
-    // Si ya está logueado, redirigir a home
-    // Comentado para permitir pruebas, descomentar en producción si se desea
-    // window.location.href = '/home';
+  
+  /**
+   * Limpia todos los mensajes de error
+   */
+  function clearAllErrors() {
+    clearEmailError();
+    clearPasswordError();
   }
 });

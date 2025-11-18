@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+    {% load static %}
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -15,7 +16,7 @@
     <link href="https://unpkg.com/lucide-static@latest/font/lucide.css" rel="stylesheet"/>
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/ViajesDetalles.css') }}"/>
+    <link rel="stylesheet" href="{% static 'styles/ViajesDetalles.css' %}"/>
 </head>
 <body>
     <div class="page-container">
@@ -35,23 +36,33 @@
                 
                 <!-- Breadcrumbs -->
                 <nav class="breadcrumbs" aria-label="Breadcrumb">
-                    <a href="/homeUsuario" class="breadcrumb-link">Home</a>
+                    <a href="{% url 'inicio_usuario' usuario.id %}" class="breadcrumb-link">Home</a>
                     <span class="breadcrumb-separator">/</span>
-                    <a href="/Viajes" class="breadcrumb-link">Viajes</a>
+                    <a href="{% url 'viajes_usuario' usuario.id %}" class="breadcrumb-link">Viajes</a>
                     <span class="breadcrumb-separator">/</span>
-                    <a href="/misViajes" class="breadcrumb-link">Mis Viajes</a>
+                    <a href="{% url 'mis_viajes' usuario.id %}" class="breadcrumb-link">Mis Viajes</a>
                     <span class="breadcrumb-separator">/</span>
-                    <span class="breadcrumb-current" id="breadcrumbRuta">Madrid - Barcelona</span>
+                    <span class="breadcrumb-current">{{ viaje.origenEstacion }} - {{ viaje.destinoEstacion }}</span>
                 </nav>
 
                 <!-- Alert Warning -->
-                <div class="alert-box" id="alertBox" style="display: none;" role="alert" aria-live="assertive">
+                {% if viaje.estadoViaje == 'retrasado' or viaje.estadoViaje == 'cancelado' %}
+                <div class="alert-box" role="alert" aria-live="assertive">
                     <i data-lucide="alert-triangle" class="alert-icon" aria-hidden="true"></i>
                     <div class="alert-content">
-                        <p class="alert-title" id="alertTitle">Alerta</p>
-                        <p class="alert-message" id="alertMessage">Información del viaje</p>
+                        <p class="alert-title">
+                            {% if viaje.estadoViaje == 'retrasado' %}Viaje Retrasado{% else %}Viaje Cancelado{% endif %}
+                        </p>
+                        <p class="alert-message">
+                            {% if viaje.estadoViaje == 'retrasado' %}
+                                Este viaje está experimentando retrasos. Por favor, consulta las alternativas disponibles.
+                            {% else %}
+                                Este viaje ha sido cancelado. Por favor, consulta las alternativas disponibles.
+                            {% endif %}
+                        </p>
                     </div>
                 </div>
+                {% endif %}
 
                 <!-- Ticket Card -->
                 <div class="ticket-card" role="article" aria-label="Información del billete de tren">
@@ -59,12 +70,14 @@
                     <div class="ticket-header">
                         <div class="ticket-header-content">
                             <div class="ticket-left">
-                                <p class="ticket-date" id="ticketDate">Fecha</p>
-                                <h2 class="ticket-route" id="ticketRoute">Ruta</h2>
+                                <p class="ticket-date">{{ viaje.fechaViaje|date:"d/m/Y" }}</p>
+                                <h2 class="ticket-route">{{ viaje.origenEstacion }} → {{ viaje.destinoEstacion }}</h2>
                             </div>
                             <div class="ticket-right">
-                                <p class="ticket-train" id="ticketTrain">Tren</p>
-                                <span class="status-badge" id="statusBadge">Estado</span>
+                                <p class="ticket-train">Coche {{ viaje.coche }}</p>
+                                <span class="status-badge status-{{ viaje.estadoViaje|lower }}">
+                                    {{ viaje.estadoViaje|capfirst }}
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -79,13 +92,13 @@
                                     <!-- Platform Box -->
                                     <div class="detail-box detail-box-platform">
                                         <div class="detail-label">Andén</div>
-                                        <div class="detail-value-large" id="platform">--</div>
+                                        <div class="detail-value-large">{{ viaje.andenOrigen }}</div>
                                     </div>
                                     
                                     <!-- Departure Box -->
                                     <div class="detail-box">
                                         <div class="detail-label">Salida</div>
-                                        <div class="detail-value-medium" id="departure">--:--</div>
+                                        <div class="detail-value-medium">{{ viaje.horaSalidaOrigen|time:"H:i" }}</div>
                                     </div>
                                 </div>
 
@@ -93,19 +106,19 @@
                                 <div class="passenger-info-grid">
                                     <div class="info-item">
                                         <p class="info-label">Embarque</p>
-                                        <p class="info-value" id="boarding">--:--</p>
+                                        <p class="info-value">{{ viaje.horaSalidaOrigen|time:"H:i" }}</p>
                                     </div>
                                     <div class="info-item">
                                         <p class="info-label">Coche / Asiento</p>
-                                        <p class="info-value" id="seatInfo">-- / --</p>
+                                        <p class="info-value">{{ viaje.coche }} / {{ viaje.asiento }}</p>
                                     </div>
                                     <div class="info-item">
                                         <p class="info-label">Clase</p>
-                                        <p class="info-value" id="class">--</p>
+                                        <p class="info-value">{{ viaje.clase }}</p>
                                     </div>
                                     <div class="info-item">
                                         <p class="info-label">Pasajero</p>
-                                        <p class="info-value" id="passenger">--</p>
+                                        <p class="info-value">{{ viaje.nombrePasajero }}</p>
                                     </div>
                                 </div>
 
@@ -113,10 +126,10 @@
                                 <div class="notifications-toggle">
                                     <label for="notificationsToggle" class="toggle-label-wrapper">
                                         <i data-lucide="bell" class="toggle-icon" aria-hidden="true"></i>
-                                        <span class="toggle-label" id="toggleLabel">Notificaciones del viaje</span>
+                                        <span class="toggle-label">Notificaciones del viaje</span>
                                     </label>
                                     <div class="toggle-switch">
-                                        <input type="checkbox" id="notificationsToggle" checked role="switch" aria-checked="true" aria-labelledby="toggleLabel"/>
+                                        <input type="checkbox" id="notificationsToggle" {% if viaje.notificacionesActivas %}checked{% endif %} role="switch" aria-checked="{% if viaje.notificacionesActivas %}true{% else %}false{% endif %}" aria-labelledby="toggleLabel"/>
                                         <span class="toggle-slider"></span>
                                     </div>
                                 </div>
@@ -124,9 +137,31 @@
 
                             <!-- Right Column - Itinerary -->
                             <div class="itinerary-col">
-                                <h3 class="itinerary-title" id="itineraryTitle">Itinerario del Viaje</h3>
-                                <ul class="itinerary-list" id="itineraryList" role="list" aria-labelledby="itineraryTitle">
-                                    <!-- Items will be added by JavaScript -->
+                                <h3 class="itinerary-title">Itinerario del Viaje</h3>
+                                <ul class="itinerary-list" role="list">
+                                    <li class="itinerary-item" role="listitem">
+                                        <div class="itinerary-icon-wrapper">
+                                            <div class="itinerary-icon itinerary-icon-start">
+                                                <i data-lucide="map-pin" aria-hidden="true"></i>
+                                            </div>
+                                            <div class="itinerary-line"></div>
+                                        </div>
+                                        <div class="itinerary-content">
+                                            <p class="itinerary-station">{{ viaje.origenEstacion }}</p>
+                                            <p class="itinerary-time">{{ viaje.horaSalidaOrigen|time:"H:i" }} - Salida</p>
+                                        </div>
+                                    </li>
+                                    <li class="itinerary-item" role="listitem">
+                                        <div class="itinerary-icon-wrapper">
+                                            <div class="itinerary-icon itinerary-icon-end">
+                                                <i data-lucide="flag" aria-hidden="true"></i>
+                                            </div>
+                                        </div>
+                                        <div class="itinerary-content">
+                                            <p class="itinerary-station">{{ viaje.destinoEstacion }}</p>
+                                            <p class="itinerary-time">{{ viaje.horaLlegadaDestino|time:"H:i" }} - Llegada</p>
+                                        </div>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -143,6 +178,13 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <!-- Custom JS -->
-    <script src="{{ url_for('static', filename='js/ViajesDetalles.js') }}"></script>
+    <script src="{% static 'js/ViajesDetalles.js' %}"></script>
+    
+    <script>
+        // Inicializar iconos de Lucide
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    </script>
 </body>
 </html>
