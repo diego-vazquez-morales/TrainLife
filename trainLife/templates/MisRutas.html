@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+{% load static %}
 
 <head>
     <meta charset="utf-8" />
@@ -8,9 +9,9 @@
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/MisRutas.css') }}">
+    <link rel="stylesheet" href="{% static 'styles/MisRutas.css' %}">
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script defer src="{{ url_for('static', filename='js/misRutas.js') }}"></script>
+    <script defer src="{% static 'js/misRutas.js' %}"></script>
 </head>
 
 <body>
@@ -27,19 +28,21 @@
                     <h1 class="logo-text">TrainLife</h1>
                 </div>
                 <nav class="nav-menu" aria-label="Menú de navegación">
-                    <a class="nav-item" href="/homeUsuario" aria-label="Ir a inicio">
+                    <a class="nav-item" href="{% url 'inicio_usuario' usuario.id %}" aria-label="Ir a inicio">
                         <i data-lucide="home"></i>
                         <span>Home</span>
                     </a>
-                    <a class="nav-item" href="/Viajes" aria-label="Ir a viajes">
+                    <a class="nav-item" href="{% url 'viajes_usuario' usuario.id %}" aria-label="Ir a viajes">
                         <i data-lucide="ticket"></i>
                         <span>Viajes</span>
                     </a>
-                    <a class="nav-item active" href="/MisRutas" aria-current="page" aria-label="Mis rutas (página actual)">
+                    <a class="nav-item active" href="{% url 'mis_rutas' usuario.id %}" aria-current="page"
+                        aria-label="Mis rutas (página actual)">
                         <i data-lucide="map-pin"></i>
                         <span>Mis Rutas</span>
                     </a>
-                    <a class="nav-item" href="/buscarRutas" aria-label="Buscar rutas disponibles">
+                    <a class="nav-item" href="{% url 'buscar_rutas' usuario.id %}"
+                        aria-label="Buscar rutas disponibles">
                         <i data-lucide="search"></i>
                         <span>Buscar Rutas</span>
                     </a>
@@ -54,164 +57,119 @@
                 </nav>
 
                 <!-- Logout Button -->
-                <button class="logout-btn" onclick="window.location.href='/salir'" aria-label="Cerrar sesión">
+                <button class="logout-btn" onclick="window.location.href='{% url 'salir' usuario.id %}'"
+                    aria-label="Cerrar sesión">
                     <i data-lucide="log-out"></i>
                     <span>Cerrar Sesión</span>
                 </button>
             </div>
         </aside>
-        
+
         <main class="main-content" role="main" aria-label="Contenido principal">
             <div class="content-wrapper">
                 <nav class="breadcrumb" aria-label="Breadcrumb">
-                    <a href="#" class="breadcrumb-item" aria-label="Volver a inicio">Home</a>
+                    <a href="{% url 'inicio_usuario' usuario.id %}" class="breadcrumb-item"
+                        aria-label="Volver a inicio">Home</a>
                     <span class="breadcrumb-separator">/</span>
                     <span class="breadcrumb-item breadcrumb-current">Mis Rutas</span>
                 </nav>
-                
+
                 <h1 class="page-title">Mis Rutas Guardadas</h1>
-                
+
                 <div class="routes-container" role="list" aria-label="Lista de rutas guardadas">
-                    <!-- Ruta 1: Casa al Trabajo (Expandida) -->
-                    <div class="route-card route-card-expanded" role="listitem" aria-labelledby="route-1-title">
+                    {% if rutas %}
+                    {% for ruta in rutas %}
+                    <div class="route-card" role="listitem" aria-labelledby="route-{{ ruta.id }}-title">
                         <div class="route-header">
                             <div class="route-info">
-                                <h2 class="route-title" id="route-1-title">Casa al Trabajo</h2>
-                                <p class="route-subtitle">Estación Central a Distrito Financiero</p>
+                                <h2 class="route-title" id="route-{{ ruta.id }}-title">{{ ruta.nombre }}</h2>
+                                {% if ruta.descripcion %}
+                                <p class="route-subtitle">{{ ruta.descripcion }}</p>
+                                {% endif %}
                                 <div class="route-actions">
-                                    <button class="btn btn-primary" id="verDetalles" aria-expanded="true" aria-controls="route-1-details" aria-label="Ver detalles de la ruta Casa al Trabajo">
+                                    <button class="btn btn-primary expand-route" data-route-id="{{ ruta.id }}"
+                                        aria-expanded="false" aria-controls="route-{{ ruta.id }}-details"
+                                        aria-label="Ver detalles de la ruta {{ ruta.nombre }}">
                                         <span>Ver Detalles</span>
                                     </button>
-                                    <button class="btn btn-delete" aria-label="Eliminar ruta Casa al Trabajo de favoritos">
+                                    <button class="btn btn-delete"
+                                        onclick="if(confirm('¿Eliminar {{ ruta.nombre }} de favoritos?')) window.location.href='#'"
+                                        aria-label="Eliminar ruta {{ ruta.nombre }} de favoritos">
                                         <span class="material-symbols-outlined" aria-hidden="true">delete</span>
                                         <span>Eliminar de favoritos</span>
                                     </button>
                                 </div>
                             </div>
-                            <div class="route-map route-map-main" role="img" aria-label="Mapa de la ruta desde Estación Central a Distrito Financiero"></div>
+                            <div class="route-map route-map-main" role="img"
+                                aria-label="Mapa de la ruta {{ ruta.nombre }}"></div>
                         </div>
-                        
-                        <div class="route-details" id="route-1-details" role="region" aria-label="Detalles de la ruta Casa al Trabajo">
-                            <div class="transfers-badge" role="note" aria-label="Número de transbordos">
-                                <span class="transfers-label">Transbordos:</span>
-                                <span class="transfers-count" aria-label="2 transbordos">2</span>
+
+                        <div class="route-details" id="route-{{ ruta.id }}-details" style="display: none;" role="region"
+                            aria-label="Detalles de la ruta {{ ruta.nombre }}">
+                            <div class="transfers-badge" role="note" aria-label="Número de trayectos">
+                                <span class="transfers-label">Trayectos:</span>
+                                <span class="transfers-count" aria-label="{{ ruta.trayectos.count }} trayectos">{{
+                                    ruta.trayectos.count }}</span>
                             </div>
-                            
-                            <!-- Línea 1 -->
-                            <div class="line-section" role="region" aria-labelledby="line-1-title">
-                                <h3 class="line-title" id="line-1-title">Línea 1 (Roja)</h3>
+
+                            {% for trayecto in ruta.trayectos.all %}
+                            <div class="line-section" role="region" aria-labelledby="line-{{ trayecto.id }}-title">
+                                <h3 class="line-title" id="line-{{ trayecto.id }}-title">{{ trayecto.nombreLinea }}</h3>
                                 <div class="line-content">
                                     <div class="line-info-grid">
                                         <div class="info-item">
                                             <span class="info-label">Estación de Salida</span>
-                                            <span class="info-value">Estación Central</span>
+                                            <span class="info-value">{{ trayecto.estacionSalida }}</span>
                                         </div>
                                         <div class="info-item">
                                             <span class="info-label">Andén de Salida</span>
-                                            <span class="info-value">3B</span>
+                                            <span class="info-value">{{ trayecto.andenSalida }}</span>
                                         </div>
                                         <div class="info-item">
                                             <span class="info-label">Estación de Llegada</span>
-                                            <span class="info-value">Estación Intermedia</span>
+                                            <span class="info-value">{{ trayecto.estacionLlegada }}</span>
                                         </div>
                                         <div class="info-item">
                                             <span class="info-label">Andén de Llegada</span>
-                                            <span class="info-value">1A</span>
+                                            <span class="info-value">{{ trayecto.andenLlegada }}</span>
                                         </div>
                                         <div class="info-item">
                                             <span class="info-label">Hora de Salida</span>
-                                            <span class="info-value">08:00 AM</span>
+                                            <span class="info-value">{{ trayecto.horaSalida|time:"H:i" }}</span>
                                         </div>
                                         <div class="info-item">
                                             <span class="info-label">Hora de Llegada</span>
-                                            <span class="info-value">08:25 AM</span>
+                                            <span class="info-value">{{ trayecto.horaLlegada|time:"H:i" }}</span>
                                         </div>
                                     </div>
+                                    {% if trayecto.imagenMapa %}
                                     <div class="line-image-container">
                                         <span class="image-label">Imagen del Trayecto de la Línea</span>
-                                        <div class="line-route-image line-route-image-1" role="img" aria-label="Mapa del trayecto de la Línea 1 (Roja) desde Estación Central a Estación Intermedia"></div>
+                                        <img src="{{ trayecto.imagenMapa.url }}"
+                                            alt="Mapa del trayecto de {{ trayecto.nombreLinea }}"
+                                            class="line-route-image">
                                     </div>
+                                    {% endif %}
                                 </div>
                             </div>
-                            
-                            <!-- Línea 2 -->
-                            <div class="line-section" role="region" aria-labelledby="line-2-title">
-                                <h3 class="line-title" id="line-2-title">Línea 2 (Azul)</h3>
-                                <div class="line-content">
-                                    <div class="line-info-grid">
-                                        <div class="info-item">
-                                            <span class="info-label">Estación de Salida</span>
-                                            <span class="info-value">Estación Intermedia</span>
-                                        </div>
-                                        <div class="info-item">
-                                            <span class="info-label">Andén de Salida</span>
-                                            <span class="info-value">5C</span>
-                                        </div>
-                                        <div class="info-item">
-                                            <span class="info-label">Estación de Llegada</span>
-                                            <span class="info-value">Distrito Financiero</span>
-                                        </div>
-                                        <div class="info-item">
-                                            <span class="info-label">Andén de Llegada</span>
-                                            <span class="info-value">2D</span>
-                                        </div>
-                                        <div class="info-item">
-                                            <span class="info-label">Hora de Salida</span>
-                                            <span class="info-value">08:35 AM</span>
-                                        </div>
-                                        <div class="info-item">
-                                            <span class="info-label">Hora de Llegada</span>
-                                            <span class="info-value">08:50 AM</span>
-                                        </div>
-                                    </div>
-                                    <div class="line-image-container">
-                                        <span class="image-label">Imagen del Trayecto de la Línea</span>
-                                        <div class="line-route-image line-route-image-2" role="img" aria-label="Mapa del trayecto de la Línea 2 (Azul) desde Estación Intermedia a Distrito Financiero"></div>
-                                    </div>
-                                </div>
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
-                    
-                    <!-- Ruta 2: Oficina a Ciudad Playa -->
-                    <div class="route-card" role="listitem" aria-labelledby="route-2-title">
-                        <div class="route-header">
-                            <div class="route-info">
-                                <h2 class="route-title" id="route-2-title">Oficina a Ciudad Playa</h2>
-                                <p class="route-subtitle">Distrito Financiero a Costa del Sol</p>
-                                <div class="route-actions">
-                                    <button class="btn btn-primary" aria-expanded="false" aria-label="Ver detalles de la ruta Oficina a Ciudad Playa">
-                                        <span>Ver Detalles</span>
-                                    </button>
-                                    <button class="btn btn-delete" aria-label="Eliminar ruta Oficina a Ciudad Playa de favoritos">
-                                        <span class="material-symbols-outlined" aria-hidden="true">delete</span>
-                                        <span>Eliminar de favoritos</span>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="route-map route-map-beach" role="img" aria-label="Mapa de la ruta desde Distrito Financiero a Costa del Sol"></div>
-                        </div>
+                    {% endfor %}
+                    {% else %}
+                    <div class="empty-state" style="text-align: center; padding: 3rem;">
+                        <i data-lucide="map-pin"
+                            style="width: 64px; height: 64px; margin: 0 auto 1rem; color: #9ca3af;"></i>
+                        <p style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">No tienes rutas
+                            guardadas</p>
+                        <p style="color: #6b7280; margin-bottom: 1.5rem;">Explora y guarda tus rutas favoritas desde la
+                            sección de Buscar Rutas</p>
+                        <button class="btn btn-primary"
+                            onclick="window.location.href='{% url 'buscar_rutas' usuario.id %}'">
+                            Buscar Rutas
+                        </button>
                     </div>
-                    
-                    <!-- Ruta 3: Viaje Familiar a Montaña -->
-                    <div class="route-card" role="listitem" aria-labelledby="route-3-title">
-                        <div class="route-header">
-                            <div class="route-info">
-                                <h2 class="route-title" id="route-3-title">Viaje Familiar a Montaña</h2>
-                                <p class="route-subtitle">Estación Central a Villa Serrana</p>
-                                <div class="route-actions">
-                                    <button class="btn btn-primary" aria-expanded="false" aria-label="Ver detalles de la ruta Viaje Familiar a Montaña">
-                                        <span>Ver Detalles</span>
-                                    </button>
-                                    <button class="btn btn-delete" aria-label="Eliminar ruta Viaje Familiar a Montaña de favoritos">
-                                        <span class="material-symbols-outlined" aria-hidden="true">delete</span>
-                                        <span>Eliminar de favoritos</span>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="route-map route-map-mountain" role="img" aria-label="Mapa de la ruta desde Estación Central a Villa Serrana"></div>
-                        </div>
-                    </div>
+                    {% endif %}
                 </div>
             </div>
         </main>

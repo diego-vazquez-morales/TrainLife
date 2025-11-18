@@ -39,11 +39,11 @@
                         <i data-lucide="ticket"></i>
                         <span>Viajes</span>
                     </a>
-                    <a href="" class="nav-item">
+                    <a href="{% url 'mis_rutas' usuario.id %}" class="nav-item">
                         <i data-lucide="map-pin"></i>
                         <span>Mis Rutas</span>
                     </a>
-                    <a href="" class="nav-item">
+                    <a href="{% url 'buscar_rutas' usuario.id %}" class="nav-item">
                         <i data-lucide="search"></i>
                         <span>Buscar Rutas</span>
                     </a>
@@ -58,7 +58,7 @@
                 </nav>
 
                 <!-- Logout Button -->
-                <button class="logout-btn" id="logoutBtn" aria-label="Cerrar sesión">
+                <button class="logout-btn" onclick="window.location.href='{% url 'salir' usuario.id %}'" aria-label="Cerrar sesión">
                     <i data-lucide="log-out"></i>
                     <span>Cerrar Sesión</span>
                 </button>

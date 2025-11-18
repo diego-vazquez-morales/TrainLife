@@ -14,4 +14,7 @@ urlpatterns = [
     path('misViajes/<int:usuario_id>/', views.misViajes, name='mis_viajes'),
     path('salir/<int:usuario_id>/', views.salir, name='salir'),
     path('viajesDetalles/<int:usuario_id>/<int:viaje_id>/', views.verDetallesViaje, name='detalles_viaje'),
+    path('buscarRutas/<int:usuario_id>/', views.buscarRutas, name='buscar_rutas'),
+    path('misRutas/<int:usuario_id>/', views.misRutas, name='mis_rutas'),
+    path('agregarRutaFavorito/<int:usuario_id>/<int:ruta_id>/', views.agregarRutaFavorito, name='agregar_ruta_favorito'),
 ]

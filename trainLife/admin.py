@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Usuario, Viaje, Ruta, RutaFavorita, Trayecto
+from .models import Usuario, Viaje, Ruta, Trayecto
 
 
 @admin.register(Usuario)
@@ -17,37 +17,25 @@ class ViajeAdmin(admin.ModelAdmin):
 class TrayectoInline(admin.TabularInline):
 	model = Trayecto
 	extra = 1
-	fields = ('orden', 'estacionSalida', 'andenSalida', 'estacionLlegada', 'andenLlegada', 'horaSalida', 'horaLlegada', 'nombreLinea', 'colorLinea', 'imagenMapa', 'numeroTransbordos')
+	fields = ('orden', 'estacionSalida', 'andenSalida', 'estacionLlegada', 'andenLlegada', 'horaSalida', 'horaLlegada', 'nombreLinea', 'colorLinea', 'imagenMapa')
 	ordering = ['orden']
 
 
 @admin.register(Ruta)
 class RutaAdmin(admin.ModelAdmin):
-	list_display = ('nombre', 'usuario', 'esPublica', 'fechaCreacion', 'numero_trayectos', 'numero_favoritos')
-	list_filter = ('esPublica', 'fechaCreacion', 'usuario')
+	list_display = ('nombre', 'usuario', 'fechaCreacion', 'numero_trayectos')
+	list_filter = ('fechaCreacion', 'usuario')
 	search_fields = ('nombre', 'descripcion', 'usuario__nombreUsuario')
 	inlines = [TrayectoInline]
 	
 	def numero_trayectos(self, obj):
 		return obj.trayectos.count()
 	numero_trayectos.short_description = 'Nº Trayectos'
-	
-	def numero_favoritos(self, obj):
-		return obj.favoritos.count()
-	numero_favoritos.short_description = 'Nº Favoritos'
-
-
-@admin.register(RutaFavorita)
-class RutaFavoritaAdmin(admin.ModelAdmin):
-	list_display = ('usuario', 'ruta', 'fechaAgregado')
-	list_filter = ('fechaAgregado', 'usuario', 'ruta')
-	search_fields = ('usuario__nombreUsuario', 'ruta__nombre')
-	date_hierarchy = 'fechaAgregado'
 
 
 @admin.register(Trayecto)
 class TrayectoAdmin(admin.ModelAdmin):
-	list_display = ('ruta', 'orden', 'estacionSalida', 'estacionLlegada', 'nombreLinea', 'horaSalida', 'horaLlegada', 'numeroTransbordos')
-	list_filter = ('nombreLinea', 'ruta__usuario', 'numeroTransbordos')
+	list_display = ('ruta', 'orden', 'estacionSalida', 'estacionLlegada', 'nombreLinea', 'horaSalida', 'horaLlegada')
+	list_filter = ('nombreLinea', 'ruta__usuario')
 	search_fields = ('estacionSalida', 'estacionLlegada', 'nombreLinea', 'ruta__nombre')
 	ordering = ['ruta', 'orden']

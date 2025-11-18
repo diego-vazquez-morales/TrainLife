@@ -42,11 +42,11 @@
                         <i data-lucide="ticket"></i>
                         <span>Viajes</span>
                     </a>
-                    <a href="/MisRutas" class="nav-item">
+                    <a href="{% url 'mis_rutas' usuario.id %}" class="nav-item">
                         <i data-lucide="map-pin"></i>
                         <span>Mis Rutas</span>
                     </a>
-                    <a href="/buscarRutas" class="nav-item">
+                    <a href="{% url 'buscar_rutas' usuario.id %}" class="nav-item">
                         <i data-lucide="search"></i>
                         <span>Buscar Rutas</span>
                     </a>
@@ -61,7 +61,7 @@
                 </nav>
 
                 <!-- Logout Button -->
-                <button class="logout-btn" onclick="window.location.href='/salir'" aria-label="Cerrar sesión">
+                <button class="logout-btn" onclick="window.location.href='{% url 'salir' usuario.id %}'" aria-label="Cerrar sesión">
                     <i data-lucide="log-out"></i>
                     <span>Cerrar Sesión</span>
                 </button>
@@ -129,7 +129,7 @@
                             </p>
 
                             <!-- Button -->
-                            <button class="card-btn" onclick="window.location.href='/buscarRutas'" aria-label="Buscar rutas disponibles para comprar un nuevo billete">
+                            <button class="card-btn" onclick="window.location.href='{% url 'buscar_rutas' usuario.id %}'" aria-label="Buscar rutas disponibles para comprar un nuevo billete">
                                 <span>Buscar rutas</span>
                                 <i data-lucide="arrow-right"></i>
                             </button>

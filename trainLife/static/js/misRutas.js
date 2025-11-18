@@ -17,15 +17,32 @@ function initializeMisRutas() {
  * Configura los event listeners
  */
 function setupEventListeners() {
-    // Botón ver detalles
-    const verDetallesBton = document.getElementById("verDetalles");
-    const routeDetails = document.querySelector(".route-details");
+    // Botones ver detalles (múltiples rutas)
+    const expandButtons = document.querySelectorAll(".expand-route");
     
-    if (verDetallesBton && routeDetails) {
-        verDetallesBton.addEventListener("click", function() {
-            routeDetails.classList.toggle("route-details-expanded");
+    expandButtons.forEach(button => {
+        button.addEventListener("click", function() {
+            const routeId = this.getAttribute('data-route-id');
+            const routeDetails = document.getElementById(`route-${routeId}-details`);
+            const routeCard = this.closest('.route-card');
+            
+            if (routeDetails) {
+                const isExpanded = routeDetails.style.display === 'block';
+                
+                if (isExpanded) {
+                    routeDetails.style.display = 'none';
+                    this.setAttribute('aria-expanded', 'false');
+                    routeCard.classList.remove('route-card-expanded');
+                    this.querySelector('span').textContent = 'Ver Detalles';
+                } else {
+                    routeDetails.style.display = 'block';
+                    this.setAttribute('aria-expanded', 'true');
+                    routeCard.classList.add('route-card-expanded');
+                    this.querySelector('span').textContent = 'Ocultar Detalles';
+                }
+            }
         });
-    }
+    });
 
     // Hover en tarjetas de rutas
     const routeCards = document.querySelectorAll(".route-card");

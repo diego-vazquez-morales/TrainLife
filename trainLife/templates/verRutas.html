@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/verRutas.css') }}">
+    <link rel="stylesheet" href="{% static 'styles/verRutas.css' %}">
     
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -32,19 +33,19 @@
 
                 <!-- Navigation -->
                 <nav class="nav-menu">
-                    <a href="/homeUsuario" class="nav-item">
+                    <a href="{% url 'inicio_usuario' usuario.id %}" class="nav-item">
                         <i data-lucide="home"></i>
                         <span>Home</span>
                     </a>
-                    <a href="/Viajes" class="nav-item">
+                    <a href="{% url 'viajes_usuario' usuario.id %}" class="nav-item">
                         <i data-lucide="ticket"></i>
                         <span>Viajes</span>
                     </a>
-                    <a href="/MisRutas" class="nav-item">
+                    <a href="{% url 'mis_rutas' usuario.id %}" class="nav-item">
                         <i data-lucide="map-pin"></i>
                         <span>Mis Rutas</span>
                     </a>
-                    <a href="/verRutas" class="nav-item active" aria-current="page" aria-label="Buscar Rutas - Página actual">
+                    <a href="{% url 'buscar_rutas' usuario.id %}" class="nav-item active" aria-current="page" aria-label="Buscar Rutas - Página actual">
                         <i data-lucide="search"></i>
                         <span>Buscar Rutas</span>
                     </a>
@@ -59,7 +60,7 @@
                 </nav>
 
                 <!-- Logout Button -->
-                <button class="logout-btn" onclick="window.location.href='/salir'" aria-label="Cerrar sesión">
+                <button class="logout-btn" onclick="window.location.href='{% url 'salir' usuario.id %}'" aria-label="Cerrar sesión">
                     <i data-lucide="log-out"></i>
                     <span>Cerrar Sesión</span>
                 </button>
@@ -71,7 +72,7 @@
             <div class="content-wrapper">
                 <!-- Breadcrumbs -->
                 <nav class="breadcrumbs" aria-label="breadcrumb">
-                    <a href="/homeUsuario" class="breadcrumb-link">Home</a>
+                    <a href="{% url 'inicio_usuario' usuario.id %}" class="breadcrumb-link">Home</a>
                     <span class="breadcrumb-separator">/</span>
                     <span class="breadcrumb-current">Buscar Rutas</span>
                 </nav>
@@ -84,7 +85,7 @@
 
                 <!-- Search Form -->
                 <section class="search-form-section">
-                    <form id="searchForm" class="search-form" role="form" aria-label="Formulario de búsqueda de rutas">
+                    <form method="GET" action="{% url 'buscar_rutas' usuario.id %}" class="search-form" role="form" aria-label="Formulario de búsqueda de rutas">
                         <div class="form-grid">
                             <!-- Origen -->
                             <div class="form-group">
@@ -97,8 +98,7 @@
                                         name="origen"
                                         class="form-input"
                                         placeholder="Parada de salida"
-                                        required
-                                        aria-required="true"
+                                        value="{% if busqueda %}{{ busqueda.origen }}{% endif %}"
                                     >
                                 </div>
                             </div>
@@ -114,24 +114,7 @@
                                         name="destino"
                                         class="form-input"
                                         placeholder="Parada de llegada"
-                                        required
-                                        aria-required="true"
-                                    >
-                                </div>
-                            </div>
-
-                            <!-- Fecha -->
-                            <div class="form-group">
-                                <label for="fecha" class="form-label">Fecha</label>
-                                <div class="input-wrapper">
-                                    <i data-lucide="calendar" class="input-icon" aria-hidden="true"></i>
-                                    <input
-                                        type="date"
-                                        id="fecha"
-                                        name="fecha"
-                                        class="form-input"
-                                        required
-                                        aria-required="true"
+                                        value="{% if busqueda %}{{ busqueda.destino }}{% endif %}"
                                     >
                                 </div>
                             </div>
@@ -145,16 +128,56 @@
                     </form>
                 </section>
 
-                <!-- Results Section -->
-                <section id="resultsSection" class="results-section" style="display: none;">
-                    <h3 class="section-title">Resultados de la Búsqueda</h3>
-                    <div id="resultsContainer" class="routes-container"></div>
-                </section>
-
-                <!-- Recommended Routes Section -->
-                <section id="recommendedSection" class="recommended-section">
-                    <h3 class="section-title">Rutas Recomendadas</h3>
-                    <div id="recommendedContainer" class="routes-container"></div>
+                <!-- Routes Section -->
+                <section class="routes-section">
+                    <h3 class="section-title">{% if busqueda %}Resultados de la Búsqueda{% else %}Rutas Disponibles{% endif %}</h3>
+                    
+                    {% if rutas %}
+                        <div class="routes-container">
+                            {% for ruta in rutas %}
+                            <div class="route-card">
+                                <div class="route-header">
+                                    <h4 class="route-title">{{ ruta.nombre }}</h4>
+                                    {% if ruta.descripcion %}
+                                    <p class="route-description">{{ ruta.descripcion }}</p>
+                                    {% endif %}
+                                </div>
+                                <div class="route-body">
+                                    <div class="route-details">
+                                        {% for trayecto in ruta.trayectos.all %}
+                                        <div class="trayecto-item">
+                                            <div class="trayecto-info">
+                                                <i data-lucide="map-pin"></i>
+                                                <span>{{ trayecto.estacionSalida }} → {{ trayecto.estacionLlegada }}</span>
+                                            </div>
+                                            <div class="trayecto-time">
+                                                <i data-lucide="clock"></i>
+                                                <span>{{ trayecto.horaSalida|time:"H:i" }} - {{ trayecto.horaLlegada|time:"H:i" }}</span>
+                                            </div>
+                                            <div class="trayecto-line">
+                                                <i data-lucide="train"></i>
+                                                <span>{{ trayecto.nombreLinea }}</span>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="route-footer">
+                                    <button class="btn-save-route" onclick="window.location.href='{% url 'agregar_ruta_favorito' usuario.id ruta.id %}'">
+                                        <i data-lucide="heart"></i>
+                                        Guardar Ruta
+                                    </button>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="empty-state">
+                            <i data-lucide="search" class="empty-icon"></i>
+                            <p class="empty-title">No se encontraron rutas</p>
+                            <p class="empty-text">{% if busqueda %}Intenta con otros criterios de búsqueda{% else %}No hay rutas disponibles en este momento{% endif %}</p>
+                        </div>
+                    {% endif %}
                 </section>
             </div>
         </main>
@@ -190,6 +213,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <!-- Custom JavaScript -->
-    <script src="{{ url_for('static', filename='js/verRutas.js') }}"></script>
+    <script src="{% static 'js/verRutas.js' %}"></script>
+    
+    <script>
+        // Inicializar iconos de Lucide
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    </script>
 </body>
 </html>

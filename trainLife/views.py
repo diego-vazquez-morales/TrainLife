@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib import messages
-from .models import Usuario, Viaje
+from .models import Usuario, Viaje, Ruta
+from django.db.models import Q
 
 
 # Create your views here.
@@ -171,3 +172,79 @@ def verDetallesViaje(request, usuario_id, viaje_id):
         'usuario': usuario,
         'viaje': viaje
     })
+
+
+def buscarRutas(request, usuario_id):
+    """Vista para buscar rutas disponibles."""
+    session_usuario_id = request.session.get('usuario_id')
+    if not session_usuario_id or session_usuario_id != usuario_id:
+        return redirect('login')
+
+    usuario = Usuario.objects.filter(id=usuario_id).first()
+    if not usuario:
+        return redirect('login')
+
+    # Obtener rutas disponibles (sin usuario asignado)
+    rutas_disponibles = Ruta.objects.filter(usuario__isnull=True).prefetch_related('trayectos')
+    
+    # Si hay búsqueda
+    busqueda = None
+    if request.GET.get('origen') or request.GET.get('destino'):
+        origen = request.GET.get('origen', '').strip()
+        destino = request.GET.get('destino', '').strip()
+        
+        if origen or destino:
+            query = Q()
+            if origen:
+                query &= Q(trayectos__estacionSalida__icontains=origen)
+            if destino:
+                query &= Q(trayectos__estacionLlegada__icontains=destino)
+            
+            rutas_disponibles = rutas_disponibles.filter(query).distinct()
+            busqueda = {'origen': origen, 'destino': destino}
+    
+    return render(request, 'verRutas.html', {
+        'usuario': usuario,
+        'rutas': rutas_disponibles,
+        'busqueda': busqueda
+    })
+
+
+def misRutas(request, usuario_id):
+    """Vista para ver las rutas guardadas del usuario."""
+    session_usuario_id = request.session.get('usuario_id')
+    if not session_usuario_id or session_usuario_id != usuario_id:
+        return redirect('login')
+
+    usuario = Usuario.objects.filter(id=usuario_id).first()
+    if not usuario:
+        return redirect('login')
+
+    # Obtener rutas del usuario
+    rutas = Ruta.objects.filter(usuario=usuario).prefetch_related('trayectos')
+    
+    return render(request, 'MisRutas.html', {
+        'usuario': usuario,
+        'rutas': rutas
+    })
+
+
+def agregarRutaFavorito(request, usuario_id, ruta_id):
+    """Agregar una ruta a favoritos asignándola al usuario."""
+    session_usuario_id = request.session.get('usuario_id')
+    if not session_usuario_id or session_usuario_id != usuario_id:
+        return redirect('login')
+
+    usuario = Usuario.objects.filter(id=usuario_id).first()
+    if not usuario:
+        return redirect('login')
+
+    ruta = Ruta.objects.filter(id=ruta_id, usuario__isnull=True).first()
+    if ruta:
+        ruta.usuario = usuario
+        ruta.save()
+        messages.success(request, f'Ruta "{ruta.nombre}" agregada a tus favoritos.')
+    else:
+        messages.error(request, 'Ruta no disponible.')
+    
+    return redirect('buscar_rutas', usuario_id=usuario_id)

@@ -56,15 +56,12 @@ class Viaje(models.Model):
     
 
 class Ruta(models.Model):
-    # Relación con usuario (opcional - puede ser null para rutas públicas)
+    # Relación con usuario (opcional - puede ser null para rutas públicas sin asignar)
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='rutas', null=True, blank=True)
     
     # Información de la ruta
     nombre = models.CharField(max_length=200)  # Nombre descriptivo de la ruta
     descripcion = models.TextField(blank=True, null=True)  # Descripción opcional
-    
-    # Tipo de ruta
-    esPublica = models.BooleanField(default=True)  # Rutas públicas disponibles para todos
     
     # Fechas
     fechaCreacion = models.DateTimeField(auto_now_add=True)
@@ -78,25 +75,7 @@ class Ruta(models.Model):
     def __str__(self):
         if self.usuario:
             return f"{self.nombre} ({self.usuario.nombreUsuario})"
-        return f"{self.nombre} (Pública)"
-
-
-class RutaFavorita(models.Model):
-    # Relación muchos a muchos entre Usuario y Ruta
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='rutas_favoritas')
-    ruta = models.ForeignKey(Ruta, on_delete=models.CASCADE, related_name='favoritos')
-    
-    # Fecha cuando se agregó a favoritos
-    fechaAgregado = models.DateTimeField(auto_now_add=True)
-    
-    class Meta:
-        unique_together = ['usuario', 'ruta']  # Un usuario no puede agregar la misma ruta dos veces
-        verbose_name = 'Ruta Favorita'
-        verbose_name_plural = 'Rutas Favoritas'
-        ordering = ['-fechaAgregado']
-    
-    def __str__(self):
-        return f"{self.usuario.nombreUsuario} - {self.ruta.nombre}"
+        return f"{self.nombre} (Sin asignar)"
 
 
 class Trayecto(models.Model):
@@ -123,9 +102,6 @@ class Trayecto(models.Model):
     
     # Imagen del mapa del trayecto
     imagenMapa = models.ImageField(upload_to='trayectos/mapas/', blank=True, null=True)
-    
-    # Número de transbordos antes de este trayecto
-    numeroTransbordos = models.PositiveIntegerField(default=0)
     
     # Fechas
     fechaCreacion = models.DateTimeField(auto_now_add=True)

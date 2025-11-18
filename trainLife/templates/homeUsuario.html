@@ -39,11 +39,11 @@
                         <i data-lucide="ticket"></i>
                         <span>Viajes</span>
                     </a>
-                    <a href="/MisRutas" class="nav-item" aria-label="Ir a Mis Rutas">
+                    <a href="{% url 'mis_rutas' usuario.id %}" class="nav-item" aria-label="Ir a Mis Rutas">
                         <i data-lucide="map-pin"></i>
                         <span>Mis Rutas</span>
                     </a>
-                    <a href="/buscarRutas" class="nav-item" aria-label="Ir a Buscar Rutas">
+                    <a href="{% url 'buscar_rutas' usuario.id %}" class="nav-item" aria-label="Ir a Buscar Rutas">
                         <i data-lucide="search"></i>
                         <span>Buscar Rutas</span>
                     </a>
@@ -109,7 +109,7 @@
                         </article>
 
                         <!-- Card 2: Consulta Horarios -->
-                        <article class="action-card" tabindex="0" data-navigate="/MisRutas" role="button" aria-label="Ir a Consultar Horarios - Explora Mis Rutas guardadas">
+                        <article class="action-card" tabindex="0" onclick="window.location.href='{% url 'mis_rutas' usuario.id %}'" role="button" aria-label="Ir a Consultar Horarios - Explora Mis Rutas guardadas">
                             <div class="card-header card-header-green">
                                 <i data-lucide="route" class="card-icon"></i>
                             </div>
@@ -265,7 +265,7 @@
                             y mantente siempre informado con nuestras notificaciones en tiempo real.
                         </p>
                         <div class="getting-started-buttons">
-                            <button class="btn btn-primary-custom" data-navigate="/buscarRutas">
+                            <button class="btn btn-primary-custom" onclick="window.location.href='{% url 'buscar_rutas' usuario.id %}'">
                                 Buscar Rutas
                             </button>
                             <button class="btn btn-secondary-custom" onclick="window.location.href='{% url 'mis_viajes' usuario.id %}'">
