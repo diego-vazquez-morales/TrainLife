@@ -192,6 +192,7 @@ def buscarRutas(request, usuario_id):
     if request.GET.get('origen') or request.GET.get('destino'):
         origen = request.GET.get('origen', '').strip()
         destino = request.GET.get('destino', '').strip()
+        fecha = request.GET.get('fecha', '').strip()
         
         if origen or destino:
             query = Q()
@@ -201,12 +202,17 @@ def buscarRutas(request, usuario_id):
                 query &= Q(trayectos__estacionLlegada__icontains=destino)
             
             rutas_disponibles = rutas_disponibles.filter(query).distinct()
-            busqueda = {'origen': origen, 'destino': destino}
+            busqueda = {'origen': origen, 'destino': destino, 'fecha': fecha}
+    
+    # Fecha actual para el campo de fecha
+    from datetime import date
+    fecha_actual = date.today().strftime('%Y-%m-%d')
     
     return render(request, 'verRutas.html', {
         'usuario': usuario,
         'rutas': rutas_disponibles,
-        'busqueda': busqueda
+        'busqueda': busqueda,
+        'fecha_actual': fecha_actual
     })
 
 
@@ -248,3 +254,74 @@ def agregarRutaFavorito(request, usuario_id, ruta_id):
         messages.error(request, 'Ruta no disponible.')
     
     return redirect('buscar_rutas', usuario_id=usuario_id)
+
+def crearUsuario(request):
+    """Vista para crear un nuevo usuario."""
+    if request.method == 'POST':
+        # Obtener datos del formulario
+        nombre = request.POST.get('nombre', '').strip()
+        apellido1 = request.POST.get('apellido1', '').strip()
+        apellido2 = request.POST.get('apellido2', '').strip()
+        telefono = request.POST.get('telefono', '').strip()
+        email = request.POST.get('email', '').strip()
+        contrasenia = request.POST.get('contrasenia', '').strip()
+        confirmar_contrasenia = request.POST.get('confirmar_contrasenia', '').strip()
+        aceptar_terminos = request.POST.get('terminos')
+        
+        # Validaciones
+        errores = []
+        
+        if not nombre:
+            errores.append('El nombre es obligatorio.')
+        if not apellido1:
+            errores.append('El primer apellido es obligatorio.')
+        if not email:
+            errores.append('El correo electrónico es obligatorio.')
+        if not contrasenia:
+            errores.append('La contraseña es obligatoria.')
+        if contrasenia != confirmar_contrasenia:
+            errores.append('Las contraseñas no coinciden.')
+        if len(contrasenia) < 6:
+            errores.append('La contraseña debe tener al menos 6 caracteres.')
+        if not aceptar_terminos:
+            errores.append('Debes aceptar los términos y condiciones.')
+        
+        # Verificar si el email ya existe
+        if Usuario.objects.filter(email=email).exists():
+            errores.append('El correo electrónico ya está registrado.')
+        
+        if errores:
+            for error in errores:
+                messages.error(request, error)
+            return render(request, 'crearUsuario.html', {
+                'nombre': nombre,
+                'apellido1': apellido1,
+                'apellido2': apellido2,
+                'telefono': telefono,
+                'email': email
+            })
+        
+        # Crear el usuario
+        try:
+            usuario = Usuario.objects.create(
+                nombreUsuario=nombre,
+                apellido1=apellido1,
+                apellido2=apellido2 if apellido2 else None,
+                email=email,
+                numeroTelefono=telefono if telefono else None,
+                contrasenia=contrasenia
+            )
+            messages.success(request, '¡Cuenta creada exitosamente! Ya puedes iniciar sesión.')
+            return redirect('login')
+        except Exception as e:
+            messages.error(request, f'Error al crear la cuenta: {str(e)}')
+            return render(request, 'crearUsuario.html', {
+                'nombre': nombre,
+                'apellido1': apellido1,
+                'apellido2': apellido2,
+                'telefono': telefono,
+                'email': email
+            })
+    
+    # GET
+    return render(request, 'crearUsuario.html')

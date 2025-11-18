@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html class="light" lang="es">
 
@@ -11,7 +12,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 
-    <link rel="stylesheet" href="../static/styles/crearUsuario.css" />
+    <link rel="stylesheet" href="{% static 'styles/crearUsuario.css' %}" />
+    <script src="{% static 'js/crearUsuario.js' %}" defer></script>
 
 </head>
 
@@ -26,32 +28,44 @@
                     <p class="title" id="page-title">Crear Cuenta</p>
                     <p class="subtitle">Únete a TrainLife para empezar.</p>
                 </div>
-                <form class="form-layout" role="form" aria-labelledby="page-title">
+                
+                {% if messages %}
+                    <div class="messages-container">
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                
+                <form class="form-layout" method="POST" action="{% url 'crear_usuario' %}" role="form" aria-labelledby="page-title">
+                    {% csrf_token %}
                     <label class="form-label-container">
                         <p class="input-label" id="nombre-label">Nombre</p>
-                        <input class="form-input-field" placeholder="Introduce tu nombre" value="" aria-labelledby="nombre-label" aria-required="true" />
+                        <input class="form-input-field" name="nombre" placeholder="Introduce tu nombre" value="{{ nombre|default:'' }}" aria-labelledby="nombre-label" aria-required="true" required />
                     </label>
                     <label class="form-label-container">
                         <p class="input-label" id="apellido1-label">Primer Apellido</p>
-                        <input class="form-input-field" placeholder="Introduce tu apellido" value="" aria-labelledby="apellido1-label" aria-required="true" />
+                        <input class="form-input-field" name="apellido1" placeholder="Introduce tu apellido" value="{{ apellido1|default:'' }}" aria-labelledby="apellido1-label" aria-required="true" required />
                     </label>
                     <label class="form-label-container">
                         <p class="input-label" id="apellido2-label">Segundo Apellido</p>
-                        <input class="form-input-field" placeholder="Opcional" value="" aria-labelledby="apellido2-label" aria-required="false" />
+                        <input class="form-input-field" name="apellido2" placeholder="Opcional" value="{{ apellido2|default:'' }}" aria-labelledby="apellido2-label" aria-required="false" />
                     </label>
                     <label class="form-label-container">
                         <p class="input-label" id="telefono-label">Teléfono</p>
-                        <input class="form-input-field" placeholder="+34 600 000 000" value="" aria-labelledby="telefono-label" aria-required="true" />
+                        <input class="form-input-field" name="telefono" placeholder="+34 600 000 000" value="{{ telefono|default:'' }}" aria-labelledby="telefono-label" aria-required="false" />
                     </label>
                     <label class="form-label-container">
                         <p class="input-label" id="email-label">Correo Electrónico</p>
-                        <input class="form-input-field" placeholder="tu.correo@ejemplo.com" type="email" value="" aria-labelledby="email-label" aria-required="true" />
+                        <input class="form-input-field" name="email" placeholder="tu.correo@ejemplo.com" type="email" value="{{ email|default:'' }}" aria-labelledby="email-label" aria-required="true" required />
                     </label>
                     <label class="form-label-container">
                         <p class="input-label" id="password-label">Contraseña</p>
                         <div class="password-input-wrap">
-                            <input class="form-input-field password-input" placeholder="Introduce tu contraseña"
-                                type="password" value="" aria-labelledby="password-label" aria-required="true" />
+                            <input class="form-input-field password-input" name="contrasenia" placeholder="Introduce tu contraseña"
+                                type="password" value="" aria-labelledby="password-label" aria-required="true" required minlength="6" />
                             <button class="toggle-password-button" type="button" aria-label="Mostrar contraseña">
                                 <span class="material-symbols-outlined icon-visibility" aria-hidden="true">visibility</span>
                             </button>
@@ -60,15 +74,15 @@
                     <label class="form-label-container">
                         <p class="input-label" id="confirm-password-label">Confirmar Contraseña</p>
                         <div class="password-input-wrap">
-                            <input class="form-input-field password-input" placeholder="Confirma tu contraseña"
-                                type="password" value="" aria-labelledby="confirm-password-label" aria-required="true" />
+                            <input class="form-input-field password-input" name="confirmar_contrasenia" placeholder="Confirma tu contraseña"
+                                type="password" value="" aria-labelledby="confirm-password-label" aria-required="true" required minlength="6" />
                             <button class="toggle-password-button" type="button" aria-label="Mostrar contraseña de confirmación">
                                 <span class="material-symbols-outlined icon-visibility" aria-hidden="true">visibility_off</span>
                             </button>
                         </div>
                     </label>
                     <div class="terms-checkbox-wrap">
-                        <input class="form-checkbox-field" id="terms" type="checkbox" aria-required="true" />
+                        <input class="form-checkbox-field" name="terminos" id="terms" type="checkbox" aria-required="true" required />
                         <label class="terms-text" for="terms">
                             Acepto los <a class="terms-link" href="#">Términos y Condiciones</a> y la <a
                                 class="terms-link" href="#">Política de Privacidad</a>.
@@ -81,9 +95,32 @@
             </main>
             <footer class="page-footer">
                 <p class="footer-text">
-                    ¿Ya tienes una cuenta? <a class="footer-link" href="#">Iniciar Sesión</a>
+                    ¿Ya tienes una cuenta? <a class="footer-link" href="{% url 'login' %}">Iniciar Sesión</a>
                 </p>
             </footer>
+        </div>
+    </div>
+    
+    <!-- Modal de Confirmación -->
+    <div class="modal-overlay" id="confirmModal" style="display: none;">
+        <div class="modal-container">
+            <div class="modal-content">
+                <div class="modal-icon">
+                    <span class="material-symbols-outlined">help</span>
+                </div>
+                <h2 class="modal-title">¿Confirmar registro?</h2>
+                <p class="modal-message">¿Estás seguro de que quieres crear esta cuenta?</p>
+                <div class="modal-actions">
+                    <button type="button" class="btn-modal btn-cancel" id="btnCancelar">
+                        <span class="material-symbols-outlined">close</span>
+                        No, cancelar
+                    </button>
+                    <button type="button" class="btn-modal btn-confirm" id="btnConfirmar">
+                        <span class="material-symbols-outlined">check</span>
+                        Sí, crear cuenta
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </body>
