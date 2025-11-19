@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Rutas - TrainLife</title>
+    {% load static %}
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'styles/buscarRutas.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/confirmModal.css' %}">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-menu-toggle" aria-label="Toggle menu">
+            <i data-lucide="menu"></i>
+        </button>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-content">
+                <!-- Logo -->
+                <div class="logo-section">
+                    <i data-lucide="train" class="logo-icon"></i>
+                    <h1 class="logo-title">TrainLife</h1>
+                </div>
+
+                <!-- Navigation -->
+                <nav class="nav-menu">
+                    <a href="{% url 'inicio_usuario' usuario.id %}" class="nav-item">
+                        <i data-lucide="home"></i>
+                        <span>Home</span>
+                    </a>
+                    <a href="{% url 'viajes_usuario' usuario.id %}" class="nav-item">
+                        <i data-lucide="ticket"></i>
+                        <span>Viajes</span>
+                    </a>
+                    <a href="{% url 'mis_rutas' usuario.id %}" class="nav-item">
+                        <i data-lucide="map-pin"></i>
+                        <span>Mis Rutas</span>
+                    </a>
+                    <a href="{% url 'buscar_rutas' usuario.id %}" class="nav-item active">
+                        <i data-lucide="search"></i>
+                        <span>Buscar Rutas</span>
+                    </a>
+                    <a href="/notificaciones" class="nav-item">
+                        <i data-lucide="bell"></i>
+                        <span>Notificaciones</span>
+                    </a>
+                    <a href="/configuracion" class="nav-item">
+                        <i data-lucide="settings"></i>
+                        <span>Configuración</span>
+                    </a>
+                </nav>
+
+                <!-- Logout Button -->
+                <button class="logout-btn" onclick="window.location.href='{% url 'salir' usuario.id %}'" aria-label="Cerrar sesión">
+                    <i data-lucide="log-out"></i>
+                    <span>Cerrar Sesión</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="content-wrapper">
+                <!-- Breadcrumbs -->
+                <nav class="breadcrumbs" aria-label="breadcrumb">
+                    <a href="{% url 'inicio_usuario' usuario.id %}" class="breadcrumb-link">Home</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <span class="breadcrumb-current">Buscar Rutas</span>
+                </nav>
+
+                <!-- Page Header -->
+                <header class="page-header">
+                    <h2 class="page-title">Consulta de Rutas</h2>
+                    <p class="page-subtitle">Encuentra tu próximo viaje en tren.</p>
+                </header>
+
+                <!-- Search Form -->
+                <section class="search-form-section">
+                    <form id="searchForm" class="search-form" method="GET" action="{% url 'buscar_rutas' usuario.id %}" role="search" aria-label="Buscar rutas de tren">
+                        <div class="form-grid">
+                            <!-- Origen -->
+                            <div class="form-group">
+                                <label for="origen" class="form-label">Origen</label>
+                                <div class="input-wrapper">
+                                    <i data-lucide="map-pin" class="input-icon"></i>
+                                    <input
+                                        type="text"
+                                        id="origen"
+                                        name="origen"
+                                        class="form-input"
+                                        placeholder="Parada de salida"
+                                        aria-label="Estación de origen"
+                                        value="{{ busqueda.origen|default:'' }}"
+                                    >
+                                </div>
+                            </div>
+
+                            <!-- Destino -->
+                            <div class="form-group">
+                                <label for="destino" class="form-label">Destino</label>
+                                <div class="input-wrapper">
+                                    <i data-lucide="map-pin" class="input-icon"></i>
+                                    <input
+                                        type="text"
+                                        id="destino"
+                                        name="destino"
+                                        class="form-input"
+                                        placeholder="Parada de destino"
+                                        aria-label="Estación de destino"
+                                        value="{{ busqueda.destino|default:'' }}"
+                                    >
+                                </div>
+                            </div>
+
+                            <!-- Fecha -->
+                            <div class="form-group">
+                                <label for="fecha" class="form-label">Fecha</label>
+                                <div class="input-wrapper">
+                                    <i data-lucide="calendar" class="input-icon"></i>
+                                    <input
+                                        type="date"
+                                        id="fecha"
+                                        name="fecha"
+                                        class="form-input"
+                                        value="{{ busqueda.fecha|default:fecha_actual }}"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Search Button -->
+                        <button type="submit" class="btn-search">
+                            <i data-lucide="search"></i>
+                            Buscar Rutas
+                        </button>
+                    </form>
+                </section>
+
+                <!-- Routes Section -->
+                <section class="routes-section">
+                    <h3 class="section-title">
+                        {% if busqueda %}
+                            Resultados de la Búsqueda ({{ rutas|length }})
+                        {% else %}
+                            Todas las Rutas Disponibles ({{ rutas|length }})
+                        {% endif %}
+                    </h3>
+                    
+                    {% if rutas %}
+                        <div id="routesContainer" class="routes-container">
+                            {% for ruta in rutas %}
+                                <div class="route-card" id="route-{{ ruta.id }}" data-route-id="{{ ruta.id }}">
+                                    <div class="route-header">
+                                        <div class="route-info">
+                                            <h2 class="route-title">{{ ruta.nombre }}</h2>
+                                            <p class="route-description">
+                                                {{ ruta.descripcion|default:"Sin descripción disponible" }}
+                                                {% if ruta.usuario %}
+                                                    <span class="badge bg-info ms-2">Asignada a: {{ ruta.usuario.nombreUsuario }}</span>
+                                                {% else %}
+                                                    <span class="badge bg-success ms-2">Disponible</span>
+                                                {% endif %}
+                                            </p>
+                                            
+                                            {% if ruta.trayectos.all %}
+                                                {% with primer_trayecto=ruta.trayectos.first ultimo_trayecto=ruta.trayectos.last %}
+                                                <div class="route-summary">
+                                                    <span><strong>Origen:</strong> {{ primer_trayecto.estacionSalida }}</span>
+                                                    <span><strong>Destino:</strong> {{ ultimo_trayecto.estacionLlegada }}</span>
+                                                    <span><strong>Salida:</strong> {{ primer_trayecto.horaSalida|time:"H:i" }}</span>
+                                                    <span><strong>Llegada:</strong> {{ ultimo_trayecto.horaLlegada|time:"H:i" }}</span>
+                                                    <span><strong>Transbordos:</strong> {{ ruta.trayectos.count|add:"-1" }}</span>
+                                                </div>
+                                                {% endwith %}
+                                            {% endif %}
+                                            
+                                            <div class="route-actions">
+                                                <button class="btn-toggle" onclick="toggleExpand({{ ruta.id }})">
+                                                    <i data-lucide="chevron-down"></i>
+                                                    Ver Detalles
+                                                </button>
+                                                {% if ruta.usuario.id != usuario.id %}
+                                                <button class="btn-save" onclick="guardarRuta({{ ruta.id }}, '{{ ruta.nombre|escapejs }}', {{ usuario.id }})">
+                                                    <i data-lucide="star"></i>
+                                                    Agregar a Favoritos
+                                                </button>
+                                                {% else %}
+                                                <button class="btn-saved" disabled>
+                                                    <i data-lucide="star" class="fill-star"></i>
+                                                    Tu Ruta
+                                                </button>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="route-image-placeholder">
+                                            <i data-lucide="map"></i>
+                                        </div>
+                                    </div>
+
+                                    <!-- Detalles expandibles -->
+                                    <div class="route-details" style="display: none;">
+                                        <div class="transbordos-info">
+                                            <span class="transbordos-label">Transbordos:</span>
+                                            <span class="transbordos-badge">{{ ruta.trayectos.count|add:"-1" }}</span>
+                                        </div>
+
+                                        <div class="lineas-container">
+                                            {% for trayecto in ruta.trayectos.all %}
+                                                <div class="linea-section">
+                                                    <h3 class="linea-title">{{ trayecto.nombreLinea }}</h3>
+                                                    
+                                                    <div class="linea-grid">
+                                                        <!-- Columna 1 -->
+                                                        <div class="linea-column">
+                                                            <div class="linea-field">
+                                                                <span class="linea-field-label">Estación de Salida</span>
+                                                                <span class="linea-field-value">{{ trayecto.estacionSalida }}</span>
+                                                            </div>
+                                                            <div class="linea-field">
+                                                                <span class="linea-field-label">Estación de Llegada</span>
+                                                                <span class="linea-field-value">{{ trayecto.estacionLlegada }}</span>
+                                                            </div>
+                                                            <div class="linea-field">
+                                                                <span class="linea-field-label">Hora de Salida</span>
+                                                                <span class="linea-field-value">{{ trayecto.horaSalida|time:"H:i" }}</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Columna 2 -->
+                                                        <div class="linea-column">
+                                                            <div class="linea-field">
+                                                                <span class="linea-field-label">Andén de Salida</span>
+                                                                <span class="linea-field-value">{{ trayecto.andenSalida|default:"N/A" }}</span>
+                                                            </div>
+                                                            <div class="linea-field">
+                                                                <span class="linea-field-label">Andén de Llegada</span>
+                                                                <span class="linea-field-value">{{ trayecto.andenLlegada|default:"N/A" }}</span>
+                                                            </div>
+                                                            <div class="linea-field">
+                                                                <span class="linea-field-label">Hora de Llegada</span>
+                                                                <span class="linea-field-value">{{ trayecto.horaLlegada|time:"H:i" }}</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Columna 3 -->
+                                                        <div class="linea-image-container">
+                                                            <span class="linea-image-label">Imagen del Trayecto</span>
+                                                            {% if trayecto.imagenMapa %}
+                                                                <img src="{{ trayecto.imagenMapa.url }}" alt="Mapa de {{ trayecto.nombreLinea }}" class="linea-image">
+                                                            {% else %}
+                                                                <div class="linea-image-placeholder">
+                                                                    <i data-lucide="image"></i>
+                                                                </div>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+
+                                                    {% if not forloop.last %}
+                                                        <div class="linea-separator"></div>
+                                                    {% endif %}
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info">
+                            <i data-lucide="info"></i>
+                            {% if busqueda %}
+                                No se encontraron rutas que coincidan con tu búsqueda.
+                            {% else %}
+                                No hay rutas disponibles en este momento.
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal-overlay" style="display: none;">
+        <div class="modal-container modal-success">
+            <div class="modal-header">
+                <div class="modal-icon-header">
+                    <div class="modal-icon modal-icon-success">
+                        <i data-lucide="check"></i>
+                    </div>
+                    <h3 class="modal-title">¡Ruta Guardada!</h3>
+                </div>
+                <button class="modal-close" onclick="closeSuccessModal()">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <p class="modal-message" id="modalMessage"></p>
+            <div class="modal-actions">
+                <button class="modal-btn modal-btn-primary" onclick="closeSuccessModal()">
+                    Continuar
+                </button>
+                <button class="modal-btn modal-btn-secondary" onclick="window.location.href='{% url 'mis_rutas' usuario.id %}'">
+                    Ver Mis Rutas
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="{% static 'js/confirmModal.js' %}"></script>
+    <script src="{% static 'js/buscarRutas.js' %}"></script>
+    
+    <script>
+        // Inicializar iconos de Lucide
+        lucide.createIcons();
+    </script>
+</body>
+</html>

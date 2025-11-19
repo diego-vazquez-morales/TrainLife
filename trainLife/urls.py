@@ -17,6 +17,8 @@ urlpatterns = [
     path('buscarRutas/<int:usuario_id>/', views.buscarRutas, name='buscar_rutas'),
     path('misRutas/<int:usuario_id>/', views.misRutas, name='mis_rutas'),
     path('agregarRutaFavorito/<int:usuario_id>/<int:ruta_id>/', views.agregarRutaFavorito, name='agregar_ruta_favorito'),
+    path('eliminarRutaFavorito/<int:usuario_id>/<int:ruta_id>/', views.eliminarRutaFavorito, name='eliminar_ruta_favorito'),
     path('crearUsuario/', views.crearUsuario, name='crear_usuario'),
+    path('api/buscarRutas/<int:usuario_id>/', views.api_buscar_rutas, name='api_buscar_rutas'),
     
 ]

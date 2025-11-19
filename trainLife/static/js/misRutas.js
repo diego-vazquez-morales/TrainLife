@@ -11,6 +11,10 @@ document.addEventListener("DOMContentLoaded", function() {
  */
 function initializeMisRutas() {
     console.log('Mis Rutas cargado');
+    // Inicializar iconos de Lucide
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
 }
 
 /**

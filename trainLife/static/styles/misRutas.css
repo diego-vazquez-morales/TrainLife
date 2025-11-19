@@ -294,6 +294,11 @@ body {
     font-size: 18px;
 }
 
+.btn i[data-lucide] {
+    width: 18px;
+    height: 18px;
+}
+
 .btn-primary {
     background-color: #1049bd;
     color: #ffffff;

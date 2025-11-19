@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib import messages
-from .models import Usuario, Viaje, Ruta
+from django.http import JsonResponse
+from .models import Usuario, Viaje, Ruta, Trayecto
 from django.db.models import Q
 
 
@@ -184,8 +185,8 @@ def buscarRutas(request, usuario_id):
     if not usuario:
         return redirect('login')
 
-    # Obtener rutas disponibles (sin usuario asignado)
-    rutas_disponibles = Ruta.objects.filter(usuario__isnull=True).prefetch_related('trayectos')
+    # Obtener TODAS las rutas (con y sin usuario asignado)
+    rutas_disponibles = Ruta.objects.all().prefetch_related('trayectos').order_by('-fechaCreacion')
     
     # Si hay búsqueda
     busqueda = None
@@ -208,7 +209,7 @@ def buscarRutas(request, usuario_id):
     from datetime import date
     fecha_actual = date.today().strftime('%Y-%m-%d')
     
-    return render(request, 'verRutas.html', {
+    return render(request, 'buscarRutas.html', {
         'usuario': usuario,
         'rutas': rutas_disponibles,
         'busqueda': busqueda,
@@ -254,6 +255,29 @@ def agregarRutaFavorito(request, usuario_id, ruta_id):
         messages.error(request, 'Ruta no disponible.')
     
     return redirect('buscar_rutas', usuario_id=usuario_id)
+
+
+def eliminarRutaFavorito(request, usuario_id, ruta_id):
+    """Eliminar una ruta de favoritos (desasignarla del usuario)."""
+    session_usuario_id = request.session.get('usuario_id')
+    if not session_usuario_id or session_usuario_id != usuario_id:
+        return redirect('login')
+
+    usuario = Usuario.objects.filter(id=usuario_id).first()
+    if not usuario:
+        return redirect('login')
+
+    ruta = Ruta.objects.filter(id=ruta_id, usuario=usuario).first()
+    if ruta:
+        nombre_ruta = ruta.nombre
+        ruta.usuario = None
+        ruta.save()
+        messages.success(request, f'Ruta "{nombre_ruta}" eliminada de tus favoritos.')
+    else:
+        messages.error(request, 'Ruta no encontrada.')
+    
+    return redirect('mis_rutas', usuario_id=usuario_id)
+
 
 def crearUsuario(request):
     """Vista para crear un nuevo usuario."""
@@ -325,3 +349,66 @@ def crearUsuario(request):
     
     # GET
     return render(request, 'crearUsuario.html')
+
+
+def api_buscar_rutas(request, usuario_id):
+    """API JSON para buscar rutas dinámicamente."""
+    session_usuario_id = request.session.get('usuario_id')
+    if not session_usuario_id or session_usuario_id != usuario_id:
+        return JsonResponse({'error': 'No autorizado'}, status=401)
+
+    # Obtener todas las rutas
+    rutas = Ruta.objects.all().prefetch_related('trayectos')
+    
+    # Aplicar filtros si existen
+    origen = request.GET.get('origen', '').strip()
+    destino = request.GET.get('destino', '').strip()
+    
+    if origen or destino:
+        query = Q()
+        if origen:
+            query &= Q(trayectos__estacionSalida__icontains=origen)
+        if destino:
+            query &= Q(trayectos__estacionLlegada__icontains=destino)
+        rutas = rutas.filter(query).distinct()
+    
+    # Serializar rutas
+    rutas_data = []
+    for ruta in rutas:
+        trayectos = ruta.trayectos.all().order_by('orden')
+        
+        # Calcular datos de la ruta
+        primer_trayecto = trayectos.first() if trayectos else None
+        ultimo_trayecto = trayectos.last() if trayectos else None
+        
+        if primer_trayecto and ultimo_trayecto:
+            ruta_data = {
+                'id': ruta.id,
+                'nombre': ruta.nombre,
+                'descripcion': ruta.descripcion or '',
+                'usuario_nombre': ruta.usuario.nombreUsuario if ruta.usuario else 'Sin asignar',
+                'tiene_usuario': ruta.usuario is not None,
+                'origen': primer_trayecto.estacionSalida,
+                'destino': ultimo_trayecto.estacionLlegada,
+                'hora_salida': primer_trayecto.horaSalida.strftime('%H:%M'),
+                'hora_llegada': ultimo_trayecto.horaLlegada.strftime('%H:%M'),
+                'num_transbordos': trayectos.count() - 1,
+                'trayectos': [
+                    {
+                        'orden': t.orden,
+                        'estacion_salida': t.estacionSalida,
+                        'estacion_llegada': t.estacionLlegada,
+                        'hora_salida': t.horaSalida.strftime('%H:%M'),
+                        'hora_llegada': t.horaLlegada.strftime('%H:%M'),
+                        'anden_salida': t.andenSalida or 'N/A',
+                        'anden_llegada': t.andenLlegada or 'N/A',
+                        'nombre_linea': t.nombreLinea,
+                        'color_linea': t.colorLinea or '',
+                        'imagen_url': t.imagenMapa.url if t.imagenMapa else None
+                    }
+                    for t in trayectos
+                ]
+            }
+            rutas_data.append(ruta_data)
+    
+    return JsonResponse({'rutas': rutas_data})
