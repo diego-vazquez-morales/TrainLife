@@ -48,6 +48,36 @@ function setupEventListeners() {
         });
     });
 
+    // Botones eliminar de favoritos
+    const deleteButtons = document.querySelectorAll(".btn-delete[data-delete-route-id]");
+    
+    deleteButtons.forEach(button => {
+        button.addEventListener("click", function() {
+            const routeName = this.getAttribute('data-delete-route-name');
+            const deleteUrl = this.getAttribute('data-delete-url');
+            
+            // Mostrar modal de confirmación
+            if (window.confirmModal) {
+                window.confirmModal.show({
+                    title: 'Eliminar de Favoritos',
+                    message: `¿Estás seguro de que deseas eliminar "${routeName}" de tus rutas favoritas?`,
+                    confirmText: 'Sí, eliminar',
+                    cancelText: 'Cancelar',
+                    type: 'danger',
+                    onConfirm: () => {
+                        // Redirigir a la URL de eliminación
+                        window.location.href = deleteUrl;
+                    }
+                });
+            } else {
+                // Fallback al confirm nativo si el modal no está disponible
+                if (confirm(`¿Eliminar "${routeName}" de favoritos?`)) {
+                    window.location.href = deleteUrl;
+                }
+            }
+        });
+    });
+
     // Hover en tarjetas de rutas
     const routeCards = document.querySelectorAll(".route-card");
     routeCards.forEach(function(routeCard) {

@@ -10,7 +10,9 @@
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="{% static 'styles/MisRutas.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/confirmModal.css' %}">
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script defer src="{% static 'js/confirmModal.js' %}"></script>
     <script defer src="{% static 'js/misRutas.js' %}"></script>
 </head>
 
@@ -92,8 +94,10 @@
                                         aria-label="Ver detalles de la ruta {{ ruta.nombre }}">
                                         <span>Ver Detalles</span>
                                     </button>
-                                    <button class="btn btn-delete"
-                                        onclick="if(confirm('¿Eliminar {{ ruta.nombre|escapejs }} de favoritos?')) window.location.href='{% url 'eliminar_ruta_favorito' usuario.id ruta.id %}'"
+                                    <button class="btn btn-delete" 
+                                        data-delete-route-id="{{ ruta.id }}"
+                                        data-delete-route-name="{{ ruta.nombre|escapejs }}"
+                                        data-delete-url="{% url 'eliminar_ruta_favorito' usuario.id ruta.id %}"
                                         aria-label="Eliminar ruta {{ ruta.nombre }} de favoritos">
                                         <i data-lucide="trash-2" aria-hidden="true"></i>
                                         <span>Eliminar de favoritos</span>

@@ -121,21 +121,6 @@
                                     >
                                 </div>
                             </div>
-
-                            <!-- Fecha -->
-                            <div class="form-group">
-                                <label for="fecha" class="form-label">Fecha</label>
-                                <div class="input-wrapper">
-                                    <i data-lucide="calendar" class="input-icon"></i>
-                                    <input
-                                        type="date"
-                                        id="fecha"
-                                        name="fecha"
-                                        class="form-input"
-                                        value="{{ busqueda.fecha|default:fecha_actual }}"
-                                    >
-                                </div>
-                            </div>
                         </div>
 
                         <!-- Search Button -->
@@ -185,12 +170,15 @@
                                             {% endif %}
                                             
                                             <div class="route-actions">
-                                                <button class="btn-toggle" onclick="toggleExpand({{ ruta.id }})">
+                                                <button class="btn-toggle">
                                                     <i data-lucide="chevron-down"></i>
                                                     Ver Detalles
                                                 </button>
                                                 {% if ruta.usuario.id != usuario.id %}
-                                                <button class="btn-save" onclick="guardarRuta({{ ruta.id }}, '{{ ruta.nombre|escapejs }}', {{ usuario.id }})">
+                                                <button class="btn-save" 
+                                                    data-route-id="{{ ruta.id }}"
+                                                    data-route-name="{{ ruta.nombre|escapejs }}"
+                                                    data-user-id="{{ usuario.id }}">
                                                     <i data-lucide="star"></i>
                                                     Agregar a Favoritos
                                                 </button>
