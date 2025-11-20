@@ -549,6 +549,15 @@ body {
     text-decoration: underline;
 }
 
+/* === FOCUS === */
+.card-btn:focus,
+.nav-item:focus,
+.breadcrumb-link:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+
 /* === Responsive Design === */
 @media (max-width: 1024px) {
     .sidebar {

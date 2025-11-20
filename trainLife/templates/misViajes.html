@@ -75,9 +75,9 @@
             <div class="content-wrapper">
                 <!-- Breadcrumbs -->
                 <nav class="breadcrumbs" aria-label="Breadcrumb">
-                    <a href="/home" class="breadcrumb-link">Home</a>
+                    <a href="{% url 'inicio_usuario' usuario.id %}" class="breadcrumb-link">Home</a>
                     <span class="breadcrumb-separator">/</span>
-                    <a href="/misViajes" class="breadcrumb-link">Viajes</a>
+                    <a href="{% url 'viajes_usuario' usuario.id %}" class="breadcrumb-link">Viajes</a>
                     <span class="breadcrumb-separator">/</span>
                     <span class="breadcrumb-current">Mis Viajes</span>
                 </nav>
