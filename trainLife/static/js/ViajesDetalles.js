@@ -288,6 +288,7 @@ function setupNotificationsToggle() {
   if (toggle) {
     toggle.addEventListener('change', function() {
       notificationsEnabled = this.checked;
+      toggle.setAttribute('aria-checked', toggle.checked ? 'true' : 'false');
       console.log('Notificaciones:', notificationsEnabled ? 'activadas' : 'desactivadas');
       
       // Aquí se podría hacer una llamada al backend para guardar la preferencia

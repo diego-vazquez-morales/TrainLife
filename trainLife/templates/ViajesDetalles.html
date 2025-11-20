@@ -124,13 +124,14 @@
 
                                 <!-- Notifications Toggle -->
                                 <div class="notifications-toggle">
-                                    <label for="notificationsToggle" class="toggle-label-wrapper">
-                                        <i data-lucide="bell" class="toggle-icon" aria-hidden="true"></i>
-                                        <span class="toggle-label">Notificaciones del viaje</span>
-                                    </label>
+                                    <i data-lucide="bell" class="toggle-icon" aria-hidden="true"></i>
+                                    <span id="notificationsToggleLabel" class="toggle-label">Notificaciones del viaje</span>
                                     <div class="toggle-switch">
-                                        <input type="checkbox" id="notificationsToggle" {% if viaje.notificacionesActivas %}checked{% endif %} role="switch" aria-checked="{% if viaje.notificacionesActivas %}true{% else %}false{% endif %}" aria-labelledby="toggleLabel"/>
-                                        <span class="toggle-slider"></span>
+                                        <label for="notificationsToggle">
+                                            <input type="checkbox" id="notificationsToggle" role="switch" aria-checked="{{ viaje.notificacionesActivas|yesno:"true,false" }}" aria-labelledby="notificationsToggleLabel" {% if viaje.notificacionesActivas %}checked{% endif %} />
+                                            <span class="toggle-slider"></span>
+                                            <span class="sr-only">Activar o desactivar notificaciones</span>
+                                        </label>
                                     </div>
                                 </div>
                             </div>
