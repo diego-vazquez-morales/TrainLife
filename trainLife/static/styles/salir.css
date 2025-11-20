@@ -1,7 +1,31 @@
+/* === ICONOS DE MATERIAL SYMBOLS OUTLINED === */
 .material-symbols-outlined {
     font-variation-settings:
     'FILL' 0,
     'wght' 400,
     'GRAD' 0,
     'opsz' 24
+}
+
+/* === TEXTOS OSCUROS SOBRE FONDO CLARO === */
+.text-slate-900 { color: #1e293b; }        
+.bg-white { background: #fff; }
+
+/* === TEXTOS CLAROS SOBRE FONDO OSCURO === */
+.dark\:text-slate-50 { color: #f8fafc; }   
+.dark\:bg-slate-900 { background: #0f172a; }
+
+/* === TEXTOS SECUNDARIOS === */
+.text-slate-600 { color: #475569; }
+.dark\:text-slate-400 { color: #94a3b8; }
+.bg-slate-200 { background: #e2e8f0; }
+.dark\:bg-slate-700 { background: #334155; }
+
+/* === SOMBRA PARA BOTONES DE COLOR CLARO SOBRE FONDOS OSCUROS === */
+.text-white {
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.22);
+}
+.dark\:text-slate-50 {
+  text-shadow: 0 1px 3px rgba(0,0,0,0.22);
 }
