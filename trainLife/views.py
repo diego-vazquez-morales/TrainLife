@@ -570,5 +570,29 @@ def marcar_todas_leidas(request, usuario_id):
     return JsonResponse({'success': True, 'marcadas': count})
 
 
-def configuracion(request):
-    return render(request, 'configuracion.html')
+def configuracion(request, usuario_id):
+    usuario = Usuario.objects.get(id=usuario_id)
+    
+    if request.method == 'POST':
+        # Actualizar información personal
+        usuario.nombreUsuario = request.POST.get('nombreUsuario')
+        usuario.apellido1 = request.POST.get('apellido1')
+        usuario.apellido2 = request.POST.get('apellido2', '')
+        usuario.numeroTelefono = request.POST.get('numeroTelefono', '')
+        usuario.email = request.POST.get('email')
+        
+        # Actualizar preferencias de notificaciones
+        usuario.notificacionesViajes = 'notificacionesViajes' in request.POST
+        usuario.notificacionesRutas = 'notificacionesRutas' in request.POST
+        usuario.notificacionesAvisos = 'notificacionesAvisos' in request.POST
+        
+        # Guardar cambios
+        usuario.save()
+        
+        # Agregar mensaje de éxito
+        messages.success(request, 'Configuración guardada correctamente.')
+        
+        # Redirigir para evitar reenvío del formulario
+        return redirect('configuracion', usuario_id=usuario_id)
+    
+    return render(request, 'configuracion.html', {'usuario': usuario})

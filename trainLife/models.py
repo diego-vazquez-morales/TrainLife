@@ -503,3 +503,4 @@ def notificar_nuevo_aviso(sender, instance, created, **kwargs):
         # Crear todas las notificaciones en una sola operación (más eficiente)
         if notificaciones_a_crear:
             Notificacion.objects.bulk_create(notificaciones_a_crear)
+

@@ -29,6 +29,6 @@ urlpatterns = [
     path('notificaciones/<int:usuario_id>/marcar-todas/', views.marcar_todas_leidas, name='marcar_todas_leidas'),
 
     # configuración
-    path('configuracion/', views.configuracion, name='configuracion'),
+    path('configuracion/<int:usuario_id>/', views.configuracion, name='configuracion'),
     
 ]

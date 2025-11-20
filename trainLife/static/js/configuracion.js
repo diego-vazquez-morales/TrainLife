@@ -201,48 +201,38 @@ function validatePersonalInfo(data) {
  * Maneja el guardado de cambios
  */
 function handleSaveChanges(event) {
-    event.preventDefault();
+    // NO prevenir el comportamiento por defecto - permitir envío del formulario
+    // event.preventDefault();
 
-    // Recopilar datos
+    // Recopilar datos para validación
     const personalInfo = getPersonalInfoData();
 
     // Validar datos
     const errors = validatePersonalInfo(personalInfo);
     
     if (errors.length > 0) {
+        // Prevenir envío solo si hay errores
+        event.preventDefault();
+        
         // Mostrar modal de error
-        window.showConfirmModal({
-            title: 'Errores de validación',
-            message: 'Por favor, corrige los siguientes errores:\n\n' + errors.join('\n'),
-            confirmText: 'Entendido',
-            type: 'danger',
-            onConfirm: () => {
-                console.log('Errores mostrados al usuario');
-            }
-        });
+        if (window.showConfirmModal) {
+            window.showConfirmModal({
+                title: 'Errores de validación',
+                message: 'Por favor, corrige los siguientes errores:\n\n' + errors.join('\n'),
+                confirmText: 'Entendido',
+                type: 'danger',
+                onConfirm: () => {
+                    console.log('Errores mostrados al usuario');
+                }
+            });
+        } else {
+            alert('Por favor, corrige los siguientes errores:\n\n' + errors.join('\n'));
+        }
         return;
     }
 
-    // Mostrar modal de confirmación antes de guardar
-    window.showConfirmModal({
-        title: '¿Guardar cambios?',
-        message: '¿Estás seguro de que deseas guardar los cambios realizados en tu información personal y configuración de notificaciones?',
-        confirmText: 'Guardar',
-        cancelText: 'Cancelar',
-        type: 'info',
-        onConfirm: () => {
-            // Guardar en localStorage
-            localStorage.setItem('personalInfo', JSON.stringify(personalInfo));
-            localStorage.setItem('notificationSettings', JSON.stringify(notificationSettings));
-
-            // Mostrar mensaje de éxito
-            showSuccessMessage();
-
-            console.log('Cambios guardados exitosamente');
-            console.log('Información personal:', personalInfo);
-            console.log('Configuración de notificaciones:', notificationSettings);
-        }
-    });
+    // Si no hay errores, el formulario se enviará normalmente al servidor
+    console.log('Enviando formulario al servidor...');
 }
 
 /**

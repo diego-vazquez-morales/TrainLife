@@ -34,34 +34,34 @@
 
                 <!-- Navigation -->
                 <nav class="nav-menu">
-                    <a href="" class="nav-item">
+                    <a href="{% url 'inicio_usuario' usuario.id %}" class="nav-item">
                         <i data-lucide="home"></i>
                         <span>Home</span>
                     </a>
-                    <a href="" class="nav-item">
+                    <a href="{% url 'viajes_usuario' usuario.id %}" class="nav-item">
                         <i data-lucide="ticket"></i>
                         <span>Viajes</span>
                     </a>
-                    <a href="" class="nav-item">
+                    <a href="{% url 'mis_rutas' usuario.id %}" class="nav-item">
                         <i data-lucide="map-pin"></i>
                         <span>Mis Rutas</span>
                     </a>
-                    <a href="" class="nav-item">
+                    <a href="{% url 'buscar_rutas' usuario.id %}" class="nav-item">
                         <i data-lucide="search"></i>
                         <span>Buscar Rutas</span>
                     </a>
-                    <a href="" class="nav-item">
+                    <a href="{% url 'notificaciones' usuario.id %}" class="nav-item">
                         <i data-lucide="bell"></i>
                         <span>Notificaciones</span>
                     </a>
-                    <a href="" class="nav-item active">
+                    <a href="{% url 'configuracion' usuario.id %}" class="nav-item active">
                         <i data-lucide="settings"></i>
                         <span>Configuración</span>
                     </a>
                 </nav>
 
                 <!-- Logout Button -->
-                <button class="logout-btn"  aria-label="Cerrar sesión">
+                <button class="logout-btn" onclick="window.location.href='{% url 'salir' usuario.id %}'" aria-label="Cerrar sesión">
                     <i data-lucide="log-out"></i>
                     <span>Cerrar Sesión</span>
                 </button>
@@ -73,7 +73,7 @@
             <div class="content-wrapper">
                 <!-- Breadcrumbs -->
                 <nav class="breadcrumbs" aria-label="Breadcrumb">
-                    <a href="" class="breadcrumb-link">Home</a>
+                    <a href="{% url 'inicio_usuario' usuario.id %}" class="breadcrumb-link">Home</a>
                     <span class="breadcrumb-separator">/</span>
                     <span class="breadcrumb-current">Configuración</span>
                 </nav>
@@ -89,7 +89,8 @@
 
                 <!-- Form Card -->
                 <div class="form-card">
-                    <form id="personalInfoForm" aria-label="Formulario de información personal">
+                    <form id="personalInfoForm" method="POST" action="{% url 'configuracion' usuario.id %}" aria-label="Formulario de información personal">
+                        {% csrf_token %}
                         <!-- Nombre -->
                         <div class="form-group">
                             <label for="nombre" class="form-label">Nombre</label>
@@ -97,8 +98,9 @@
                                 <input
                                     type="text"
                                     id="nombre"
+                                    name="nombreUsuario"
                                     class="form-input"
-                                    value="Laura"
+                                    value="{{ usuario.nombreUsuario }}"
                                     aria-required="true"
                                 />
                                 <i data-lucide="edit" class="input-icon"></i>
@@ -113,8 +115,9 @@
                                     <input
                                         type="text"
                                         id="primerApellido"
+                                        name="apellido1"
                                         class="form-input"
-                                        value="Martínez"
+                                        value="{{ usuario.apellido1 }}"
                                         aria-required="true"
                                     />
                                     <i data-lucide="edit" class="input-icon"></i>
@@ -127,8 +130,9 @@
                                     <input
                                         type="text"
                                         id="segundoApellido"
+                                        name="apellido2"
                                         class="form-input"
-                                        value="García"
+                                        value="{{ usuario.apellido2|default:'' }}"
                                     />
                                     <i data-lucide="edit" class="input-icon"></i>
                                 </div>
@@ -143,8 +147,9 @@
                                     <input
                                         type="tel"
                                         id="telefono"
+                                        name="numeroTelefono"
                                         class="form-input"
-                                        value="+34 600 123 456"
+                                        value="{{ usuario.numeroTelefono|default:'' }}"
                                         aria-required="true"
                                     />
                                     <i data-lucide="edit" class="input-icon"></i>
@@ -157,15 +162,15 @@
                                     <input
                                         type="email"
                                         id="email"
+                                        name="email"
                                         class="form-input"
-                                        value="laura@gmail.com"
+                                        value="{{ usuario.email }}"
                                         aria-required="true"
                                     />
                                     <i data-lucide="edit" class="input-icon"></i>
                                 </div>
                             </div>
                         </div>
-                    </form>
                 </div>
 
                 <!-- Notifications Section -->
@@ -203,11 +208,12 @@
                             <input
                                 type="checkbox"
                                 id="travelToggle"
+                                name="notificacionesViajes"
                                 class="toggle-input"
                                 role="switch"
-                                aria-checked="true"
+                                aria-checked="{{ usuario.notificacionesViajes|yesno:'true,false' }}"
                                 aria-labelledby="travel-label"
-                                checked
+                                {% if usuario.notificacionesViajes %}checked{% endif %}
                             />
                             <div class="toggle-switch">
                                 <div class="toggle-slider"></div>
@@ -231,7 +237,9 @@
                             <input
                                 type="checkbox"
                                 id="routeToggle"
+                                name="notificacionesRutas"
                                 class="toggle-input"
+                                {% if usuario.notificacionesRutas %}checked{% endif %}
                             />
                             <div class="toggle-switch">
                                 <div class="toggle-slider"></div>
@@ -257,8 +265,9 @@
                             <input
                                 type="checkbox"
                                 id="generalToggle"
+                                name="notificacionesAvisos"
                                 class="toggle-input"
-                                checked
+                                {% if usuario.notificacionesAvisos %}checked{% endif %}
                             />
                             <div class="toggle-switch">
                                 <div class="toggle-slider"></div>
@@ -266,10 +275,13 @@
                         </div>
                     </div>
                 </div>
+                    </form>
 
                 <!-- Save Button -->
                 <div class="button-container">
                     <button
+                        type="submit"
+                        form="personalInfoForm"
                         id="saveBtn"
                         class="save-btn"
                         aria-label="Guardar todos los cambios realizados en la configuración"
