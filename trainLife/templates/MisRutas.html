@@ -48,11 +48,11 @@
                         <i data-lucide="search"></i>
                         <span>Buscar Rutas</span>
                     </a>
-                    <a class="nav-item" href="/notificaciones" aria-label="Ver notificaciones">
+                    <a class="nav-item" href="{% url 'notificaciones' usuario.id %}" aria-label="Ver notificaciones">
                         <i data-lucide="bell"></i>
                         <span>Notificaciones</span>
                     </a>
-                    <a class="nav-item" href="/configuracion" aria-label="Ir a configuración">
+                    <a class="nav-item" href="{% url 'configuracion' usuario.id %}" aria-label="Ir a configuración">
                         <i data-lucide="settings"></i>
                         <span>Configuración</span>
                     </a>

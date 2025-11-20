@@ -47,11 +47,11 @@
                         <i data-lucide="search"></i>
                         <span>Buscar Rutas</span>
                     </a>
-                    <a href="/notificaciones" class="nav-item" aria-label="Ir a Notificaciones">
+                    <a href="{% url 'notificaciones' usuario.id %}" class="nav-item" aria-label="Ir a Notificaciones">
                         <i data-lucide="bell"></i>
                         <span>Notificaciones</span>
                     </a>
-                    <a href="/configuracion" class="nav-item" aria-label="Ir a Configuración">
+                    <a href="{% url 'configuracion'  %}" class="nav-item" aria-label="Ir a Configuración">
                         <i data-lucide="settings"></i>
                         <span>Configuración</span>
                     </a>
