@@ -50,11 +50,11 @@
                         <i data-lucide="search"></i>
                         <span>Buscar Rutas</span>
                     </a>
-                    <a href="/notificaciones" class="nav-item">
+                    <a href="{% url 'notificaciones' usuario.id %}" class="nav-item">
                         <i data-lucide="bell"></i>
                         <span>Notificaciones</span>
                     </a>
-                    <a href="/configuracion" class="nav-item">
+                    <a href="{% url 'configuracion' %}" class="nav-item">
                         <i data-lucide="settings"></i>
                         <span>Configuración</span>
                     </a>
@@ -129,7 +129,7 @@
                             </p>
 
                             <!-- Button -->
-                            <button class="card-btn" onclick="window.location.href='{% url 'buscar_rutas' usuario.id %}'" aria-label="Buscar rutas disponibles para comprar un nuevo billete">
+                            <button class="card-btn" onclick="window.location.href='{% url 'aniadir_billete' usuario.id %}'" aria-label="Añadir un nuevo billete de tren">
                                 <span>Añadir nuevo billete</span>
                                 <i data-lucide="arrow-right"></i>
                             </button>
@@ -165,16 +165,6 @@
                         <h3 class="stat-title">Viajes Activos</h3>
                         <div class="stat-number">{{ num_viajes }}</div>
                         <p class="stat-date">Billetes confirmados</p>
-                    </div>
-
-                    <!-- Rutas Guardadas -->
-                    <div class="stat-card" role="listitem">
-                        <div class="stat-icon stat-icon-purple">
-                            <i data-lucide="map-pin"></i>
-                        </div>
-                        <h3 class="stat-title">Rutas Guardadas</h3>
-                        <div class="stat-number">3</div>
-                        <p class="stat-date">Rutas favoritas</p>
                     </div>
                 </div>
 

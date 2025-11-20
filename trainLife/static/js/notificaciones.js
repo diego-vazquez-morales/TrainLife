@@ -1,293 +1,277 @@
-// notificaciones.js - Gestión de Notificaciones
+// notificaciones.js - Gestión de notificaciones en tiempo real
 
-// Datos de notificaciones
-const notificaciones = [
-    {
-        id: 1,
-        type: 'warning',
-        title: 'Cambio de andén',
-        message: 'Tu tren AVE 3012 Madrid → Barcelona saldrá desde el andén 12 en lugar del andén 8.',
-        time: 'Hace 5 minutos',
-        unread: true
-    },
-    {
-        id: 2,
-        type: 'success',
-        title: 'Billete confirmado',
-        message: 'Tu reserva para el viaje Sevilla → Valencia ha sido confirmada. Coche 04, Asiento 12A.',
-        time: 'Hace 1 hora',
-        unread: true
-    },
-    {
-        id: 3,
-        type: 'info',
-        title: 'Recordatorio de viaje',
-        message: 'Tu viaje a Barcelona es mañana a las 14:30. No olvides llegar 30 minutos antes.',
-        time: 'Hace 3 horas',
-        unread: false
-    },
-    {
-        id: 4,
-        type: 'warning',
-        title: 'Retraso en servicio',
-        message: 'El tren AVE 2150 tiene un retraso estimado de 15 minutos.',
-        time: 'Hace 1 día',
-        unread: false
-    },
-    {
-        id: 5,
-        type: 'success',
-        title: 'Ruta guardada',
-        message: 'Has guardado exitosamente la ruta Madrid → Barcelona en tus favoritos.',
-        time: 'Hace 2 días',
-        unread: false
-    },
-    {
-        id: 6,
-        type: 'info',
-        title: 'Oferta especial',
-        message: 'Descuento del 20% en viajes AVE para el próximo mes. ¡Aprovecha ahora!',
-        time: 'Hace 3 días',
-        unread: false
-    }
-];
-
-// Estado de la aplicación
 let currentFilter = 'all';
-let notificacionesState = [...notificaciones];
+let notificaciones = [];
 
-// Inicialización al cargar el DOM
-document.addEventListener('DOMContentLoaded', () => {
-    initializeNotificaciones();
-    setupEventListeners();
+// Cargar notificaciones al iniciar
+document.addEventListener('DOMContentLoaded', function() {
     lucide.createIcons();
-});
-
-/**
- * Inicializa la página de notificaciones
- */
-function initializeNotificaciones() {
-    // Cargar notificaciones guardadas de localStorage si existen
-    const savedNotifications = localStorage.getItem('notificaciones');
-    if (savedNotifications) {
-        notificacionesState = JSON.parse(savedNotifications);
-    }
-
-    renderNotifications();
-    updateUnreadBadge();
-}
-
-/**
- * Configura los event listeners
- */
-function setupEventListeners() {
-    // Filtros
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    filterButtons.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const filter = e.target.getAttribute('data-filter');
-            handleFilterChange(filter);
+    cargarNotificaciones();
+    
+    // Event listeners para filtros
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Actualizar botones activos
+            document.querySelectorAll('.filter-btn').forEach(b => {
+                b.classList.remove('active');
+                b.setAttribute('aria-pressed', 'false');
+            });
+            this.classList.add('active');
+            this.setAttribute('aria-pressed', 'true');
+            
+            // Cambiar filtro
+            currentFilter = this.dataset.filter;
+            cargarNotificaciones();
         });
     });
-
-    // Sidebar mobile toggle
-    const mobileToggle = document.querySelector('.mobile-menu-toggle');
-    const sidebar = document.querySelector('.sidebar');
     
-    if (mobileToggle && sidebar) {
-        mobileToggle.addEventListener('click', () => {
+    // Event listener para marcar todas como leídas
+    document.getElementById('markAllReadBtn').addEventListener('click', marcarTodasComoLeidas);
+    
+    // Sidebar toggle
+    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+    const sidebar = document.querySelector('.sidebar');
+
+    if (mobileMenuToggle && sidebar) {
+        mobileMenuToggle.addEventListener('click', function() {
             sidebar.classList.toggle('active');
         });
 
-        // Cerrar sidebar al hacer clic fuera en móvil
-        document.addEventListener('click', (e) => {
+        document.addEventListener('click', function(e) {
             if (window.innerWidth <= 1024) {
-                if (!sidebar.contains(e.target) && !mobileToggle.contains(e.target)) {
+                if (!sidebar.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
                     sidebar.classList.remove('active');
                 }
             }
         });
     }
+});
 
-    // Cerrar sidebar al cambiar tamaño de ventana
-    window.addEventListener('resize', () => {
-        if (window.innerWidth > 1024 && sidebar) {
-            sidebar.classList.remove('active');
-        }
-    });
+// Cargar notificaciones desde el servidor
+function cargarNotificaciones() {
+    const url = `/api/notificaciones/${USUARIO_ID}/?filtro=${currentFilter}`;
+    
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            notificaciones = data.notificaciones;
+            actualizarBadge(data.no_leidas);
+            renderizarNotificaciones();
+        })
+        .catch(error => {
+            console.error('Error al cargar notificaciones:', error);
+            mostrarError();
+        });
 }
 
-/**
- * Maneja el cambio de filtro
- */
-function handleFilterChange(filter) {
-    currentFilter = filter;
-
-    // Actualizar botones activos
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.getAttribute('data-filter') === filter) {
-            btn.classList.add('active');
-        }
-    });
-
-    renderNotifications();
+// Actualizar badge de notificaciones no leídas
+function actualizarBadge(count) {
+    const badge = document.getElementById('unreadBadge');
+    if (badge) {
+        badge.textContent = count;
+        badge.style.display = count > 0 ? 'inline-flex' : 'none';
+    }
 }
 
-/**
- * Renderiza las notificaciones según el filtro activo
- */
-function renderNotifications() {
+// Renderizar notificaciones en el DOM
+function renderizarNotificaciones() {
     const container = document.getElementById('notificationsList');
     const emptyState = document.getElementById('emptyState');
     
-    if (!container || !emptyState) return;
-
-    // Filtrar notificaciones
-    let filteredNotifications = [...notificacionesState];
-    
-    if (currentFilter === 'unread') {
-        filteredNotifications = filteredNotifications.filter(n => n.unread);
-    } else if (currentFilter === 'alerts') {
-        filteredNotifications = filteredNotifications.filter(n => n.type === 'warning');
-    }
-
-    // Limpiar contenedor
-    container.innerHTML = '';
-
-    // Mostrar empty state si no hay notificaciones
-    if (filteredNotifications.length === 0) {
-        emptyState.style.display = 'flex';
+    if (notificaciones.length === 0) {
+        container.style.display = 'none';
+        emptyState.style.display = 'block';
+        lucide.createIcons();
         return;
-    } else {
-        emptyState.style.display = 'none';
     }
-
-    // Renderizar cada notificación
-    filteredNotifications.forEach(notif => {
-        const item = createNotificationItem(notif);
-        container.appendChild(item);
+    
+    container.style.display = 'block';
+    emptyState.style.display = 'none';
+    
+    container.innerHTML = notificaciones.map(notif => crearNotificacionHTML(notif)).join('');
+    
+    // Actualizar iconos de Lucide
+    lucide.createIcons();
+    
+    // Agregar event listeners para marcar como leída
+    document.querySelectorAll('.notification-card').forEach(card => {
+        card.addEventListener('click', function() {
+            const notifId = parseInt(this.dataset.notifId);
+            const notif = notificaciones.find(n => n.id === notifId);
+            if (notif && !notif.leida) {
+                marcarComoLeida(notifId);
+            }
+        });
     });
+}
 
-    // Reinicializar iconos de Lucide
+// Crear HTML para una notificación
+function crearNotificacionHTML(notif) {
+    const iconos = {
+        'cambio_viaje': 'alert-circle',
+        'nuevo_viaje': 'check-circle',
+        'cancelacion': 'x-circle',
+        'recordatorio': 'clock',
+        'cambio_anden': 'map-pin',
+        'cambio_hora': 'clock',
+        'alerta': 'alert-triangle',
+        'info': 'info',
+        'cambio_ruta': 'alert-circle',
+        'aviso_general': 'info'
+    };
+    
+    const colores = {
+        'cambio_viaje': 'warning',
+        'nuevo_viaje': 'success',
+        'cancelacion': 'danger',
+        'recordatorio': 'info',
+        'cambio_anden': 'warning',
+        'cambio_hora': 'warning',
+        'alerta': 'danger',
+        'info': 'info',
+        'cambio_ruta': 'warning',
+        'aviso_general': 'info'
+    };
+    
+    const icono = iconos[notif.tipo] || 'bell';
+    const color = colores[notif.tipo] || 'default';
+    const leidaClass = notif.leida ? '' : 'unread';
+    
+    const fecha = formatearFecha(notif.fechaCreacion);
+    
+    return `
+        <div class="notification-card ${leidaClass}" 
+             data-notif-id="${notif.id}" 
+             role="listitem"
+             aria-label="Notificación: ${notif.titulo}">
+            ${!notif.leida ? '<div class="notification-unread-dot"></div>' : ''}
+            <div class="notification-icon notification-icon-${color}">
+                <i data-lucide="${icono}"></i>
+            </div>
+            <div class="notification-content">
+                <h4 class="notification-title">${notif.titulo}</h4>
+                <p class="notification-message">${notif.mensaje}</p>
+                <span class="notification-time">
+                    <i data-lucide="clock"></i>
+                    ${fecha}
+                </span>
+            </div>
+            <div class="notification-chevron">
+                <i data-lucide="chevron-right"></i>
+            </div>
+        </div>
+    `;
+}
+
+// Formatear fecha de forma legible
+function formatearFecha(fechaStr) {
+    const fecha = new Date(fechaStr);
+    const ahora = new Date();
+    const diffMs = ahora - fecha;
+    const diffMins = Math.floor(diffMs / 60000);
+    const diffHoras = Math.floor(diffMs / 3600000);
+    const diffDias = Math.floor(diffMs / 86400000);
+    
+    if (diffMins < 1) {
+        return 'Ahora';
+    } else if (diffMins < 60) {
+        return `Hace ${diffMins} min`;
+    } else if (diffHoras < 24) {
+        return `Hace ${diffHoras}h`;
+    } else if (diffDias < 7) {
+        return `Hace ${diffDias}d`;
+    } else {
+        return fecha.toLocaleDateString('es-ES', { 
+            day: '2-digit', 
+            month: 'short' 
+        });
+    }
+}
+
+// Marcar una notificación como leída
+function marcarComoLeida(notifId) {
+    fetch(`/notificaciones/${USUARIO_ID}/marcar/${notifId}/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Actualizar estado local
+            const notif = notificaciones.find(n => n.id === notifId);
+            if (notif) {
+                notif.leida = true;
+            }
+            
+            // Recargar notificaciones para actualizar contador
+            cargarNotificaciones();
+        }
+    })
+    .catch(error => {
+        console.error('Error al marcar notificación como leída:', error);
+    });
+}
+
+// Marcar todas las notificaciones como leídas
+function marcarTodasComoLeidas() {
+    if (notificaciones.filter(n => !n.leida).length === 0) {
+        return;
+    }
+    
+    if (!confirm('¿Marcar todas las notificaciones como leídas?')) {
+        return;
+    }
+    
+    fetch(`/notificaciones/${USUARIO_ID}/marcar-todas/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            cargarNotificaciones();
+        }
+    })
+    .catch(error => {
+        console.error('Error al marcar todas como leídas:', error);
+    });
+}
+
+// Mostrar mensaje de error
+function mostrarError() {
+    const container = document.getElementById('notificationsList');
+    container.innerHTML = `
+        <div class="alert alert-danger" role="alert">
+            <i data-lucide="alert-circle"></i>
+            Error al cargar las notificaciones. Por favor, intenta de nuevo.
+        </div>
+    `;
     lucide.createIcons();
 }
 
-/**
- * Crea un elemento de notificación
- */
-function createNotificationItem(notif) {
-    const item = document.createElement('div');
-    item.className = `notification-item ${notif.unread ? 'unread' : ''}`;
-    item.onclick = () => handleNotificationClick(notif.id);
-
-    // Icono según tipo
-    const iconMap = {
-        success: 'check-circle',
-        warning: 'alert-circle',
-        info: 'info'
-    };
-
-    item.innerHTML = `
-        <div class="notification-icon ${notif.type}">
-            <i data-lucide="${iconMap[notif.type]}"></i>
-        </div>
-        <div class="notification-content">
-            <div class="notification-header">
-                <h3 class="notification-title">${notif.title}</h3>
-                ${notif.unread ? '<span class="unread-indicator"></span>' : ''}
-            </div>
-            <p class="notification-message">${notif.message}</p>
-            <div class="notification-time">
-                <i data-lucide="clock"></i>
-                <span>${notif.time}</span>
-            </div>
-        </div>
-        <i data-lucide="chevron-right" class="notification-arrow"></i>
-    `;
-
-    return item;
-}
-
-/**
- * Maneja el clic en una notificación
- */
-function handleNotificationClick(id) {
-    // Marcar como leída
-    notificacionesState = notificacionesState.map(n => 
-        n.id === id ? { ...n, unread: false } : n
-    );
-
-    saveNotifications();
-    renderNotifications();
-    updateUnreadBadge();
-
-    console.log('Notificación clickeada:', id);
-}
-
-/**
- * Marca todas las notificaciones como leídas
- */
-function markAllAsRead() {
-    notificacionesState = notificacionesState.map(n => ({ ...n, unread: false }));
-    
-    saveNotifications();
-    renderNotifications();
-    updateUnreadBadge();
-
-    console.log('Todas las notificaciones marcadas como leídas');
-}
-
-/**
- * Actualiza el badge de notificaciones no leídas
- */
-function updateUnreadBadge() {
-    const badge = document.getElementById('unreadBadge');
-    if (!badge) return;
-
-    const unreadCount = notificacionesState.filter(n => n.unread).length;
-    
-    if (unreadCount > 0) {
-        badge.textContent = unreadCount;
-        badge.style.display = 'inline-flex';
-    } else {
-        badge.style.display = 'none';
+// Obtener cookie CSRF
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
     }
+    return cookieValue;
 }
 
-/**
- * Guarda notificaciones en localStorage
- */
-function saveNotifications() {
-    localStorage.setItem('notificaciones', JSON.stringify(notificacionesState));
-}
-
-/**
- * Añade una nueva notificación (función auxiliar)
- */
-function addNotification(type, title, message) {
-    const newNotification = {
-        id: Date.now(),
-        type: type,
-        title: title,
-        message: message,
-        time: 'Ahora',
-        unread: true
-    };
-
-    notificacionesState.unshift(newNotification);
-    saveNotifications();
-    renderNotifications();
-    updateUnreadBadge();
-}
-
-/**
- * Exporta funciones para uso global
- */
-window.markAllAsRead = markAllAsRead;
-window.addNotification = addNotification;
-
-// Debug: Log en consola
-console.log('notificaciones.js cargado correctamente');
-console.log('Notificaciones:', notificacionesState.length);
-console.log('No leídas:', notificacionesState.filter(n => n.unread).length);
+// Auto-refrescar notificaciones cada 30 segundos
+setInterval(() => {
+    cargarNotificaciones();
+}, 30000);

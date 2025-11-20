@@ -20,5 +20,15 @@ urlpatterns = [
     path('eliminarRutaFavorito/<int:usuario_id>/<int:ruta_id>/', views.eliminarRutaFavorito, name='eliminar_ruta_favorito'),
     path('crearUsuario/', views.crearUsuario, name='crear_usuario'),
     path('api/buscarRutas/<int:usuario_id>/', views.api_buscar_rutas, name='api_buscar_rutas'),
+    path('aniadirBillete/<int:usuario_id>/', views.aniadirBillete, name='aniadir_billete'),
+    
+    # Notificaciones
+    path('notificaciones/<int:usuario_id>/', views.notificaciones, name='notificaciones'),
+    path('api/notificaciones/<int:usuario_id>/', views.api_notificaciones, name='api_notificaciones'),
+    path('notificaciones/<int:usuario_id>/marcar/<int:notificacion_id>/', views.marcar_notificacion_leida, name='marcar_notificacion_leida'),
+    path('notificaciones/<int:usuario_id>/marcar-todas/', views.marcar_todas_leidas, name='marcar_todas_leidas'),
+
+    # configuración
+    path('configuracion/', views.configuracion, name='configuracion'),
     
 ]

@@ -1,16 +1,25 @@
 from django.contrib import admin
-from .models import Usuario, Viaje, Ruta, Trayecto
+from .models import Usuario, Viaje, Ruta, Trayecto, Notificacion, Aviso
 
 
 @admin.register(Usuario)
 class UsuarioAdmin(admin.ModelAdmin):
-	list_display = ('nombreUsuario', 'apellido1', 'apellido2', 'email', 'numeroTelefono')
+	list_display = ('nombreUsuario', 'apellido1', 'apellido2', 'email', 'numeroTelefono', 'notificacionesViajes', 'notificacionesRutas', 'notificacionesAvisos')
+	list_filter = ('notificacionesViajes', 'notificacionesRutas', 'notificacionesAvisos')
 	search_fields = ('nombreUsuario', 'apellido1', 'email')
+	fieldsets = (
+		('Información Personal', {
+			'fields': ('nombreUsuario', 'apellido1', 'apellido2', 'email', 'numeroTelefono', 'contrasenia')
+		}),
+		('Preferencias de Notificaciones', {
+			'fields': ('notificacionesViajes', 'notificacionesRutas', 'notificacionesAvisos')
+		}),
+	)
 
 @admin.register(Viaje)
 class ViajeAdmin(admin.ModelAdmin):
-	list_display = ('usuario', 'nombrePasajero', 'origenEstacion', 'destinoEstacion', 'fechaViaje', 'horaSalidaOrigen', 'estadoViaje', 'notificacionesActivas')
-	list_filter = ('fechaViaje', 'estadoViaje', 'notificacionesActivas')
+	list_display = ('usuario', 'nombrePasajero', 'origenEstacion', 'destinoEstacion', 'fechaViaje', 'horaSalidaOrigen', 'estadoViaje')
+	list_filter = ('fechaViaje', 'estadoViaje')
 	search_fields = ('usuario__nombreUsuario', 'nombrePasajero', 'origenEstacion', 'destinoEstacion')
 
 
@@ -39,3 +48,30 @@ class TrayectoAdmin(admin.ModelAdmin):
 	list_filter = ('nombreLinea', 'ruta__usuario')
 	search_fields = ('estacionSalida', 'estacionLlegada', 'nombreLinea', 'ruta__nombre')
 	ordering = ['ruta', 'orden']
+
+
+@admin.register(Notificacion)
+class NotificacionAdmin(admin.ModelAdmin):
+	list_display = ('usuario', 'tipo', 'titulo', 'leida', 'importante', 'fechaCreacion')
+	list_filter = ('tipo', 'leida', 'importante', 'fechaCreacion')
+	search_fields = ('usuario__nombreUsuario', 'titulo', 'mensaje')
+	readonly_fields = ('fechaCreacion', 'fechaLeida')
+	ordering = ['-fechaCreacion']
+
+
+@admin.register(Aviso)
+class AvisoAdmin(admin.ModelAdmin):
+	list_display = ('nombreAviso', 'fechaAviso', 'horaAviso', 'fechaCreacion')
+	list_filter = ('fechaAviso',)
+	search_fields = ('nombreAviso', 'informacion')
+	ordering = ['-fechaAviso', '-horaAviso']
+	fieldsets = (
+		('Información del Aviso', {
+			'fields': ('nombreAviso', 'fechaAviso', 'horaAviso', 'informacion')
+		}),
+		('Fechas de Control', {
+			'fields': ('fechaCreacion',),
+			'classes': ('collapse',)
+		}),
+	)
+	readonly_fields = ('fechaCreacion',)

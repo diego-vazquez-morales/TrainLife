@@ -1,8 +1,9 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib import messages
 from django.http import JsonResponse
-from .models import Usuario, Viaje, Ruta, Trayecto
+from .models import Usuario, Viaje, Ruta, Trayecto, Notificacion
 from django.db.models import Q
+from datetime import datetime
 
 
 # Create your views here.
@@ -412,3 +413,162 @@ def api_buscar_rutas(request, usuario_id):
             rutas_data.append(ruta_data)
     
     return JsonResponse({'rutas': rutas_data})
+
+
+def aniadirBillete(request, usuario_id):
+    """Vista para añadir un nuevo billete/viaje."""
+    # Verificar que el usuario de la sesión coincida con el de la URL
+    session_usuario_id = request.session.get('usuario_id')
+    if not session_usuario_id or session_usuario_id != usuario_id:
+        return redirect('login')
+
+    usuario = Usuario.objects.filter(id=usuario_id).first()
+    if not usuario:
+        return redirect('login')
+    
+    if request.method == 'POST':
+        try:
+            # Extraer datos del formulario
+            nuevo_viaje = Viaje(
+                usuario=usuario,
+                nombrePasajero=request.POST.get('nombrePasajero'),
+                coche=request.POST.get('coche'),
+                asiento=request.POST.get('asiento'),
+                clase=request.POST.get('clase', 'Turista'),
+                origenEstacion=request.POST.get('origenEstacion'),
+                horaSalidaOrigen=request.POST.get('horaSalidaOrigen'),
+                andenOrigen=request.POST.get('andenOrigen', ''),
+                destinoEstacion=request.POST.get('destinoEstacion'),
+                horaLlegadaDestino=request.POST.get('horaLlegadaDestino'),
+                fechaViaje=request.POST.get('fechaViaje'),
+                notificacionesActivas=request.POST.get('notificacionesActivas') == 'on',
+                estadoViaje=request.POST.get('estadoViaje', 'Programado')
+            )
+            
+            # Guardar el viaje
+            nuevo_viaje.save()
+            
+            messages.success(request, '¡Billete añadido exitosamente!')
+            return redirect('viajes_usuario', usuario_id=usuario_id)
+            
+        except Exception as e:
+            messages.error(request, f'Error al añadir el billete: {str(e)}')
+            return render(request, 'AniadirBillete.html', {
+                'usuario': usuario,
+            })
+    
+    # GET - Mostrar formulario vacío
+    return render(request, 'AniadirBillete.html', {
+        'usuario': usuario,
+    })
+
+
+def notificaciones(request, usuario_id):
+    """Vista para mostrar las notificaciones del usuario."""
+    # Verificar que el usuario de la sesión coincida con el de la URL
+    session_usuario_id = request.session.get('usuario_id')
+    if not session_usuario_id or session_usuario_id != usuario_id:
+        return redirect('login')
+
+    usuario = Usuario.objects.filter(id=usuario_id).first()
+    if not usuario:
+        return redirect('login')
+    
+    # Obtener todas las notificaciones del usuario
+    todas_notificaciones = Notificacion.objects.filter(usuario=usuario)
+    
+    # Contar no leídas
+    num_no_leidas = todas_notificaciones.filter(leida=False).count()
+    
+    return render(request, 'notificaciones.html', {
+        'usuario': usuario,
+        'num_no_leidas': num_no_leidas,
+    })
+
+
+def api_notificaciones(request, usuario_id):
+    """API para obtener notificaciones del usuario en formato JSON."""
+    # Verificar autenticación
+    session_usuario_id = request.session.get('usuario_id')
+    if not session_usuario_id or session_usuario_id != usuario_id:
+        return JsonResponse({'error': 'No autenticado'}, status=401)
+    
+    usuario = Usuario.objects.filter(id=usuario_id).first()
+    if not usuario:
+        return JsonResponse({'error': 'Usuario no encontrado'}, status=404)
+    
+    # Filtros
+    filtro = request.GET.get('filtro', 'all')  # all, unread, alerts
+    
+    notificaciones = Notificacion.objects.filter(usuario=usuario)
+    
+    if filtro == 'unread':
+        notificaciones = notificaciones.filter(leida=False)
+    elif filtro == 'alerts':
+        notificaciones = notificaciones.filter(importante=True)
+    
+    # Serializar notificaciones
+    notificaciones_data = []
+    for notif in notificaciones:
+        notificaciones_data.append({
+            'id': notif.id,
+            'tipo': notif.tipo,
+            'titulo': notif.titulo,
+            'mensaje': notif.mensaje,
+            'leida': notif.leida,
+            'importante': notif.importante,
+            'fechaCreacion': notif.fechaCreacion.strftime('%Y-%m-%d %H:%M:%S'),
+            'viaje_id': notif.viaje.id if notif.viaje else None,
+        })
+    
+    return JsonResponse({
+        'notificaciones': notificaciones_data,
+        'total': len(notificaciones_data),
+        'no_leidas': notificaciones.filter(leida=False).count()
+    })
+
+
+def marcar_notificacion_leida(request, usuario_id, notificacion_id):
+    """Marca una notificación como leída."""
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Método no permitido'}, status=405)
+    
+    # Verificar autenticación
+    session_usuario_id = request.session.get('usuario_id')
+    if not session_usuario_id or session_usuario_id != usuario_id:
+        return JsonResponse({'error': 'No autenticado'}, status=401)
+    
+    try:
+        notificacion = Notificacion.objects.get(id=notificacion_id, usuario_id=usuario_id)
+        notificacion.marcar_como_leida()
+        return JsonResponse({'success': True, 'leida': True})
+    except Notificacion.DoesNotExist:
+        return JsonResponse({'error': 'Notificación no encontrada'}, status=404)
+
+
+def marcar_todas_leidas(request, usuario_id):
+    """Marca todas las notificaciones del usuario como leídas."""
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Método no permitido'}, status=405)
+    
+    # Verificar autenticación
+    session_usuario_id = request.session.get('usuario_id')
+    if not session_usuario_id or session_usuario_id != usuario_id:
+        return JsonResponse({'error': 'No autenticado'}, status=401)
+    
+    usuario = Usuario.objects.filter(id=usuario_id).first()
+    if not usuario:
+        return JsonResponse({'error': 'Usuario no encontrado'}, status=404)
+    
+    # Marcar todas como leídas
+    notificaciones_no_leidas = Notificacion.objects.filter(usuario=usuario, leida=False)
+    count = notificaciones_no_leidas.count()
+    
+    for notif in notificaciones_no_leidas:
+        notif.marcar_como_leida()
+    
+    return JsonResponse({'success': True, 'marcadas': count})
+
+
+def configuracion(request):
+    return render(request, 'configuracion.html')

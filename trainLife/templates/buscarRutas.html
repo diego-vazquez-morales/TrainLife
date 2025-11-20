@@ -46,15 +46,15 @@
                         <i data-lucide="map-pin"></i>
                         <span>Mis Rutas</span>
                     </a>
-                    <a href="{% url 'buscar_rutas' usuario.id %}" class="nav-item active">
+                    <a href="{% url 'buscar_rutas' usuario.id %}" class="nav-item active" aria-current="page">
                         <i data-lucide="search"></i>
                         <span>Buscar Rutas</span>
                     </a>
-                    <a href="/notificaciones" class="nav-item">
+                    <a href="{% url 'notificaciones' usuario.id %}" class="nav-item">
                         <i data-lucide="bell"></i>
                         <span>Notificaciones</span>
                     </a>
-                    <a href="/configuracion" class="nav-item">
+                    <a href="{% url 'configuracion' usuario.id %}" class="nav-item">
                         <i data-lucide="settings"></i>
                         <span>Configuración</span>
                     </a>
