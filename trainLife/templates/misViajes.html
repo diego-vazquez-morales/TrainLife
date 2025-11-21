@@ -113,7 +113,7 @@
                         {% for viaje in viajes %}
                         <div class="trip-card" role="listitem">
                             <div class="trip-card-header">
-                                <h3 class="trip-route">{{ viaje.origenEstacion }} → {{ viaje.destinoEstacion }}</h3>
+                                <h2 class="trip-route">{{ viaje.origenEstacion }} → {{ viaje.destinoEstacion }}</h2>
                                 <span class="status-badge status-{{ viaje.estadoViaje|lower }}">
                                     <i data-lucide="check-circle"></i>
                                     {{ viaje.estadoViaje|capfirst }}
