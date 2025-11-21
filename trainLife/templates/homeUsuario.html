@@ -21,7 +21,7 @@
 <body>
     <div class="dashboard-container">
         <!-- Sidebar -->
-        <aside class="sidebar" id="sidebar" role="navigation" aria-label="Menú de navegación principal">
+        <aside class="sidebar" id="sidebar" aria-label="Menú de navegación principal">
             <div class="sidebar-content">
                 <!-- Logo -->
                 <div class="logo-section">
@@ -33,7 +33,7 @@
                 <nav class="nav-menu" aria-label="Menú principal">
                     <a href="{% url 'inicio_usuario' usuario.id %}" class="nav-item active" aria-current="page" aria-label="Inicio (página actual)">
                         <i data-lucide="home"></i>
-                        <span>Inicio</span>
+                        <span>Home</span>
                     </a>
                     <a href="{% url 'viajes_usuario' usuario.id %}" class="nav-item" aria-label="Ir a Viajes">
                         <i data-lucide="ticket"></i>
