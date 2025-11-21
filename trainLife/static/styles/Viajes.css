@@ -6,7 +6,7 @@
     --primary-hover: #0d3a9a;
     --primary-light: #1976d2;
     --text-dark: #1a1a1a;
-    --text-secondary: #666666;
+    --text-secondary: #444444;
     --text-light: #999999;
     --bg-main: #f5f5f5;
     --bg-white: #ffffff;
@@ -286,11 +286,11 @@ body {
 
 /* Gradients */
 .card-gradient-blue {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+    background: linear-gradient(135deg, #053278 0%, #0f49bd 100%);
 }
 
 .card-gradient-lightblue {
-    background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary-color) 100%);
+    background: linear-gradient(135deg, #1976d2 0%, #1049bd 100%);
 }
 
 /* Card Decoration */
@@ -340,15 +340,17 @@ body {
 .card-title {
     font-size: 1.5rem;
     font-weight: 700;
-    color: white;
+    color: #ffffff;
     margin-bottom: 0.75rem;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.35), 0 1px 1px rgba(0,0,0,0.25);
 }
 
 .card-description {
     font-size: 1rem;
-    color: rgba(255, 255, 255, 0.9);
+    color: #ffffff;
     line-height: 1.6;
     margin-bottom: 1.5rem;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.35), 0 1px 1px rgba(0,0,0,0.25);
 }
 
 /* Card Button */
