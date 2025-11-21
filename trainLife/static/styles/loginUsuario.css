@@ -50,7 +50,7 @@ body {
 
 .login-subtitle {
   font-size: 14px;
-  color: #8e8e93;
+  color: #444444;
   font-weight: 400;
 }
 
@@ -118,7 +118,7 @@ body {
 }
 
 .form-input::placeholder {
-  color: #b0b0b5;
+  color: #444444;
 }
 
 .form-input:focus {
@@ -158,7 +158,7 @@ body {
 
 .forgot-password {
   font-size: 13px;
-  color: #007aff;
+  color: #0051d5;
   text-decoration: none;
   font-weight: 400;
   transition: color 0.2s ease;
@@ -200,12 +200,12 @@ body {
 
 .register-link p {
   font-size: 14px;
-  color: #8e8e93;
+  color: #444444;
   font-weight: 400;
 }
 
 .register-link a {
-  color: #007aff;
+  color: #0051d5;
   font-weight: 600;
   text-decoration: none;
   transition: opacity 0.2s ease;
@@ -214,6 +214,39 @@ body {
 .register-link a:hover {
   opacity: 0.8;
   text-decoration: underline;
+}
+
+/* Aplica a todos los botones importantes de login */
+button,
+button span,
+input[type="button"],
+input[type="submit"] {
+  min-width: 44px !important;
+  min-height: 44px !important;
+  /* Para iconos, quita padding si ya tienen tamaño de caja fijo */
+}
+
+/* Específicamente para el botón de mostrar/ocultar contraseña */
+.toggle-password,
+button[aria-label="Mostrar u ocultar contraseña"] {
+  min-width: 44px !important;
+  min-height: 44px !important;
+  width: 44px !important;
+  height: 44px !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.material-symbols-outlined {
+  color: #000000 !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  .material-symbols-outlined {
+    color: #000000 !important;
+  }
 }
 
 /* Responsive */

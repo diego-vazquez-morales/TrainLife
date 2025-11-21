@@ -17,65 +17,67 @@
       class="absolute inset-0 z-0 h-full w-full bg-[url('https://images.unsplash.com/photo-1527498913931-c3024438f226?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=M3wzNjAzNTV8MHwxfGFsbHx8fHx8fHx8fDE3MTc1MTAzOTZ8&amp;ixlib=rb-4.0.3&amp;q=80&amp;w=1080')] bg-cover bg-center">
       <div class="absolute inset-0 bg-gray-900/60 dark:bg-black/70"></div>
     </div>
-    <div class="relative z-10 flex w-full max-w-md flex-col items-center">
-      <div class="w-full rounded-xl bg-background-light/95 dark:bg-background-dark/95 p-8 shadow-2xl backdrop-blur-sm">
-        <div class="flex flex-col items-center">
-          <h1
-            class="text-[#0d141b] dark:text-white tracking-light text-[32px] font-bold leading-tight pb-3 pt-6 text-center">
-            TrainApp</h1>
-          <p class="text-slate-600 dark:text-slate-400 pb-8">Bienvenido de nuevo</p>
-        </div>
-        <form method="post" class="flex flex-col gap-4">
-          {% csrf_token %}
-          <div class="flex flex-col w-full">
-            <label class="flex flex-col w-full flex-1">
-              <p class="text-[#0d141b] dark:text-slate-200 text-base font-medium leading-normal pb-2">Correo electrónico
-              </p>
-              <div class="relative flex w-full items-center">
-                <span class="material-symbols-outlined absolute left-4 text-slate-400 dark:text-slate-500">mail</span>
-                <input aria-label="Correo electrónico"
-                  class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 focus:border-primary dark:focus:border-primary h-14 placeholder:text-[#4c739a] dark:placeholder:text-slate-500 p-[15px] pl-12 text-base font-normal leading-normal"
-                  placeholder="Introduce tu correo electrónico" type="email" value="" name="email" required />
-              </div>
-            </label>
+    <main>
+      <div class="relative z-10 flex w-full max-w-md flex-col items-center">
+        <div class="w-full rounded-xl bg-background-light/95 dark:bg-background-dark/95 p-8 shadow-2xl backdrop-blur-sm">
+          <div class="flex flex-col items-center">
+            <h1
+              class="text-[#0d141b] dark:text-white tracking-light text-[32px] font-bold leading-tight pb-3 pt-6 text-center">
+              TrainApp</h1>
+            <p class="text-slate-600 dark:text-slate-400 pb-8">Bienvenido de nuevo</p>
           </div>
-          <div class="flex flex-col w-full">
-            <label class="flex flex-col w-full flex-1">
-              <p class="text-[#0d141b] dark:text-slate-200 text-base font-medium leading-normal pb-2">
-                Contraseña</p>
-              <div class="relative flex w-full flex-1 items-center">
-                <span class="material-symbols-outlined absolute left-4 text-slate-400 dark:text-slate-500">lock</span>
-                <input aria-label="Contraseña"
-                  class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 focus:border-primary dark:focus:border-primary h-14 placeholder:text-[#4c739a] dark:placeholder:text-slate-500 p-[15px] pl-12 pr-12 text-base font-normal leading-normal"
-                  placeholder="Introduce tu contraseña" type="password" value="" name="contrasenia" required />
-                <button aria-label="Mostrar u ocultar contraseña"
-                  class="absolute right-0 h-14 w-12 flex items-center justify-center text-[#4c739a] dark:text-slate-500 hover:text-primary dark:hover:text-primary"
-                  type="button">
-                  <span class="material-symbols-outlined text-2xl">visibility</span>
-                </button>
-              </div>
-            </label>
-          </div>
+          <form method="post" class="flex flex-col gap-4">
+            {% csrf_token %}
+            <div class="flex flex-col w-full">
+              <label class="flex flex-col w-full flex-1">
+                <p class="text-[#0d141b] dark:text-slate-200 text-base font-medium leading-normal pb-2">Correo electrónico
+                </p>
+                <div class="relative flex w-full items-center">
+                  <span class="material-symbols-outlined absolute left-4 text-slate-400 dark:text-slate-500">mail</span>
+                  <input aria-label="Correo electrónico"
+                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 focus:border-primary dark:focus:border-primary h-14 placeholder:text-[#4c739a] dark:placeholder:text-slate-500 p-[15px] pl-12 text-base font-normal leading-normal"
+                    placeholder="Introduce tu correo electrónico" type="email" value="" name="email" required />
+                </div>
+              </label>
+            </div>
+            <div class="flex flex-col w-full">
+              <label class="flex flex-col w-full flex-1">
+                <p class="text-[#0d141b] dark:text-slate-200 text-base font-medium leading-normal pb-2">
+                  Contraseña</p>
+                <div class="relative flex w-full flex-1 items-center">
+                  <span class="material-symbols-outlined absolute left-4 text-slate-400 dark:text-slate-500">lock</span>
+                  <input aria-label="Contraseña"
+                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0d141b] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 focus:border-primary dark:focus:border-primary h-14 placeholder:text-[#4c739a] dark:placeholder:text-slate-500 p-[15px] pl-12 pr-12 text-base font-normal leading-normal"
+                    placeholder="Introduce tu contraseña" type="password" value="" name="contrasenia" required />
+                  <button aria-label="Mostrar u ocultar contraseña"
+                    class="absolute right-0 h-14 w-12 flex items-center justify-center text-[#4c739a] dark:text-slate-500 hover:text-primary dark:hover:text-primary"
+                    type="button">
+                    <span class="material-symbols-outlined text-2xl">visibility</span>
+                  </button>
+                </div>
+              </label>
+            </div>
 
-          <div class="flex justify-end pt-1">
-            <a class="text-primary hover:underline text-sm font-normal leading-normal" href="#">¿Has olvidado tu
-              contraseña?</a>
-          </div>
-          <div class="flex pt-3 justify-center">
-            <button type="submit"
-              class="flex min-w-[84px] w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary text-slate-50 text-base font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:ring-offset-background-light dark:focus:ring-offset-background-dark transition-colors">
-              <span class="truncate">Iniciar Sesión</span>
-            </button>
-          </div>
-        </form>
+            <div class="flex justify-end pt-1">
+              <a class="text-primary hover:underline text-sm font-normal leading-normal" href="#">¿Has olvidado tu
+                contraseña?</a>
+            </div>
+            <div class="flex pt-3 justify-center">
+              <button type="submit"
+                class="flex min-w-[84px] w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary text-slate-50 text-base font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:ring-offset-background-light dark:focus:ring-offset-background-dark transition-colors">
+                <span class="truncate">Iniciar Sesión</span>
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="mt-8 text-center">
+          <p class="text-slate-200 dark:text-slate-400">
+            ¿No tienes una cuenta? <a class="font-bold text-white dark:text-primary hover:underline"
+              href="{% url 'registro_usuario' %}">Regístrate</a>
+          </p>
+        </div>
       </div>
-      <div class="mt-8 text-center">
-        <p class="text-slate-200 dark:text-slate-400">
-          ¿No tienes una cuenta? <a class="font-bold text-white dark:text-primary hover:underline"
-            href="{% url 'registro_usuario' %}">Regístrate</a>
-        </p>
-      </div>
-    </div>
+    </main>
   </div>
 </body>
 
