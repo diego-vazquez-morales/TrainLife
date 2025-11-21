@@ -33,7 +33,7 @@
                 </div>
 
                 <!-- Navigation -->
-                <nav class="nav-menu">
+                <nav class="nav-menu" aria-label="Menú principal de navegación">
                     <a href="{% url 'inicio_usuario' usuario.id %}" class="nav-item">
                         <i data-lucide="home"></i>
                         <span>Home</span>
@@ -71,7 +71,7 @@
         <!-- Main Content -->
         <main class="main-content">
             <!-- Breadcrumbs -->
-            <nav class="breadcrumbs">
+            <nav class="breadcrumbs" aria-label="Ruta de navegación (breadcrumbs)">
                 <a href="{% url 'viajes_usuario' usuario.id %}" class="breadcrumb-link">Viajes</a>
                 <span class="breadcrumb-separator">/</span>
                 <span class="breadcrumb-current">Añadir Nuevo Billete</span>
@@ -103,10 +103,10 @@
 
                     <!-- Sección: Información del Pasajero -->
                     <div class="form-section">
-                        <h3 class="section-title">
+                        <h2 class="section-title">
                             <i data-lucide="user"></i>
                             Información del Pasajero
-                        </h3>
+                        </h2>
                         <div class="row g-3">
                             <div class="col-12">
                                 <label for="nombrePasajero" class="form-label">Nombre Completo del Pasajero *</label>
@@ -118,10 +118,10 @@
 
                     <!-- Sección: Origen y Destino -->
                     <div class="form-section">
-                        <h3 class="section-title">
+                        <h2 class="section-title">
                             <i data-lucide="map-pin"></i>
                             Origen y Destino
-                        </h3>
+                        </h2>
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label for="origenEstacion" class="form-label">Estación de Origen *</label>
@@ -143,10 +143,10 @@
 
                     <!-- Sección: Fecha y Horarios -->
                     <div class="form-section">
-                        <h3 class="section-title">
+                        <h2 class="section-title">
                             <i data-lucide="calendar"></i>
                             Fecha y Horarios
-                        </h3>
+                        </h2>
                         <div class="row g-3">
                             <div class="col-md-4">
                                 <label for="fechaViaje" class="form-label">Fecha del Viaje *</label>
@@ -165,10 +165,10 @@
 
                     <!-- Sección: Información del Billete -->
                     <div class="form-section">
-                        <h3 class="section-title">
+                        <h2 class="section-title">
                             <i data-lucide="ticket"></i>
                             Información del Billete
-                        </h3>
+                        </h2>
                         <div class="row g-3">
                             <div class="col-md-4">
                                 <label for="coche" class="form-label">Coche *</label>
@@ -194,10 +194,10 @@
 
                     <!-- Sección: Opciones Adicionales -->
                     <div class="form-section">
-                        <h3 class="section-title">
+                        <h2 class="section-title">
                             <i data-lucide="settings"></i>
                             Opciones Adicionales
-                        </h3>
+                        </h2>
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label for="estadoViaje" class="form-label">Estado del Viaje</label>
