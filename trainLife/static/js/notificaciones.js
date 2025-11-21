@@ -149,7 +149,7 @@ function crearNotificacionHTML(notif) {
                 <i data-lucide="${icono}"></i>
             </div>
             <div class="notification-content">
-                <h4 class="notification-title">${notif.titulo}</h4>
+                <h2 class="notification-title">${notif.titulo}</h2>
                 <p class="notification-message">${notif.mensaje}</p>
                 <span class="notification-time">
                     <i data-lucide="clock"></i>
