@@ -110,10 +110,11 @@
 
                         <div class="route-details" id="route-{{ ruta.id }}-details" style="display: none;" role="region"
                             aria-label="Detalles de la ruta {{ ruta.nombre }}">
-                            <div class="transfers-badge" role="note" aria-label="Número de trayectos">
+                            <div class="transfers-badge" role="note" aria-label="Número de trayectos: {{ ruta.trayectos.count }}">
                                 <span class="transfers-label">Trayectos:</span>
-                                <span class="transfers-count" aria-label="{{ ruta.trayectos.count }} trayectos">{{ ruta.trayectos.count }}</span>
+                                <span class="transfers-count">{{ ruta.trayectos.count }}</span>
                             </div>
+
 
                             {% for trayecto in ruta.trayectos.all %}
                             <div class="line-section" role="region" aria-labelledby="line-{{ trayecto.id }}-title">
