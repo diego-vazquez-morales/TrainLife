@@ -128,7 +128,7 @@
                         </article>
 
                         <!-- Card 3: Ver Avisos del Servicio -->
-                        <article class="action-card" tabindex="0" data-navigate="/notificaciones" role="button" aria-label="Ir a Ver Avisos del Servicio - Mantén informado con notificaciones">
+                        <article class="action-card" onclick="window.location.href='{% url 'notificaciones' usuario.id %}'"tabindex="0"  role="button" aria-label="Ir a Ver Avisos del Servicio - Mantén informado con notificaciones">
                             <div class="card-header card-header-red">
                                 <i data-lucide="bell" class="card-icon"></i>
                             </div>
@@ -271,7 +271,7 @@
                             <button class="btn btn-secondary-custom" onclick="window.location.href='{% url 'mis_viajes' usuario.id %}'">
                                 Ver Mis Viajes
                             </button>
-                            <button class="btn btn-tertiary-custom" data-navigate="/notificaciones">
+                            <button class="btn btn-tertiary-custom" onclick="window.location.href='{% url 'notificaciones' usuario.id %}'">
                                 Ver Notificaciones
                             </button>
                         </div>
