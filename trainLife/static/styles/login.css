@@ -163,11 +163,11 @@ body {
 }
 
 .form-control {
-  color: #ffffff;  /* Color del texto que escribes */
+  color: #9c9c9c;  /* Color del texto que escribes */
 }
 
 .form-control:focus {
-  color: #ffffff;  /* Color del texto al enfocar */
+  color: #9c9c9c;  /* Color del texto al enfocar */
 }
 
 .input-icon-wrapper {
