@@ -48,43 +48,6 @@ def login(request):
     return render(request, 'login.html')
 
 
-def loginUsuario(request):
-    """Muestra el formulario de login (GET) y procesa el login (POST).
-
-    Campos esperados en el form: 'email' y 'contrasenia'.
-    Si las credenciales coinciden con un `Usuario` se crea sesión y se redirige a inicio.
-    """
-    if request.method == 'POST':
-        email = request.POST.get('email')
-        contrasenia = request.POST.get('contrasenia')
-        
-        # Debug: imprimir valores recibidos
-        print(f"DEBUG - Email recibido: '{email}'")
-        print(f"DEBUG - Contraseña recibida: '{contrasenia}'")
-
-        if not email or not contrasenia:
-            messages.error(request, 'Introduce el correo y la contraseña.')
-            return render(request, 'loginUsuario.html')
-
-        try:
-            # Intentar buscar el usuario
-            usuario = Usuario.objects.get(email=email, contrasenia=contrasenia)
-            print(f"DEBUG - Usuario encontrado: {usuario.nombreUsuario}")
-            
-            # Guardar datos mínimos en sesión
-            request.session['usuario_id'] = usuario.id
-            request.session['usuario_nombre'] = usuario.nombreUsuario
-            print(f"DEBUG - Redirigiendo a inicio_usuario con id {usuario.id}")
-            return redirect('inicio_usuario', usuario_id=usuario.id)
-        except Usuario.DoesNotExist:
-            print(f"DEBUG - Usuario NO encontrado")
-            messages.error(request, 'Usuario o contraseña incorrectos.')
-            return render(request, 'loginUsuario.html')
-
-    # GET
-    return render(request, 'loginUsuario.html')
-
-
 def inicioRedirect(request):
     """Redirige desde /inicio/ a /inicio/<usuario_id>/ usando la sesión."""
     usuario_id = request.session.get('usuario_id')
