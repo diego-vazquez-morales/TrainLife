@@ -28,23 +28,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Event listener para marcar todas como leídas
     document.getElementById('markAllReadBtn').addEventListener('click', marcarTodasComoLeidas);
     
-    // Sidebar toggle
-    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-    const sidebar = document.querySelector('.sidebar');
-
-    if (mobileMenuToggle && sidebar) {
-        mobileMenuToggle.addEventListener('click', function() {
-            sidebar.classList.toggle('active');
-        });
-
-        document.addEventListener('click', function(e) {
-            if (window.innerWidth <= 1024) {
-                if (!sidebar.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
-                    sidebar.classList.remove('active');
-                }
-            }
-        });
-    }
 });
 
 // Cargar notificaciones desde el servidor
