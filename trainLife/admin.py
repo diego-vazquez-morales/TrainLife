@@ -32,10 +32,15 @@ class TrayectoInline(admin.TabularInline):
 
 @admin.register(Ruta)
 class RutaAdmin(admin.ModelAdmin):
-	list_display = ('nombre', 'usuario', 'fechaCreacion', 'numero_trayectos')
-	list_filter = ('fechaCreacion', 'usuario')
-	search_fields = ('nombre', 'descripcion', 'usuario__nombreUsuario')
+	list_display = ('nombre', 'get_usuarios', 'fechaCreacion', 'numero_trayectos')
+	list_filter = ('fechaCreacion',)
+	search_fields = ('nombre', 'descripcion', 'usuarios__nombreUsuario')
+	filter_horizontal = ('usuarios',)
 	inlines = [TrayectoInline]
+	
+	def get_usuarios(self, obj):
+		return ", ".join([u.nombreUsuario for u in obj.usuarios.all()])
+	get_usuarios.short_description = 'Usuarios'
 	
 	def numero_trayectos(self, obj):
 		return obj.trayectos.count()
@@ -45,7 +50,7 @@ class RutaAdmin(admin.ModelAdmin):
 @admin.register(Trayecto)
 class TrayectoAdmin(admin.ModelAdmin):
 	list_display = ('ruta', 'orden', 'estacionSalida', 'estacionLlegada', 'nombreLinea', 'horaSalida', 'horaLlegada')
-	list_filter = ('nombreLinea', 'ruta__usuario')
+	list_filter = ('nombreLinea',)
 	search_fields = ('estacionSalida', 'estacionLlegada', 'nombreLinea', 'ruta__nombre')
 	ordering = ['ruta', 'orden']
 

@@ -191,8 +191,8 @@ def misRutas(request, usuario_id):
     if not usuario:
         return redirect('login')
 
-    # Obtener rutas del usuario
-    rutas = Ruta.objects.filter(usuario=usuario).prefetch_related('trayectos')
+    # Obtener rutas del usuario (relación ManyToMany)
+    rutas = Ruta.objects.filter(usuarios=usuario).prefetch_related('trayectos')
     
     return render(request, 'MisRutas.html', {
         'usuario': usuario,
@@ -210,13 +210,16 @@ def agregarRutaFavorito(request, usuario_id, ruta_id):
     if not usuario:
         return redirect('login')
 
-    ruta = Ruta.objects.filter(id=ruta_id, usuario__isnull=True).first()
+    ruta = Ruta.objects.filter(id=ruta_id).first()
     if ruta:
-        ruta.usuario = usuario
-        ruta.save()
-        messages.success(request, f'Ruta "{ruta.nombre}" agregada a tus favoritos.')
+        # Verificar si ya está en favoritos
+        if usuario in ruta.usuarios.all():
+            messages.info(request, f'La ruta "{ruta.nombre}" ya está en tus favoritos.')
+        else:
+            ruta.usuarios.add(usuario)
+            messages.success(request, f'Ruta "{ruta.nombre}" agregada a tus favoritos.')
     else:
-        messages.error(request, 'Ruta no disponible.')
+        messages.error(request, 'Ruta no encontrada.')
     
     return redirect('buscar_rutas', usuario_id=usuario_id)
 
@@ -231,11 +234,10 @@ def eliminarRutaFavorito(request, usuario_id, ruta_id):
     if not usuario:
         return redirect('login')
 
-    ruta = Ruta.objects.filter(id=ruta_id, usuario=usuario).first()
+    ruta = Ruta.objects.filter(id=ruta_id, usuarios=usuario).first()
     if ruta:
         nombre_ruta = ruta.nombre
-        ruta.usuario = None
-        ruta.save()
+        ruta.usuarios.remove(usuario)
         messages.success(request, f'Ruta "{nombre_ruta}" eliminada de tus favoritos.')
     else:
         messages.error(request, 'Ruta no encontrada.')
@@ -350,8 +352,8 @@ def api_buscar_rutas(request, usuario_id):
                 'id': ruta.id,
                 'nombre': ruta.nombre,
                 'descripcion': ruta.descripcion or '',
-                'usuario_nombre': ruta.usuario.nombreUsuario if ruta.usuario else 'Sin asignar',
-                'tiene_usuario': ruta.usuario is not None,
+                'usuarios_count': ruta.usuarios.count(),
+                'tiene_usuarios': ruta.usuarios.exists(),
                 'origen': primer_trayecto.estacionSalida,
                 'destino': ultimo_trayecto.estacionLlegada,
                 'hora_salida': primer_trayecto.horaSalida.strftime('%H:%M'),

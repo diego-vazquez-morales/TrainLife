@@ -61,8 +61,8 @@ class Viaje(models.Model):
     
 
 class Ruta(models.Model):
-    # Relación con usuario (opcional - puede ser null para rutas públicas sin asignar)
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='rutas', null=True, blank=True)
+    # Relación con usuarios (ManyToMany - múltiples usuarios pueden tener la misma ruta en favoritos)
+    usuarios = models.ManyToManyField(Usuario, related_name='rutas', blank=True)
     
     # Información de la ruta
     nombre = models.CharField(max_length=200)  # Nombre descriptivo de la ruta
@@ -78,9 +78,9 @@ class Ruta(models.Model):
         verbose_name_plural = 'Rutas'
     
     def __str__(self):
-        if self.usuario:
-            return f"{self.nombre} ({self.usuario.nombreUsuario})"
-        return f"{self.nombre} (Sin asignar)"
+        if self.usuarios.exists():
+            return f"{self.nombre} ({self.usuarios.count()} usuarios)"
+        return f"{self.nombre} (Sin usuarios)"
 
 
 class Trayecto(models.Model):

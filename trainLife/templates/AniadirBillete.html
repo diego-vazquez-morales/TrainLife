@@ -29,7 +29,7 @@
         {% endwith %}
 
         <!-- Main Content -->
-        <main class="main-content">
+        <main class="main-content" role="main" aria-labelledby="page-title-main">
             <!-- Breadcrumbs -->
             <nav class="breadcrumbs" aria-label="Ruta de navegación (breadcrumbs)">
                 <a href="{% url 'viajes_usuario' usuario.id %}" class="breadcrumb-link">Viajes</a>
@@ -39,8 +39,8 @@
 
             <!-- Título -->
             <div class="page-header">
-                <h1 class="page-title">
-                    <i data-lucide="ticket-plus"></i>
+                <h1 class="page-title" id="page-title-main">
+                    <i data-lucide="ticket-plus" aria-hidden="true"></i>
                     Añadir Nuevo Billete
                 </h1>
                 <p class="page-subtitle">Complete los datos de su billete de tren</p>
@@ -48,7 +48,7 @@
 
             <!-- Formulario -->
             <div class="form-container">
-                <form method="POST" action="{% url 'aniadir_billete' usuario.id %}" id="billeteForm">
+                <form method="POST" action="{% url 'aniadir_billete' usuario.id %}" id="billeteForm" aria-label="Formulario de añadir nuevo billete" novalidate>
                     {% csrf_token %}
                     
                     <!-- Mensajes de Error/Éxito -->
@@ -70,10 +70,10 @@
                         <div class="row g-3">
                             <div class="col-12">
                                 <label for="nombrePasajero" class="form-label">Nombre Completo del Pasajero 
-                                    <span class="required-asterisk">*</span>
+                                    <span class="required-asterisk" aria-label="campo obligatorio">*</span>
                                 </label>
                                 <input type="text" class="form-control" id="nombrePasajero" name="nombrePasajero" 
-                                       value="{{ usuario.nombreUsuario }} {{ usuario.apellido1 }} {{ usuario.apellido2 }}" required>
+                                       value="{{ usuario.nombreUsuario }} {{ usuario.apellido1 }} {{ usuario.apellido2 }}" required aria-required="true">
                             </div>
                         </div>
                     </div>
@@ -87,17 +87,17 @@
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label for="origenEstacion" class="form-label">Estación de Origen
-                                    <span class="required-asterisk">*</span>
+                                    <span class="required-asterisk" aria-label="campo obligatorio">*</span>
                                 </label>
                                 <input type="text" class="form-control" id="origenEstacion" name="origenEstacion" 
-                                       placeholder="Ej: Madrid - Puerta de Atocha" required>
+                                       placeholder="Ej: Madrid - Puerta de Atocha" required aria-required="true">
                             </div>
                             <div class="col-md-6">
                                 <label for="destinoEstacion" class="form-label">Estación de Destino
-                                    <span class="required-asterisk">*</span>
+                                    <span class="required-asterisk" aria-label="campo obligatorio">*</span>
                                 </label>
                                 <input type="text" class="form-control" id="destinoEstacion" name="destinoEstacion" 
-                                       placeholder="Ej: Barcelona - Sants" required>
+                                       placeholder="Ej: Barcelona - Sants" required aria-required="true">
                             </div>
                             <div class="col-md-6">
                                 <label for="andenOrigen" class="form-label">Andén de Origen</label>
