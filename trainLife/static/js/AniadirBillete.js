@@ -57,25 +57,6 @@ document.addEventListener('DOMContentLoaded', function() {
     capitalizeFirstLetter(origenInput);
     capitalizeFirstLetter(destinoInput);
 
-    // Sidebar toggle para móvil
-    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-    const sidebar = document.querySelector('.sidebar');
-
-    if (mobileMenuToggle && sidebar) {
-        mobileMenuToggle.addEventListener('click', function() {
-            sidebar.classList.toggle('active');
-        });
-
-        // Cerrar sidebar al hacer click fuera (solo móvil)
-        document.addEventListener('click', function(e) {
-            if (window.innerWidth <= 1024) {
-                if (!sidebar.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
-                    sidebar.classList.remove('active');
-                }
-            }
-        });
-    }
-
     // Formatear valores de coche y asiento
     const cocheInput = document.getElementById('coche');
     const asientoInput = document.getElementById('asiento');

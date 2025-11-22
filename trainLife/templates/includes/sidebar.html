@@ -1,0 +1,38 @@
+<aside class="sidebar" aria-label="Navegación principal">
+    <div class="sidebar-content">
+        <div class="logo-section">
+            <i data-lucide="train" class="logo-icon"></i>
+            <h1 class="logo-text">TrainLife</h1>
+        </div>
+        <nav class="nav-menu" aria-label="{% block nav_label %}Menú de navegación{% endblock %}">
+            <a class="nav-item {% if seccion_actual == 'home' %}active{% endif %}" href="{% url 'inicio_usuario' usuario.id %}" aria-label="Ir a inicio" {% if seccion_actual == 'home' %}aria-current="page"{% endif %}>
+                <i data-lucide="home"></i>
+                <span>Home</span>
+            </a>
+            <a class="nav-item {% if seccion_actual == 'viajes' %}active{% endif %}" href="{% url 'viajes_usuario' usuario.id %}" aria-label="Ir a viajes" {% if seccion_actual == 'viajes' %}aria-current="page"{% endif %}>
+                <i data-lucide="ticket"></i>
+                <span>Viajes</span>
+            </a>
+            <a class="nav-item {% if seccion_actual == 'mis_rutas' %}active{% endif %}" href="{% url 'mis_rutas' usuario.id %}" aria-label="Ir a Mis Rutas" {% if seccion_actual == 'mis_rutas' %}aria-current="page"{% endif %}>
+                <i data-lucide="map-pin"></i>
+                <span>Mis Rutas</span>
+            </a>
+            <a class="nav-item {% if seccion_actual == 'buscar_rutas' %}active{% endif %}" href="{% url 'buscar_rutas' usuario.id %}" aria-label="Buscar rutas" {% if seccion_actual == 'buscar_rutas' %}aria-current="page"{% endif %}>
+                <i data-lucide="search"></i>
+                <span>Buscar Rutas</span>
+            </a>
+            <a class="nav-item {% if seccion_actual == 'notificaciones' %}active{% endif %}" href="{% url 'notificaciones' usuario.id %}" aria-label="Ver notificaciones" {% if seccion_actual == 'notificaciones' %}aria-current="page"{% endif %}>
+                <i data-lucide="bell"></i>
+                <span>Notificaciones</span>
+            </a>
+            <a class="nav-item {% if seccion_actual == 'configuracion' %}active{% endif %}" href="{% url 'configuracion' usuario.id %}" aria-label="Ir a configuración" {% if seccion_actual == 'configuracion' %}aria-current="page"{% endif %}>
+                <i data-lucide="settings"></i>
+                <span>Configuración</span>
+            </a>
+        </nav>
+        <button class="logout-btn" onclick="window.location.href='{% url 'salir' usuario.id %}'" aria-label="Cerrar sesión">
+            <i data-lucide="log-out"></i>
+            <span>Cerrar Sesión</span>
+        </button>
+    </div>
+</aside>
