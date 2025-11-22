@@ -17,58 +17,19 @@
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'styles/homeUsuario.css' %}"/>
+    <link rel="stylesheet" href="{% static 'styles/sidebar.css' %}">
 </head>
 <body>
     <div class="dashboard-container">
-        <!-- Sidebar -->
-        <aside class="sidebar" id="sidebar" aria-label="Menú de navegación principal">
-            <div class="sidebar-content">
-                <!-- Logo -->
-                <div class="logo-section">
-                    <i data-lucide="train" class="logo-icon"></i>
-                    <h1 class="logo-title">TrainLife</h1>
-                </div>
-
-                <!-- Navigation Menu -->
-                <nav class="nav-menu" aria-label="Menú principal">
-                    <a href="{% url 'inicio_usuario' usuario.id %}" class="nav-item active" aria-current="page" aria-label="Inicio (página actual)">
-                        <i data-lucide="home"></i>
-                        <span>Home</span>
-                    </a>
-                    <a href="{% url 'viajes_usuario' usuario.id %}" class="nav-item" aria-label="Ir a Viajes">
-                        <i data-lucide="ticket"></i>
-                        <span>Viajes</span>
-                    </a>
-                    <a href="{% url 'mis_rutas' usuario.id %}" class="nav-item" aria-label="Ir a Mis Rutas">
-                        <i data-lucide="map-pin"></i>
-                        <span>Mis Rutas</span>
-                    </a>
-                    <a href="{% url 'buscar_rutas' usuario.id %}" class="nav-item" aria-label="Ir a Buscar Rutas">
-                        <i data-lucide="search"></i>
-                        <span>Buscar Rutas</span>
-                    </a>
-                    <a href="{% url 'notificaciones' usuario.id %}" class="nav-item" aria-label="Ir a Notificaciones">
-                        <i data-lucide="bell"></i>
-                        <span>Notificaciones</span>
-                    </a>
-                    <a href="{% url 'configuracion' usuario.id %}" class="nav-item" aria-label="Ir a Configuración">
-                        <i data-lucide="settings"></i>
-                        <span>Configuración</span>
-                    </a>
-                </nav>
-
-                <!-- Logout Button -->
-                <button class="logout-btn" onclick="window.location.href='{% url 'salir' usuario.id %}'" aria-label="Cerrar sesión y salir de la aplicación">
-                    <i data-lucide="log-out"></i>
-                    <span>Cerrar Sesión</span>
-                </button>
-            </div>
-        </aside>
-
-        <!-- Mobile Sidebar Toggle -->
-        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Menú">
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-menu-toggle" aria-label="Toggle menu">
             <i data-lucide="menu"></i>
         </button>
+
+        <!-- Sidebar -->
+        {% with seccion_actual='home' %}
+            {% include 'includes/sidebar.html' %}
+        {% endwith %}
 
         <!-- Main Content -->
         <main class="main-content" role="main" aria-label="Contenido principal del dashboard">
@@ -289,5 +250,6 @@
     
     <!-- Custom JS -->
     <script src="{% static 'js/homeUsuario.js' %}"></script>
+    <script src="{% static 'js/sidebar.js' %}"></script>
 </body>
 </html>

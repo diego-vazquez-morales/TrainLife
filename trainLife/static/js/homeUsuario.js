@@ -56,37 +56,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
   
-  // === SIDEBAR MÓVIL ===
-  
-  const sidebar = document.getElementById('sidebar');
-  const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-  
-  if (mobileMenuToggle && sidebar) {
-    // Toggle del menú móvil
-    mobileMenuToggle.addEventListener('click', function() {
-      sidebar.classList.toggle('active');
-    });
-    
-    // Cerrar sidebar al hacer click fuera en móvil
-    document.addEventListener('click', function(e) {
-      if (window.innerWidth <= 1024) {
-        if (!sidebar.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
-          sidebar.classList.remove('active');
-        }
-      }
-    });
-    
-    // Cerrar sidebar al navegar en móvil
-    const navItems = sidebar.querySelectorAll('.nav-item');
-    navItems.forEach(item => {
-      item.addEventListener('click', function() {
-        if (window.innerWidth <= 1024) {
-          sidebar.classList.remove('active');
-        }
-      });
-    });
-  }
-  
   // === LOGOUT ===
   // Nota: El botón de logout ahora maneja la redirección directamente en el HTML
   // usando onclick con la URL de Django. No se necesita JavaScript adicional.
