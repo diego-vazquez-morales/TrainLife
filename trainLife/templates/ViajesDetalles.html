@@ -128,9 +128,7 @@
                                     <span id="notificationsToggleLabel" class="toggle-label">Notificaciones del viaje</span>
                                     <div class="toggle-switch">
                                         <label for="notificationsToggle">
-                                            <input type="checkbox" id="notificationsToggle" role="switch" aria-checked="{{ viaje.notificacionesActivas|yesno:"true,false" }}" aria-labelledby="notificationsToggleLabel" {% if viaje.notificacionesActivas %}checked{% endif %} />
-                                            <span class="toggle-slider"></span>
-                                            <span class="sr-only">Activar o desactivar notificaciones</span>
+                                            <span class="sr-only">Notificaciones del viaje activadas</span>
                                         </label>
                                     </div>
                                 </div>
