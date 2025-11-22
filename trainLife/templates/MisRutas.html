@@ -6,66 +6,31 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Mis Rutas Guardadas - TrainLife</title>
+    
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="{% static 'styles/MisRutas.css' %}">
-    <link rel="stylesheet" href="{% static 'styles/confirmModal.css' %}">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'styles/sidebar.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/misRutas.css' %}">
+
+    
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script defer src="{% static 'js/confirmModal.js' %}"></script>
-    <script defer src="{% static 'js/misRutas.js' %}"></script>
 </head>
 
 <body>
-    <div class="container">
+     <div class="dashboard-container">
         <!-- Mobile Menu Toggle -->
         <button class="mobile-menu-toggle" aria-label="Toggle menu">
             <i data-lucide="menu"></i>
         </button>
 
-        <aside class="sidebar" aria-label="Navegación principal">
-            <div class="sidebar-content">
-                <div class="logo-section">
-                    <i data-lucide="train" class="logo-icon"></i>
-                    <h1 class="logo-text">TrainLife</h1>
-                </div>
-                <nav class="nav-menu" aria-label="Menú de navegación">
-                    <a class="nav-item" href="{% url 'inicio_usuario' usuario.id %}" aria-label="Ir a inicio">
-                        <i data-lucide="home"></i>
-                        <span>Home</span>
-                    </a>
-                    <a class="nav-item" href="{% url 'viajes_usuario' usuario.id %}" aria-label="Ir a viajes">
-                        <i data-lucide="ticket"></i>
-                        <span>Viajes</span>
-                    </a>
-                    <a class="nav-item active" href="{% url 'mis_rutas' usuario.id %}" aria-current="page"
-                        aria-label="Mis rutas (página actual)">
-                        <i data-lucide="map-pin"></i>
-                        <span>Mis Rutas</span>
-                    </a>
-                    <a class="nav-item" href="{% url 'buscar_rutas' usuario.id %}"
-                        aria-label="Buscar rutas disponibles">
-                        <i data-lucide="search"></i>
-                        <span>Buscar Rutas</span>
-                    </a>
-                    <a class="nav-item" href="{% url 'notificaciones' usuario.id %}" aria-label="Ver notificaciones">
-                        <i data-lucide="bell"></i>
-                        <span>Notificaciones</span>
-                    </a>
-                    <a class="nav-item" href="{% url 'configuracion' usuario.id %}" aria-label="Ir a configuración">
-                        <i data-lucide="settings"></i>
-                        <span>Configuración</span>
-                    </a>
-                </nav>
-
-                <!-- Logout Button -->
-                <button class="logout-btn" onclick="window.location.href='{% url 'salir' usuario.id %}'"
-                    aria-label="Cerrar sesión">
-                    <i data-lucide="log-out"></i>
-                    <span>Cerrar Sesión</span>
-                </button>
-            </div>
-        </aside>
+        <!-- Sidebar -->
+        {% with seccion_actual='mis_rutas' %}
+            {% include 'includes/sidebar.html' %}
+        {% endwith %}
 
         <main class="main-content" role="main" aria-label="Contenido principal">
             <div class="content-wrapper">
@@ -178,6 +143,11 @@
             </div>
         </main>
     </div>
+
+    <!-- Custom JavaScript -->
+    <script src="{% static 'js/sidebar.js' %}"></script>
+    <script defer src="{% static 'js/misRutas.js' %}"></script>
+
 </body>
 
 </html>
