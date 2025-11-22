@@ -5,16 +5,6 @@ document.addEventListener('DOMContentLoaded', function() {
         lucide.createIcons();
     }
     
-    // Toggle del menú móvil
-    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-    const sidebar = document.querySelector('.sidebar');
-    
-    if (mobileMenuToggle && sidebar) {
-        mobileMenuToggle.addEventListener('click', function() {
-            sidebar.classList.toggle('active');
-        });
-    }
-    
     // Botón "Ver mis viajes" - Redirigir a la página de mis viajes
     const botonMisViajes = document.querySelectorAll('.card-btn')[0]; // Primer botón card-btn
     if (botonMisViajes && botonMisViajes.closest('.card-gradient-blue')) {
