@@ -127,7 +127,7 @@ body {
     transform: translateY(-50%);
     width: 1.25rem;
     height: 1.25rem;
-    color: #9ca3af;
+    color: #4a4a4a;
 }
 
 .search-input {
@@ -361,7 +361,7 @@ body {
 .empty-icon {
     width: 4rem;
     height: 4rem;
-    color: #9ca3af;
+    color: #4a4a4a;
     margin-bottom: 1rem;
 }
 
@@ -373,7 +373,7 @@ body {
 }
 
 .empty-text {
-    color: #6b7280;
+    color: #4a4a4a;
     margin-bottom: 1.5rem;
 }
 

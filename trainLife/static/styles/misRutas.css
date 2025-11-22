@@ -111,7 +111,7 @@ body {
 
 .route-subtitle {
     font-size: 14px;
-    color: #444444;
+    color: #2c2c2c;
 }
 
 .route-actions {
@@ -219,7 +219,7 @@ body {
 }
 
 .transfers-label {
-    color: #444444;
+    color: #2c2c2c;
 }
 
 .transfers-count {
@@ -268,7 +268,7 @@ body {
 
 .info-label {
     font-size: 13px;
-    color: #444444;
+    color: #2c2c2c;
 }
 
 .info-value {
@@ -286,7 +286,7 @@ body {
 
 .image-label {
     font-size: 13px;
-    color: #444444;
+    color: #2c2c2c;
 }
 
 .line-route-image {

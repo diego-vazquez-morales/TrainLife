@@ -5,7 +5,7 @@
     --primary-color: #0f49bd;
     --primary-hover: #003d82;
     --text-dark: #1a1a1a;
-    --text-secondary: #444444;
+    --text-secondary: #2c2c2c;
     --bg-main: #f5f5f5;
     --bg-white: #ffffff;
     --border-color: #dee2e6;
@@ -192,7 +192,8 @@
 }
 
 .required-asterisk {
-    color: red;
+    color: #b91c1c;
+    font-weight: 700;
 }
 
 
