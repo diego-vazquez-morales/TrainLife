@@ -46,41 +46,6 @@ function setupEventListeners() {
             window.location.href = '/buscarRutas';
         });
     }
-
-    // Sidebar mobile toggle
-    const mobileToggle = document.getElementById('mobileMenuToggle');
-    const sidebar = document.getElementById('sidebar');
-    
-    if (mobileToggle && sidebar) {
-        mobileToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('active');
-        });
-
-        // Cerrar sidebar al hacer clic fuera en móvil
-        document.addEventListener('click', (e) => {
-            if (window.innerWidth <= 1024) {
-                if (!sidebar.contains(e.target) && !mobileToggle.contains(e.target)) {
-                    sidebar.classList.remove('active');
-                }
-            }
-        });
-    }
-
-    // Cerrar sidebar al cambiar tamaño de ventana
-    window.addEventListener('resize', () => {
-        if (window.innerWidth > 1024 && sidebar) {
-            sidebar.classList.remove('active');
-        }
-    });
-
-    // Logout button
-    const logoutBtn = document.getElementById('logoutBtn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', () => {
-            sessionStorage.clear();
-            localStorage.clear();
-        });
-    }
 }
 
 /**
