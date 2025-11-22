@@ -505,3 +505,8 @@
 .footer-link {
   font-weight: 700;
 }
+
+.required-asterisk {
+  color: var(--color-error);
+  margin-left: 0.25rem;
+}

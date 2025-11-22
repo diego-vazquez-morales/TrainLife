@@ -41,11 +41,15 @@
                 <form class="form-layout" method="POST" action="{% url 'crear_usuario' %}" role="form" aria-labelledby="page-title">
                     {% csrf_token %}
                     <label class="form-label-container">
-                        <p class="input-label" id="nombre-label">Nombre</p>
+                        <p class="input-label" id="nombre-label">Nombre
+                            <span class="required-asterisk">*</span>
+                        </p>
                         <input class="form-input-field" name="nombre" placeholder="Introduce tu nombre" value="{{ nombre|default:'' }}" aria-labelledby="nombre-label" aria-required="true" required />
                     </label>
                     <label class="form-label-container">
-                        <p class="input-label" id="apellido1-label">Primer Apellido</p>
+                        <p class="input-label" id="apellido1-label">Primer Apellido
+                            <span class="required-asterisk">*</span>
+                        </p>
                         <input class="form-input-field" name="apellido1" placeholder="Introduce tu apellido" value="{{ apellido1|default:'' }}" aria-labelledby="apellido1-label" aria-required="true" required />
                     </label>
                     <label class="form-label-container">
@@ -53,15 +57,21 @@
                         <input class="form-input-field" name="apellido2" placeholder="Opcional" value="{{ apellido2|default:'' }}" aria-labelledby="apellido2-label" aria-required="false" />
                     </label>
                     <label class="form-label-container">
-                        <p class="input-label" id="telefono-label">Teléfono</p>
+                        <p class="input-label" id="telefono-label">Teléfono
+                            <span class="required-asterisk">*</span>
+                        </p>
                         <input class="form-input-field" name="telefono" placeholder="+34 600 000 000" value="{{ telefono|default:'' }}" aria-labelledby="telefono-label" aria-required="false" />
                     </label>
                     <label class="form-label-container">
-                        <p class="input-label" id="email-label">Correo Electrónico</p>
+                        <p class="input-label" id="email-label">Correo Electrónico
+                            <span class="required-asterisk">*</span>
+                        </p>
                         <input class="form-input-field" name="email" placeholder="tu.correo@ejemplo.com" type="email" value="{{ email|default:'' }}" aria-labelledby="email-label" aria-required="true" required />
                     </label>
                     <label class="form-label-container">
-                        <p class="input-label" id="password-label">Contraseña</p>
+                        <p class="input-label" id="password-label">Contraseña 
+                            <span class="required-asterisk">*</span>
+                        </p>    
                         <div class="password-input-wrap">
                             <input class="form-input-field password-input" name="contrasenia" placeholder="Introduce tu contraseña"
                                 type="password" value="" aria-labelledby="password-label" aria-required="true" required minlength="6" />
@@ -71,7 +81,9 @@
                         </div>
                     </label>
                     <label class="form-label-container">
-                        <p class="input-label" id="confirm-password-label">Confirmar Contraseña</p>
+                        <p class="input-label" id="confirm-password-label">Confirmar Contraseña 
+                            <span class="required-asterisk">*</span>
+                        </p>
                         <div class="password-input-wrap">
                             <input class="form-input-field password-input" name="confirmar_contrasenia" placeholder="Confirma tu contraseña"
                                 type="password" value="" aria-labelledby="confirm-password-label" aria-required="true" required minlength="6" />
@@ -85,6 +97,8 @@
                         <label class="terms-text" for="terms">
                             Acepto los <a class="terms-link" href="#">Términos y Condiciones</a> y la <a
                                 class="terms-link" href="#">Política de Privacidad</a>.
+                        
+                            <span class="required-asterisk">*</span>
                         </label>
                     </div>
                     <button class="primary-submit-button" type="submit" aria-label="Crear nueva cuenta">
