@@ -191,6 +191,11 @@
     margin-bottom: 1.5rem;
 }
 
+.required-asterisk {
+    color: red;
+}
+
+
 
 @media (max-width: 768px) {
     .form-actions {

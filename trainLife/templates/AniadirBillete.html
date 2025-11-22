@@ -69,7 +69,9 @@
                         </h2>
                         <div class="row g-3">
                             <div class="col-12">
-                                <label for="nombrePasajero" class="form-label">Nombre Completo del Pasajero *</label>
+                                <label for="nombrePasajero" class="form-label">Nombre Completo del Pasajero 
+                                    <span class="required-asterisk">*</span>
+                                </label>
                                 <input type="text" class="form-control" id="nombrePasajero" name="nombrePasajero" 
                                        value="{{ usuario.nombreUsuario }} {{ usuario.apellido1 }} {{ usuario.apellido2 }}" required>
                             </div>
@@ -84,12 +86,16 @@
                         </h2>
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <label for="origenEstacion" class="form-label">Estación de Origen *</label>
+                                <label for="origenEstacion" class="form-label">Estación de Origen
+                                    <span class="required-asterisk">*</span>
+                                </label>
                                 <input type="text" class="form-control" id="origenEstacion" name="origenEstacion" 
                                        placeholder="Ej: Madrid - Puerta de Atocha" required>
                             </div>
                             <div class="col-md-6">
-                                <label for="destinoEstacion" class="form-label">Estación de Destino *</label>
+                                <label for="destinoEstacion" class="form-label">Estación de Destino
+                                    <span class="required-asterisk">*</span>
+                                </label>
                                 <input type="text" class="form-control" id="destinoEstacion" name="destinoEstacion" 
                                        placeholder="Ej: Barcelona - Sants" required>
                             </div>
@@ -109,15 +115,21 @@
                         </h2>
                         <div class="row g-3">
                             <div class="col-md-4">
-                                <label for="fechaViaje" class="form-label">Fecha del Viaje *</label>
+                                <label for="fechaViaje" class="form-label">Fecha del Viaje 
+                                    <span class="required-asterisk">*</span>
+                                </label>
                                 <input type="date" class="form-control" id="fechaViaje" name="fechaViaje" required>
                             </div>
                             <div class="col-md-4">
-                                <label for="horaSalidaOrigen" class="form-label">Hora de Salida *</label>
+                                <label for="horaSalidaOrigen" class="form-label">Hora de Salida 
+                                    <span class="required-asterisk">*</span>
+                                </label>
                                 <input type="time" class="form-control" id="horaSalidaOrigen" name="horaSalidaOrigen" required>
                             </div>
                             <div class="col-md-4">
-                                <label for="horaLlegadaDestino" class="form-label">Hora de Llegada *</label>
+                                <label for="horaLlegadaDestino" class="form-label">Hora de Llegada 
+                                    <span class="required-asterisk">*</span>
+                                </label>
                                 <input type="time" class="form-control" id="horaLlegadaDestino" name="horaLlegadaDestino" required>
                             </div>
                         </div>
@@ -131,17 +143,23 @@
                         </h2>
                         <div class="row g-3">
                             <div class="col-md-4">
-                                <label for="coche" class="form-label">Coche *</label>
+                                <label for="coche" class="form-label">Coche 
+                                    <span class="required-asterisk">*</span>
+                                </label>
                                 <input type="text" class="form-control" id="coche" name="coche" 
                                        placeholder="Ej: 04" maxlength="10" required>
                             </div>
                             <div class="col-md-4">
-                                <label for="asiento" class="form-label">Asiento *</label>
+                                <label for="asiento" class="form-label">Asiento 
+                                    <span class="required-asterisk">*</span>
+                                </label>
                                 <input type="text" class="form-control" id="asiento" name="asiento" 
                                        placeholder="Ej: 12A" maxlength="10" required>
                             </div>
                             <div class="col-md-4">
-                                <label for="clase" class="form-label">Clase *</label>
+                                <label for="clase" class="form-label">Clase 
+                                    <span class="required-asterisk">*</span>
+                                </label>
                                 <select class="form-select" id="clase" name="clase" required>
                                     <option value="">Seleccionar...</option>
                                     <option value="Turista" selected>Turista</option>
