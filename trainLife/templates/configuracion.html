@@ -11,7 +11,7 @@
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'styles/configuracion.css' %}">
-    <link rel="stylesheet" href="{% static 'styles/confirmModal.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/sidebar.css' %}">
     
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -24,49 +24,9 @@
         </button>
 
         <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="sidebar-content">
-                <!-- Logo -->
-                <div class="logo-section">
-                    <i data-lucide="train" class="logo-icon"></i>
-                    <h1 class="logo-title">TrainLife</h1>
-                </div>
-
-                <!-- Navigation -->
-                <nav class="nav-menu">
-                    <a href="{% url 'inicio_usuario' usuario.id %}" class="nav-item">
-                        <i data-lucide="home"></i>
-                        <span>Home</span>
-                    </a>
-                    <a href="{% url 'viajes_usuario' usuario.id %}" class="nav-item">
-                        <i data-lucide="ticket"></i>
-                        <span>Viajes</span>
-                    </a>
-                    <a href="{% url 'mis_rutas' usuario.id %}" class="nav-item">
-                        <i data-lucide="map-pin"></i>
-                        <span>Mis Rutas</span>
-                    </a>
-                    <a href="{% url 'buscar_rutas' usuario.id %}" class="nav-item">
-                        <i data-lucide="search"></i>
-                        <span>Buscar Rutas</span>
-                    </a>
-                    <a href="{% url 'notificaciones' usuario.id %}" class="nav-item">
-                        <i data-lucide="bell"></i>
-                        <span>Notificaciones</span>
-                    </a>
-                    <a href="{% url 'configuracion' usuario.id %}" class="nav-item active">
-                        <i data-lucide="settings"></i>
-                        <span>Configuración</span>
-                    </a>
-                </nav>
-
-                <!-- Logout Button -->
-                <button class="logout-btn" onclick="window.location.href='{% url 'salir' usuario.id %}'" aria-label="Cerrar sesión">
-                    <i data-lucide="log-out"></i>
-                    <span>Cerrar Sesión</span>
-                </button>
-            </div>
-        </aside>
+        {% with seccion_actual='configuracion' %}
+            {% include 'includes/sidebar.html' %}
+        {% endwith %}
 
         <!-- Main Content -->
         <main class="main-content">
@@ -297,7 +257,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <!-- Custom JavaScript -->
-    <script src="{% static 'js/confirmModal.js' %}"></script>
+    <script src="{% static 'js/sidebar.js' %}"></script>
     <script src="{% static 'js/configuracion.js' %}"></script>
 </body>
 </html>

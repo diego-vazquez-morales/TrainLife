@@ -93,32 +93,6 @@ function setupEventListeners() {
             input.addEventListener('input', handleInputChange);
         }
     });
-
-    // Sidebar mobile toggle
-    const mobileToggle = document.querySelector('.mobile-menu-toggle');
-    const sidebar = document.querySelector('.sidebar');
-    
-    if (mobileToggle && sidebar) {
-        mobileToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('active');
-        });
-
-        // Cerrar sidebar al hacer clic fuera en móvil
-        document.addEventListener('click', (e) => {
-            if (window.innerWidth <= 1024) {
-                if (!sidebar.contains(e.target) && !mobileToggle.contains(e.target)) {
-                    sidebar.classList.remove('active');
-                }
-            }
-        });
-    }
-
-    // Cerrar sidebar al cambiar tamaño de ventana
-    window.addEventListener('resize', () => {
-        if (window.innerWidth > 1024 && sidebar) {
-            sidebar.classList.remove('active');
-        }
-    });
 }
 
 /**
