@@ -484,6 +484,7 @@ def api_notificaciones(request, usuario_id):
             'importante': notif.importante,
             'fechaCreacion': notif.fechaCreacion.strftime('%Y-%m-%d %H:%M:%S'),
             'viaje_id': notif.viaje.id if notif.viaje else None,
+            'ruta_id': notif.ruta.id if notif.ruta else None,
         })
     
     return JsonResponse({

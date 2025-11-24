@@ -304,17 +304,94 @@ def notificar_cambios_viaje(sender, instance, created, **kwargs):
         )
         notificaciones_creadas.append('fecha')
     
-    # Detectar cancelación
-    if viaje_antiguo['estadoViaje'] != 'Cancelado' and instance.estadoViaje == 'Cancelado':
-        Notificacion.objects.create(
-            usuario=instance.usuario,
-            tipo='cancelacion',
-            titulo='Viaje cancelado',
-            mensaje=f'Tu viaje {instance.origenEstacion} → {instance.destinoEstacion} del {instance.fechaViaje.strftime("%d/%m/%Y")} ha sido cancelado',
-            viaje=instance,
-            importante=True
-        )
-        notificaciones_creadas.append('cancelación')
+    # Detectar cambios de estado del viaje
+    if viaje_antiguo['estadoViaje'] != instance.estadoViaje:
+        estado_anterior = viaje_antiguo['estadoViaje']
+        estado_nuevo = instance.estadoViaje
+        
+        # Cancelación
+        if estado_nuevo.lower() == 'cancelado':
+            Notificacion.objects.create(
+                usuario=instance.usuario,
+                tipo='cancelacion',
+                titulo='Viaje cancelado',
+                mensaje=f'Tu viaje {instance.origenEstacion} → {instance.destinoEstacion} del {instance.fechaViaje.strftime("%d/%m/%Y")} ha sido cancelado',
+                viaje=instance,
+                importante=True
+            )
+            notificaciones_creadas.append('cancelación')
+        
+        # Confirmación
+        elif estado_nuevo.lower() == 'confirmado':
+            Notificacion.objects.create(
+                usuario=instance.usuario,
+                tipo='nuevo_viaje',
+                titulo='Viaje confirmado',
+                mensaje=f'Tu viaje {instance.origenEstacion} → {instance.destinoEstacion} del {instance.fechaViaje.strftime("%d/%m/%Y")} ha sido confirmado',
+                viaje=instance,
+                importante=True
+            )
+            notificaciones_creadas.append('confirmación')
+        
+        # Retraso
+        elif estado_nuevo.lower() == 'retrasado':
+            Notificacion.objects.create(
+                usuario=instance.usuario,
+                tipo='alerta',
+                titulo='Viaje retrasado',
+                mensaje=f'Tu viaje {instance.origenEstacion} → {instance.destinoEstacion} del {instance.fechaViaje.strftime("%d/%m/%Y")} ha sido retrasado',
+                viaje=instance,
+                importante=True
+            )
+            notificaciones_creadas.append('retraso')
+        
+        # En curso
+        elif estado_nuevo.lower() == 'en curso':
+            Notificacion.objects.create(
+                usuario=instance.usuario,
+                tipo='info',
+                titulo='Viaje en curso',
+                mensaje=f'Tu viaje {instance.origenEstacion} → {instance.destinoEstacion} está ahora en curso',
+                viaje=instance,
+                importante=False
+            )
+            notificaciones_creadas.append('en_curso')
+        
+        # Completado
+        elif estado_nuevo.lower() == 'completado':
+            Notificacion.objects.create(
+                usuario=instance.usuario,
+                tipo='nuevo_viaje',
+                titulo='Viaje completado',
+                mensaje=f'Tu viaje {instance.origenEstacion} → {instance.destinoEstacion} del {instance.fechaViaje.strftime("%d/%m/%Y")} ha sido completado',
+                viaje=instance,
+                importante=False
+            )
+            notificaciones_creadas.append('completado')
+        
+        # Programado (cuando vuelve a ser programado desde otro estado)
+        elif estado_nuevo.lower() == 'programado':
+            Notificacion.objects.create(
+                usuario=instance.usuario,
+                tipo='info',
+                titulo='Viaje reprogramado',
+                mensaje=f'Tu viaje {instance.origenEstacion} → {instance.destinoEstacion} del {instance.fechaViaje.strftime("%d/%m/%Y")} ha sido reprogramado',
+                viaje=instance,
+                importante=True
+            )
+            notificaciones_creadas.append('reprogramado')
+        
+        # Cualquier otro cambio de estado
+        else:
+            Notificacion.objects.create(
+                usuario=instance.usuario,
+                tipo='cambio_viaje',
+                titulo='Cambio de estado del viaje',
+                mensaje=f'El estado de tu viaje {instance.origenEstacion} → {instance.destinoEstacion} ha cambiado de "{estado_anterior}" a "{estado_nuevo}"',
+                viaje=instance,
+                importante=True
+            )
+            notificaciones_creadas.append('estado')
     
     # Detectar cambio de asiento
     if viaje_antiguo['asiento'] != instance.asiento:
@@ -378,82 +455,94 @@ def detectar_cambios_trayecto(sender, instance, **kwargs):
 @receiver(post_save, sender=Trayecto)
 def notificar_cambios_trayecto(sender, instance, created, **kwargs):
     """
-    Crea notificaciones cuando se modifica un trayecto de una ruta del usuario.
+    Crea notificaciones cuando se modifica un trayecto de una ruta.
+    Notifica a todos los usuarios que tienen la ruta en sus favoritos.
     """
-    # Si es un nuevo trayecto, la ruta no tiene usuario, o el usuario no quiere notificaciones de rutas
-    if created or not instance.ruta.usuario or not instance.ruta.usuario.notificacionesRutas:
+    # Si es un nuevo trayecto, no generar notificaciones de cambio
+    if created:
         return
     
     if instance.pk not in _trayecto_previo:
+        return
+    
+    # Obtener todos los usuarios que tienen esta ruta
+    usuarios_ruta = instance.ruta.usuarios.filter(notificacionesRutas=True)
+    if not usuarios_ruta.exists():
         return
     
     trayecto_antiguo = _trayecto_previo[instance.pk]
     
     # Detectar cambio de andén de salida
     if trayecto_antiguo['andenSalida'] != instance.andenSalida:
-        Notificacion.objects.create(
-            usuario=instance.ruta.usuario,
-            tipo='cambio_ruta',
-            titulo=f'Cambio de andén en ruta "{instance.ruta.nombre}"',
-            mensaje=f'El andén de salida en {instance.estacionSalida} ha cambiado de "{trayecto_antiguo["andenSalida"]}" a "{instance.andenSalida}"',
-            ruta=instance.ruta,
-            importante=True
-        )
+        for usuario in usuarios_ruta:
+            Notificacion.objects.create(
+                usuario=usuario,
+                tipo='cambio_ruta',
+                titulo=f'Cambio de andén en ruta "{instance.ruta.nombre}"',
+                mensaje=f'El andén de salida en {instance.estacionSalida} ha cambiado de "{trayecto_antiguo["andenSalida"]}" a "{instance.andenSalida}"',
+                ruta=instance.ruta,
+                importante=True
+            )
     
     # Detectar cambio de andén de llegada
     if trayecto_antiguo['andenLlegada'] != instance.andenLlegada:
-        Notificacion.objects.create(
-            usuario=instance.ruta.usuario,
-            tipo='cambio_ruta',
-            titulo=f'Cambio de andén en ruta "{instance.ruta.nombre}"',
-            mensaje=f'El andén de llegada en {instance.estacionLlegada} ha cambiado de "{trayecto_antiguo["andenLlegada"]}" a "{instance.andenLlegada}"',
-            ruta=instance.ruta,
-            importante=True
-        )
+        for usuario in usuarios_ruta:
+            Notificacion.objects.create(
+                usuario=usuario,
+                tipo='cambio_ruta',
+                titulo=f'Cambio de andén en ruta "{instance.ruta.nombre}"',
+                mensaje=f'El andén de llegada en {instance.estacionLlegada} ha cambiado de "{trayecto_antiguo["andenLlegada"]}" a "{instance.andenLlegada}"',
+                ruta=instance.ruta,
+                importante=True
+            )
     
     # Detectar cambio de hora de salida
     if trayecto_antiguo['horaSalida'] != instance.horaSalida:
-        Notificacion.objects.create(
-            usuario=instance.ruta.usuario,
-            tipo='cambio_ruta',
-            titulo=f'Cambio de hora en ruta "{instance.ruta.nombre}"',
-            mensaje=f'La hora de salida desde {instance.estacionSalida} ha cambiado de {trayecto_antiguo["horaSalida"].strftime("%H:%M")} a {instance.horaSalida.strftime("%H:%M")}',
-            ruta=instance.ruta,
-            importante=True
-        )
+        for usuario in usuarios_ruta:
+            Notificacion.objects.create(
+                usuario=usuario,
+                tipo='cambio_ruta',
+                titulo=f'Cambio de hora en ruta "{instance.ruta.nombre}"',
+                mensaje=f'La hora de salida desde {instance.estacionSalida} ha cambiado de {trayecto_antiguo["horaSalida"].strftime("%H:%M")} a {instance.horaSalida.strftime("%H:%M")}',
+                ruta=instance.ruta,
+                importante=True
+            )
     
     # Detectar cambio de hora de llegada
     if trayecto_antiguo['horaLlegada'] != instance.horaLlegada:
-        Notificacion.objects.create(
-            usuario=instance.ruta.usuario,
-            tipo='cambio_ruta',
-            titulo=f'Cambio de hora en ruta "{instance.ruta.nombre}"',
-            mensaje=f'La hora de llegada a {instance.estacionLlegada} ha cambiado de {trayecto_antiguo["horaLlegada"].strftime("%H:%M")} a {instance.horaLlegada.strftime("%H:%M")}',
-            ruta=instance.ruta,
-            importante=True
-        )
+        for usuario in usuarios_ruta:
+            Notificacion.objects.create(
+                usuario=usuario,
+                tipo='cambio_ruta',
+                titulo=f'Cambio de hora en ruta "{instance.ruta.nombre}"',
+                mensaje=f'La hora de llegada a {instance.estacionLlegada} ha cambiado de {trayecto_antiguo["horaLlegada"].strftime("%H:%M")} a {instance.horaLlegada.strftime("%H:%M")}',
+                ruta=instance.ruta,
+                importante=True
+            )
     
     # Detectar cambio de estaciones
     if trayecto_antiguo['estacionSalida'] != instance.estacionSalida or trayecto_antiguo['estacionLlegada'] != instance.estacionLlegada:
-        Notificacion.objects.create(
-            usuario=instance.ruta.usuario,
-            tipo='cambio_ruta',
-            titulo=f'Cambio de estaciones en ruta "{instance.ruta.nombre}"',
-            mensaje=f'El trayecto ha cambiado de "{trayecto_antiguo["estacionSalida"]} → {trayecto_antiguo["estacionLlegada"]}" a "{instance.estacionSalida} → {instance.estacionLlegada}"',
-            ruta=instance.ruta,
-            importante=True
-        )
+        for usuario in usuarios_ruta:
+            Notificacion.objects.create(
+                usuario=usuario,
+                tipo='cambio_ruta',
+                titulo=f'Cambio de estaciones en ruta "{instance.ruta.nombre}"',
+                mensaje=f'El trayecto ha cambiado de "{trayecto_antiguo["estacionSalida"]} → {trayecto_antiguo["estacionLlegada"]}" a "{instance.estacionSalida} → {instance.estacionLlegada}"',
+                ruta=instance.ruta,
+                importante=True
+            )
     
     # Detectar cambio de línea
     if trayecto_antiguo['nombreLinea'] != instance.nombreLinea:
-        Notificacion.objects.create(
-            usuario=instance.ruta.usuario,
-            tipo='cambio_ruta',
-            titulo=f'Cambio de línea en ruta "{instance.ruta.nombre}"',
-            mensaje=f'La línea del trayecto {instance.estacionSalida} → {instance.estacionLlegada} ha cambiado de "{trayecto_antiguo["nombreLinea"]}" a "{instance.nombreLinea}"',
-            ruta=instance.ruta,
-            importante=False
-        )
+        for usuario in usuarios_ruta:
+            Notificacion.objects.create(
+                usuario=usuario,
+                tipo='cambio_ruta',
+                titulo=f'Cambio de línea en ruta "{instance.ruta.nombre}"',
+                mensaje=f'La línea del trayecto {instance.estacionSalida} → {instance.estacionLlegada} ha cambiado de "{trayecto_antiguo["nombreLinea"]}" a "{instance.nombreLinea}"',
+                ruta=instance.ruta,
+                importante=False
+            )
     
     # Limpiar el estado previo
     if instance.pk in _trayecto_previo:
@@ -463,17 +552,25 @@ def notificar_cambios_trayecto(sender, instance, created, **kwargs):
 @receiver(post_save, sender=Trayecto)
 def notificar_nuevo_trayecto(sender, instance, created, **kwargs):
     """
-    Crea notificación cuando se añade un nuevo trayecto a una ruta del usuario.
+    Crea notificación cuando se añade un nuevo trayecto a una ruta.
+    Notifica a todos los usuarios que tienen la ruta en sus favoritos.
     """
-    if created and instance.ruta.usuario and instance.ruta.usuario.notificacionesRutas:
+    if not created:
+        return
+    
+    # Obtener todos los usuarios que tienen esta ruta
+    usuarios_ruta = instance.ruta.usuarios.filter(notificacionesRutas=True)
+    
+    for usuario in usuarios_ruta:
         Notificacion.objects.create(
-            usuario=instance.ruta.usuario,
+            usuario=usuario,
             tipo='cambio_ruta',
             titulo=f'Nuevo trayecto en ruta "{instance.ruta.nombre}"',
             mensaje=f'Se ha añadido un nuevo trayecto: {instance.estacionSalida} → {instance.estacionLlegada} ({instance.nombreLinea})',
             ruta=instance.ruta,
             importante=False
         )
+
 
 
 @receiver(post_save, sender=Aviso)

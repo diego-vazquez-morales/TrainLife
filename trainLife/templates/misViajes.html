@@ -76,7 +76,19 @@
                             <div class="trip-card-header">
                                 <h2 class="trip-route">{{ viaje.origenEstacion }} → {{ viaje.destinoEstacion }}</h2>
                                 <span class="status-badge status-{{ viaje.estadoViaje|lower }}">
-                                    <i data-lucide="check-circle"></i>
+                                    {% if viaje.estadoViaje|lower == 'cancelado' %}
+                                        <i data-lucide="x-circle"></i>
+                                    {% elif viaje.estadoViaje|lower == 'retrasado' %}
+                                        <i data-lucide="alert-circle"></i>
+                                    {% elif viaje.estadoViaje|lower == 'confirmado' or viaje.estadoViaje|lower == 'completado' %}
+                                        <i data-lucide="check-circle"></i>
+                                    {% elif viaje.estadoViaje|lower == 'en curso' %}
+                                        <i data-lucide="train"></i>
+                                    {% elif viaje.estadoViaje|lower == 'programado' %}
+                                        <i data-lucide="clock"></i>
+                                    {% else %}
+                                        <i data-lucide="info"></i>
+                                    {% endif %}
                                     {{ viaje.estadoViaje|capfirst }}
                                 </span>
                             </div>

@@ -76,13 +76,25 @@ function renderizarNotificaciones() {
     // Actualizar iconos de Lucide
     lucide.createIcons();
     
-    // Agregar event listeners para marcar como leída
+    // Agregar event listeners para marcar como leída y navegar
     document.querySelectorAll('.notification-card').forEach(card => {
         card.addEventListener('click', function() {
             const notifId = parseInt(this.dataset.notifId);
             const notif = notificaciones.find(n => n.id === notifId);
-            if (notif && !notif.leida) {
-                marcarComoLeida(notifId);
+            if (notif) {
+                // Marcar como leída si no lo está
+                if (!notif.leida) {
+                    marcarComoLeida(notifId);
+                }
+                
+                // Navegar al viaje o ruta correspondiente
+                if (notif.viaje_id) {
+                    // Redirigir a los detalles del viaje
+                    window.location.href = `/viajesDetalles/${USUARIO_ID}/${notif.viaje_id}/`;
+                } else if (notif.ruta_id) {
+                    // Redirigir a mis rutas (donde puede ver la ruta)
+                    window.location.href = `/misRutas/${USUARIO_ID}/`;
+                }
             }
         });
     });
@@ -122,9 +134,14 @@ function crearNotificacionHTML(notif) {
     
     const fecha = formatearFecha(notif.fechaCreacion);
     
+    // Añadir clase clickable si tiene viaje o ruta
+    const clickableClass = (notif.viaje_id || notif.ruta_id) ? 'clickable' : '';
+    
     return `
-        <div class="notification-card ${leidaClass}" 
-             data-notif-id="${notif.id}" 
+        <div class="notification-card ${leidaClass} ${clickableClass}" 
+             data-notif-id="${notif.id}"
+             data-viaje-id="${notif.viaje_id || ''}" 
+             data-ruta-id="${notif.ruta_id || ''}" 
              role="listitem"
              aria-label="Notificación: ${notif.titulo}">
             ${!notif.leida ? '<div class="notification-unread-dot"></div>' : ''}

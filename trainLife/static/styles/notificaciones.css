@@ -166,7 +166,6 @@ body {
     background-color: var(--bg-white);
     border: 1px solid var(--border-color);
     border-radius: 0.75rem;
-    cursor: pointer;
     transition: all 0.2s ease;
 }
 
@@ -177,6 +176,29 @@ body {
 .notification-card.unread {
     background-color: var(--bg-unread);
     border-color: var(--border-unread);
+}
+
+/* Notificaciones clickeables (con viaje o ruta asociada) */
+.notification-card.clickable {
+    cursor: pointer;
+}
+
+.notification-card.clickable:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+    border-color: var(--primary-color);
+}
+
+.notification-card.clickable:hover .notification-chevron {
+    color: var(--primary-color);
+}
+
+.notification-card:not(.clickable) {
+    cursor: default;
+}
+
+.notification-card:not(.clickable) .notification-chevron {
+    opacity: 0.3;
 }
 
 /* Punto azul de no leído */

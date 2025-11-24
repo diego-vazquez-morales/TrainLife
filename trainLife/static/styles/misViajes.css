@@ -223,6 +223,45 @@ body {
     height: 1rem;
 }
 
+/* Estados de viajes */
+.status-confirmado {
+    background-color: var(--success-bg);
+    border-color: var(--success-border);
+    color: #15803d;
+}
+
+.status-completado {
+    background-color: var(--success-bg);
+    border-color: var(--success-border);
+    color: #15803d;
+}
+
+.status-programado {
+    background-color: var(--info-bg);
+    border-color: var(--info-border);
+    color: #1e40af;
+}
+
+.status-retrasado {
+    background-color: var(--warning-bg);
+    border-color: var(--warning-border);
+    color: #b45309;
+}
+
+.status-cancelado {
+    background-color: var(--danger-bg);
+    border-color: var(--danger-border);
+    color: #b91c1c;
+}
+
+.status-en.curso,
+.status-en-curso {
+    background-color: #eff6ff;
+    border-color: #3b82f6;
+    color: #1e40af;
+}
+
+/* Compatibilidad con nombres en inglés (legacy) */
 .status-confirmed {
     background-color: var(--success-bg);
     border-color: var(--success-border);
