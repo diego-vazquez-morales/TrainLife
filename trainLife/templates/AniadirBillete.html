@@ -17,6 +17,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
+    <a href="#contenido-principal" class="skip-link">Saltar al contenido principal</a>
     <div class="dashboard-container">
         <!-- Mobile Menu Toggle -->
         <button class="mobile-menu-toggle" aria-label="Toggle menu">
@@ -29,7 +30,7 @@
         {% endwith %}
 
         <!-- Main Content -->
-        <main class="main-content" role="main" aria-labelledby="page-title-main">
+        <main id="contenido-principal" class="main-content" role="main" aria-labelledby="page-title-main">
             <!-- Breadcrumbs -->
             <nav class="breadcrumbs" aria-label="Ruta de navegación (breadcrumbs)">
                 <a href="{% url 'viajes_usuario' usuario.id %}" class="breadcrumb-link">Viajes</a>

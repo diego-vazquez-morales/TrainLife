@@ -22,6 +22,7 @@
 </head>
 
 <body>
+    <a href="#contenido-principal" class="skip-link">Saltar al contenido principal</a>
      <div class="dashboard-container">
         <!-- Mobile Menu Toggle -->
         <button class="mobile-menu-toggle" aria-label="Toggle menu">
@@ -44,7 +45,7 @@
             </div>
         {% endif %}
 
-        <main class="main-content" role="main" aria-label="Contenido principal">
+        <main id="contenido-principal" class="main-content" role="main" aria-label="Contenido principal">
             <div class="content-wrapper">
                 <nav class="breadcrumb" aria-label="Breadcrumb">
                     <a href="{% url 'inicio_usuario' usuario.id %}" class="breadcrumb-item"

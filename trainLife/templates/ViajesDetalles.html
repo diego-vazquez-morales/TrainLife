@@ -19,6 +19,9 @@
     <link rel="stylesheet" href="{% static 'styles/ViajesDetalles.css' %}"/>
 </head>
 <body>
+    <a href="#contenido-principal" class="skip-link">Saltar al contenido principal</a>
+    
+    
     <div class="page-container">
         <!-- Header - Solo visible en desktop -->
         <header class="page-header" role="banner">
@@ -29,7 +32,7 @@
         </header>
 
         <!-- Main Content -->
-        <main class="main-container" role="main" aria-label="Detalles del viaje">
+        <main id="contenido-principal" class="main-container" role="main" aria-label="Detalles del viaje" tabindex="-1">
             <div class="content-wrapper">
                 <!-- Page Title (visually hidden but accessible) -->
                 <h1 class="sr-only">Detalles del Viaje</h1>

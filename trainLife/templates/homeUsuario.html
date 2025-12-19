@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="{% static 'styles/sidebar.css' %}">
 </head>
 <body>
+    <a href="#contenido-principal" class="skip-link">Saltar al contenido principal</a>
     <div class="dashboard-container">
         <!-- Mobile Menu Toggle -->
         <button class="mobile-menu-toggle" aria-label="Toggle menu">
@@ -32,7 +33,7 @@
         {% endwith %}
 
         <!-- Main Content -->
-        <main class="main-content" role="main" aria-label="Contenido principal del dashboard">
+        <main id="contenido-principal" class="main-content" role="main" aria-label="Contenido principal del dashboard">
             <div class="content-wrapper">
                 <!-- Breadcrumbs -->
                 <nav class="breadcrumbs" aria-label="Breadcrumb">
