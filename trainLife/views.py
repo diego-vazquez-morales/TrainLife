@@ -406,7 +406,6 @@ def aniadirBillete(request, usuario_id):
                 destinoEstacion=request.POST.get('destinoEstacion'),
                 horaLlegadaDestino=request.POST.get('horaLlegadaDestino'),
                 fechaViaje=request.POST.get('fechaViaje'),
-                notificacionesActivas=request.POST.get('notificacionesActivas') == 'on',
                 estadoViaje=request.POST.get('estadoViaje', 'Programado')
             )
             
