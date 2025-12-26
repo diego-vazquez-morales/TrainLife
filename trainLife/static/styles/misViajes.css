@@ -249,23 +249,23 @@ body {
     height: 1rem;
 }
 
-/* Estados de viajes */
+/* Estados de viajes - Adaptables según modo de color */
 .status-confirmado {
-    background-color: var(--success-bg);
-    border-color: var(--success-border);
-    color: #15803d;
+    background-color: var(--estado-confirmado, var(--success-bg));
+    border-color: var(--estado-confirmado, var(--success-border));
+    color: #ffffff;
 }
 
 .status-completado {
-    background-color: var(--success-bg);
-    border-color: var(--success-border);
-    color: #15803d;
+    background-color: var(--estado-completado, var(--success-bg));
+    border-color: var(--estado-completado, var(--success-border));
+    color: #ffffff;
 }
 
 .status-programado {
-    background-color: var(--info-bg);
-    border-color: var(--info-border);
-    color: #1e40af;
+    background-color: var(--estado-programado, var(--info-bg));
+    border-color: var(--estado-programado, var(--info-border));
+    color: #ffffff;
 }
 
 .status-retrasado {
@@ -275,16 +275,16 @@ body {
 }
 
 .status-cancelado {
-    background-color: var(--danger-bg);
-    border-color: var(--danger-border);
-    color: #b91c1c;
+    background-color: var(--estado-cancelado, var(--danger-bg));
+    border-color: var(--estado-cancelado, var(--danger-border));
+    color: #ffffff;
 }
 
 .status-en.curso,
 .status-en-curso {
-    background-color: #eff6ff;
-    border-color: #3b82f6;
-    color: #1e40af;
+    background-color: var(--estado-en-curso, #eff6ff);
+    border-color: var(--estado-en-curso, #3b82f6);
+    color: #ffffff;
 }
 
 /* Compatibilidad con nombres en inglés (legacy) */

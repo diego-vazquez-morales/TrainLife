@@ -252,24 +252,25 @@ body {
     height: 1.25rem;
 }
 
+/* Iconos de notificación - Adaptables según modo de color */
 .notification-icon-success {
-    background-color: var(--success-bg);
-    color: var(--success-color);
+    background-color: var(--badge-bg-success, var(--success-bg));
+    color: var(--color-success, var(--success-color));
 }
 
 .notification-icon-warning {
-    background-color: var(--warning-bg);
-    color: var(--warning-color);
+    background-color: var(--badge-bg-warning, var(--warning-bg));
+    color: var(--color-warning, var(--warning-color));
 }
 
 .notification-icon-danger {
-    background-color: var(--danger-dark) !important; 
-    color: #fff !important; 
+    background-color: var(--badge-bg-danger, var(--danger-bg)) !important; 
+    color: var(--color-danger, #fff) !important; 
 }
 
 .notification-icon-info {
-    background-color: var(--info-bg);
-    color: var(--info-color);
+    background-color: var(--badge-bg-primary, var(--info-bg));
+    color: var(--color-info, var(--info-color));
 }
 
 .notification-icon-default {

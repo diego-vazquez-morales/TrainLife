@@ -19,9 +19,10 @@
     <!-- Custom CSS -->
     {% load static %}
     <link rel="stylesheet" href="{% static 'styles/login.css' %}" />
+    <link rel="stylesheet" href="{% static 'styles/color-modes.css' %}" />
 </head>
 
-<body>
+<body data-color-mode="{{ color_mode|default:'normal' }}">
     <main role="main" aria-label="Página de inicio de sesión">
         <div class="login-container">
             <!-- Background Image with Overlay -->

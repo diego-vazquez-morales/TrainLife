@@ -12,11 +12,12 @@
 
     <!-- Referencias externas a CSS y JS locales -->
     <link rel="stylesheet" href="{% static 'styles/salir.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/color-modes.css' %}">
     <script src="{% static 'js/salir.js' %}"></script>
 
 </head>
 
-<body>
+<body data-color-mode="{{ color_mode }}">
     <main role="main">
         <h1 class="sr-only">Confirmación de cierre de sesión</h1>
         <div class="page-container" role="presentation">
