@@ -120,6 +120,29 @@
                                 </div>
                             </div>
 
+                            <!-- Alerta de viaje cancelado/retrasado -->
+                            {% if viaje.estadoViaje|lower == 'cancelado' %}
+                                <div class="trip-alert trip-alert-canceled">
+                                    <i data-lucide="x-circle"></i>
+                                    <div class="trip-alert-content">
+                                        <p class="trip-alert-text">Este viaje ha sido cancelado</p>
+                                        <a href="{% url 'ver_alternativas_viaje' usuario.id viaje.id %}" class="trip-alert-link" onclick="event.stopPropagation();">
+                                            Ver alternativas disponibles →
+                                        </a>
+                                    </div>
+                                </div>
+                            {% elif viaje.estadoViaje|lower == 'retrasado' %}
+                                <div class="trip-alert trip-alert-delayed">
+                                    <i data-lucide="clock"></i>
+                                    <div class="trip-alert-content">
+                                        <p class="trip-alert-text">Este viaje está retrasado</p>
+                                        <a href="{% url 'ver_alternativas_viaje' usuario.id viaje.id %}" class="trip-alert-link" onclick="event.stopPropagation();">
+                                            Ver alternativas disponibles →
+                                        </a>
+                                    </div>
+                                </div>
+                            {% endif %}
+
                             <button class="btn-view-details" onclick="event.stopPropagation(); window.location.href='{% url 'detalles_viaje' usuario.id viaje.id %}'">
                                 Ver detalles
                                 <i data-lucide="arrow-right"></i>

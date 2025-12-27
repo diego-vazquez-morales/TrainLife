@@ -34,4 +34,14 @@ urlpatterns = [
     path('recuperar-contrasenia/', views.recuperarContrasenia, name='recuperar_contrasenia'),
     path('api/verificar-email/', views.api_verificar_email, name='api_verificar_email'),
     
+    # Sistema de alternativas (incidencias y viajes disponibles)
+    path('api/incidencias/viaje/<int:usuario_id>/<int:viaje_id>/', views.api_incidencias_viaje, name='api_incidencias_viaje'),
+    path('api/alternativa/aplicar/<int:usuario_id>/<int:viaje_alternativo_id>/<int:viaje_cancelado_id>/', views.api_aplicar_alternativa, name='api_aplicar_alternativa'),
+    path('alternativas/viaje/<int:usuario_id>/<int:viaje_id>/', views.ver_alternativas_viaje, name='ver_alternativas_viaje'),
+    path('api/incidencias/ruta/<int:usuario_id>/<int:ruta_id>/', views.api_incidencias_ruta, name='api_incidencias_ruta'),
+    
+    # Comprar billetes (viajes disponibles)
+    path('api/viajes-disponibles/<int:usuario_id>/', views.api_viajes_disponibles, name='api_viajes_disponibles'),
+    path('api/comprar-viaje/<int:usuario_id>/<int:viaje_id>/', views.api_comprar_viaje, name='api_comprar_viaje'),
+    
 ]
