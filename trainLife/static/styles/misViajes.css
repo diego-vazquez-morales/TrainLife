@@ -334,48 +334,86 @@ body {
 
 /* Trip Alert */
 .trip-alert {
-    padding: 0.75rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.875rem;
     border-radius: 0.5rem;
     margin-bottom: 1rem;
     border: 1px solid;
 }
 
-.trip-alert.alert-delayed {
+.trip-alert.alert-delayed,
+.trip-alert-delayed {
     background-color: var(--warning-bg);
     border-color: var(--warning-border);
 }
 
-.trip-alert.alert-cancelled {
+.trip-alert.alert-cancelled,
+.trip-alert-canceled {
     background-color: var(--danger-bg);
     border-color: var(--danger-border);
 }
 
-.trip-alert-title {
-    font-size: 0.875rem;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
+.trip-alert i {
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+    margin-top: 0.125rem;
 }
 
+<<<<<<< HEAD
 .trip-alert.alert-delayed .trip-alert-title {
     color: #8d3d00;
 }
 
 .trip-alert.alert-cancelled .trip-alert-title {
     color: #870000;
+=======
+.trip-alert-delayed i {
+    color: var(--warning-color);
+}
+
+.trip-alert-canceled i {
+    color: var(--danger-color);
+}
+
+.trip-alert-content {
+    flex: 1;
+}
+
+.trip-alert-title,
+.trip-alert-text {
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.trip-alert.alert-delayed .trip-alert-title,
+.trip-alert-delayed .trip-alert-text {
+    color: #b45309;
+}
+
+.trip-alert.alert-cancelled .trip-alert-title,
+.trip-alert-canceled .trip-alert-text {
+    color: #b91c1c;
+>>>>>>> diego
 }
 
 .trip-alert-link {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 0.25rem;
-    font-size: 0.75rem;
-    font-weight: 600;
+    font-size: 0.875rem;
+    font-weight: 500;
     color: var(--primary-color);
     text-decoration: none;
+    transition: all 0.2s;
 }
 
 .trip-alert-link:hover {
     text-decoration: underline;
+    color: var(--primary-hover);
 }
 
 .trip-alert-link i {
@@ -383,30 +421,55 @@ body {
     height: 0.75rem;
 }
 
-/* Trip Action Button */
-.btn-view-details {
+/* Trip Card Actions Container */
+.trip-card-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
+}
+
+/* Trip Action Buttons */
+.btn-view-details,
+.btn-view-alternatives {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
     padding: 0.625rem 1rem;
-    background-color: var(--primary-color);
-    color: white;
     border: none;
     border-radius: 0.5rem;
     font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.2s;
 }
 
-.btn-view-details i {
-    width: 1rem;
-    height: 1rem;
+.btn-view-details {
+    background-color: var(--primary-color);
+    color: white;
 }
 
 .btn-view-details:hover {
     background-color: var(--primary-hover);
+}
+
+.btn-view-alternatives {
+    background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
+    color: white;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+}
+
+.btn-view-alternatives:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+}
+
+.btn-view-details i,
+.btn-view-alternatives i {
+    width: 1rem;
+    height: 1rem;
 }
 
 /* Empty State */

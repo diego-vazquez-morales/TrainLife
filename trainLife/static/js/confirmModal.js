@@ -79,18 +79,21 @@ class ConfirmModal {
                 bgColor: 'modal-icon-danger',
                 iconColor: 'modal-icon-danger-color',
                 buttonColor: 'modal-btn-danger',
+                buttonStyle: 'background-color: #dc2626;',
                 icon: 'alert-triangle'
             },
             warning: {
                 bgColor: 'modal-icon-warning',
                 iconColor: 'modal-icon-warning-color',
                 buttonColor: 'modal-btn-warning',
+                buttonStyle: 'background-color: #0f49bd !important;',
                 icon: 'alert-triangle'
             },
             info: {
                 bgColor: 'modal-icon-info',
                 iconColor: 'modal-icon-info-color',
                 buttonColor: 'modal-btn-info',
+                buttonStyle: 'background-color: #0d6efd;',
                 icon: 'info'
             }
         };
@@ -117,7 +120,7 @@ class ConfirmModal {
                     <button class="modal-btn modal-btn-cancel">
                         ${cancelText}
                     </button>
-                    <button class="modal-btn modal-btn-confirm ${config.buttonColor}">
+                    <button class="modal-btn modal-btn-confirm ${config.buttonColor}" style="${config.buttonStyle}">
                         ${confirmText}
                     </button>
                 </div>
@@ -229,10 +232,32 @@ window.showConfirmModal = function(options) {
 
 /**
  * Muestra un modal de éxito automáticamente
- * @param {string} message - Mensaje de éxito
- * @param {number} duration - Duración en ms antes de cerrar (default: 2500)
+ * @param {Object|string} options - Objeto de opciones o mensaje de éxito
+ * @param {string} options.title - Título del modal (default: '¡Realizado con éxito!')
+ * @param {string} options.message - Mensaje de éxito
+ * @param {number} options.duration - Duración en ms antes de cerrar (default: 2500)
+ * @param {Function} options.onClose - Callback al cerrar el modal
  */
-window.showSuccessModal = function(message, duration = 2500) {
+window.showSuccessModal = function(options) {
+    console.log('showSuccessModal llamado con:', options);
+    
+    let title = '¡Realizado con éxito!';
+    let message = '';
+    let duration = 2500;
+    let onClose = null;
+    
+    // Si recibe un string, convertirlo a objeto
+    if (typeof options === 'string') {
+        message = options;
+    } else if (options && typeof options === 'object') {
+        title = options.title || title;
+        message = options.message || message;
+        duration = options.duration || duration;
+        onClose = options.onClose || onClose;
+    }
+    
+    console.log('Mostrando modal con:', { title, message, duration });
+    
     // Crear overlay si no existe
     let overlay = document.getElementById('success-modal-overlay');
     
@@ -249,22 +274,35 @@ window.showSuccessModal = function(message, duration = 2500) {
                         </svg>
                     </div>
                 </div>
-                <h2 class="success-title">¡Realizado con éxito!</h2>
+                <h2 class="success-title"></h2>
                 <p class="success-message"></p>
             </div>
         `;
         document.body.appendChild(overlay);
     }
     
-    // Actualizar mensaje
-    overlay.querySelector('.success-message').textContent = message;
+    // Actualizar título y mensaje
+    const titleElement = overlay.querySelector('.success-title');
+    const messageElement = overlay.querySelector('.success-message');
+    
+    if (titleElement) {
+        titleElement.textContent = String(title);
+        console.log('Título actualizado:', title);
+    }
+    if (messageElement) {
+        messageElement.textContent = String(message);
+        console.log('Mensaje actualizado:', message);
+    }
     
     // Mostrar modal
     overlay.style.display = 'flex';
     
-    // Cerrar automáticamente
-    setTimeout(() => {
+    // Cerrar automáticamente y ejecutar callback
+    setTimeout(function() {
         overlay.style.display = 'none';
+        if (onClose && typeof onClose === 'function') {
+            onClose();
+        }
     }, duration);
 };
 

@@ -403,6 +403,73 @@ body {
     }
 }
 
+/* === Modal de Recuperación de Contraseña === */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-overlay.show {
+    display: flex;
+}
+
+.modal-content-custom {
+    background: white;
+    border-radius: 1rem;
+    padding: 2rem;
+    max-width: 28rem;
+    width: 100%;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    animation: slideIn 0.3s ease-out;
+}
+
+.modal-description {
+    color: var(--text-gray);
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.back-to-login-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+    transition: color 0.2s;
+}
+
+.back-to-login-link:hover {
+    color: var(--primary-hover);
+    text-decoration: underline;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
 /* === Responsive === */
 @media (max-width: 640px) {
     .login-card {
@@ -419,5 +486,10 @@ body {
         width: 2.5rem;
         height: 2.5rem;
         font-size: 1rem;
+    }
+
+    .modal-content-custom {
+        padding: 1.5rem;
+        margin: 1rem;
     }
 }
