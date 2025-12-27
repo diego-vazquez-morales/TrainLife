@@ -45,6 +45,10 @@ async function cargarViajesDisponibles() {
     if (fecha) queryParams.push(`fecha=${fecha}`);
     const queryString = queryParams.length > 0 ? '?' + queryParams.join('&') : '';
     
+    console.log('Usuario ID:', usuarioId);
+    console.log('Query String:', queryString);
+    console.log('URL completa:', `/api/viajes-disponibles/${usuarioId}/${queryString}`);
+    
     try {
         loader.style.display = 'block';
         errorContainer.style.display = 'none';
@@ -52,11 +56,17 @@ async function cargarViajesDisponibles() {
         
         const response = await fetch(`/api/viajes-disponibles/${usuarioId}/${queryString}`);
         
+        console.log('Response status:', response.status);
+        console.log('Response OK:', response.ok);
+        
         if (!response.ok) {
             throw new Error('Error al cargar los viajes disponibles');
         }
         
         const data = await response.json();
+        
+        console.log('Datos recibidos:', data);
+        console.log('Número de viajes:', data.viajes ? data.viajes.length : 0);
         
         loader.style.display = 'none';
         
