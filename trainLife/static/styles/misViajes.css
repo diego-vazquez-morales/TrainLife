@@ -2,15 +2,15 @@
 
 /* === Variables CSS === */
 :root {
-    --primary-color: #0f49bd;
-    --primary-hover: #0d3a9a;
-    --success-color: #10b981;
+    --primary-color: #003bb0;
+    --primary-hover: #01287c;
+    --success-color: #009563;
     --success-bg: #f0fdf4;
     --success-border: #bbf7d0;
-    --warning-color: #f59e0b;
+    --warning-color: #af6f00;
     --warning-bg: #fffbeb;
-    --warning-border: #fcd34d;
-    --danger-color: #ef4444;
+    --warning-border: #ffc400;
+    --danger-color: #c63a3a;
     --danger-bg: #fef2f2;
     --danger-border: #fecaca;
     --info-color: #3b82f6;
@@ -253,31 +253,31 @@ body {
 .status-confirmado {
     background-color: var(--success-bg);
     border-color: var(--success-border);
-    color: #15803d;
+    color: #005020;
 }
 
 .status-completado {
     background-color: var(--success-bg);
     border-color: var(--success-border);
-    color: #15803d;
+    color: #005020;
 }
 
 .status-programado {
     background-color: var(--info-bg);
     border-color: var(--info-border);
-    color: #1e40af;
+    color: #001f84;
 }
 
 .status-retrasado {
     background-color: var(--warning-bg);
     border-color: var(--warning-border);
-    color: #b45309;
+    color: #8d3d00;
 }
 
 .status-cancelado {
     background-color: var(--danger-bg);
     border-color: var(--danger-border);
-    color: #b91c1c;
+    color: #870000;
 }
 
 .status-en.curso,
@@ -291,25 +291,25 @@ body {
 .status-confirmed {
     background-color: var(--success-bg);
     border-color: var(--success-border);
-    color: #15803d;
+    color: #007b2d;
 }
 
 .status-pending {
     background-color: var(--info-bg);
     border-color: var(--info-border);
-    color: #1e40af;
+    color: #001f84;
 }
 
 .status-delayed {
     background-color: var(--warning-bg);
     border-color: var(--warning-border);
-    color: #b45309;
+    color: #8d3d00;
 }
 
 .status-cancelled {
     background-color: var(--danger-bg);
     border-color: var(--danger-border);
-    color: #b91c1c;
+    color: #870000;
 }
 
 .trip-details {
@@ -357,11 +357,11 @@ body {
 }
 
 .trip-alert.alert-delayed .trip-alert-title {
-    color: #b45309;
+    color: #8d3d00;
 }
 
 .trip-alert.alert-cancelled .trip-alert-title {
-    color: #b91c1c;
+    color: #870000;
 }
 
 .trip-alert-link {
