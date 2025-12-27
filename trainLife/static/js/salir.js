@@ -60,4 +60,13 @@ document.addEventListener('DOMContentLoaded', function() {
             window.history.back();
         });
     }
+
+    // mueve el foco al botón principal o al diálogo
+    const dialog = document.querySelector('[role="dialog"]:not(#modalExito)');
+    const primaryBtn = document.getElementById('btnCerrarSesion');
+    if (primaryBtn) {
+        primaryBtn.focus();
+    } else if (dialog) {
+        dialog.focus();
+    }
 });
