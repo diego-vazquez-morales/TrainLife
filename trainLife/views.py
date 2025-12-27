@@ -851,16 +851,15 @@ def api_viajes_disponibles(request, usuario_id):
     try:
         from datetime import datetime as dt, date, timedelta
         
-        # Obtener parámetros de búsqueda
+        # Obtener parámetros de búsqueda (opcionales)
         origen = request.GET.get('origen', '').strip()
         destino = request.GET.get('destino', '').strip()
         fecha = request.GET.get('fecha', '').strip()
         
-        # Obtener viajes disponibles (sin usuario asignado)
+        # Obtener TODOS los viajes disponibles (sin usuario asignado)
         viajes_disponibles = Viaje.objects.filter(
             usuario__isnull=True,
-            estadoViaje='disponible',
-            fechaViaje__gte=date.today()  # Solo viajes futuros
+            estadoViaje='disponible'
         )
         
         # Aplicar filtros si se proporcionan
