@@ -181,11 +181,11 @@
 }
 
 .modal-btn-warning {
-    background-color: #d97706;
+    background-color: #0f49bd !important;
 }
 
 .modal-btn-warning:hover {
-    background-color: #b45309;
+    background-color: rgba(15, 73, 189, 0.9) !important;
 }
 
 .modal-btn-info {
@@ -350,4 +350,15 @@
         transform: translateY(0);
         opacity: 1;
     }
+}
+
+/* === Forzar color azul en botón warning === */
+.confirm-modal-overlay .modal-btn.modal-btn-warning,
+.confirm-modal-overlay button.modal-btn-warning {
+    background-color: #0f49bd !important;
+}
+
+.confirm-modal-overlay .modal-btn.modal-btn-warning:hover,
+.confirm-modal-overlay button.modal-btn-warning:hover {
+    background-color: #0d3d9a !important;
 }

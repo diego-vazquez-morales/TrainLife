@@ -30,4 +30,8 @@ urlpatterns = [
     # configuración
     path('configuracion/<int:usuario_id>/', views.configuracion, name='configuracion'),
     
+    # Recuperación de contraseña
+    path('recuperar-contrasenia/', views.recuperarContrasenia, name='recuperar_contrasenia'),
+    path('api/verificar-email/', views.api_verificar_email, name='api_verificar_email'),
+    
 ]

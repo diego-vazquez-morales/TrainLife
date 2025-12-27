@@ -561,3 +561,88 @@ def configuracion(request, usuario_id):
         return redirect('configuracion', usuario_id=usuario_id)
     
     return render(request, 'configuracion.html', {'usuario': usuario})
+
+
+def api_verificar_email(request):
+    """API para verificar si un email existe en la base de datos."""
+    if request.method == 'POST':
+        # Intentar obtener email de POST data o JSON
+        import json
+        try:
+            data = json.loads(request.body)
+            email = data.get('email', '').strip()
+        except:
+            email = request.POST.get('email', '').strip()
+        
+        if not email:
+            return JsonResponse({'existe': False, 'mensaje': 'Email requerido'})
+        
+        try:
+            existe = Usuario.objects.filter(email=email).exists()
+            
+            if existe:
+                return JsonResponse({'existe': True, 'mensaje': 'Email encontrado'})
+            else:
+                return JsonResponse({'existe': False, 'mensaje': 'No existe ninguna cuenta con este correo electrónico'})
+        except Exception as e:
+            print(f"Error en api_verificar_email: {e}")
+            return JsonResponse({'existe': False, 'mensaje': 'Error al verificar el email'}, status=500)
+    
+    return JsonResponse({'existe': False, 'mensaje': 'Método no permitido'}, status=405)
+
+
+def recuperarContrasenia(request):
+    """Muestra el formulario para cambiar la contraseña (GET) y procesa el cambio (POST)."""
+    if request.method == 'POST':
+        import json
+        
+        # Verificar si es una petición AJAX
+        is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+        
+        try:
+            data = json.loads(request.body)
+            email = data.get('email', '').strip()
+            nueva_contrasenia = data.get('newPassword', '').strip()
+            repetir_contrasenia = data.get('repeatPassword', '').strip()
+        except:
+            email = request.POST.get('email', '').strip()
+            nueva_contrasenia = request.POST.get('newPassword', '').strip()
+            repetir_contrasenia = request.POST.get('repeatPassword', '').strip()
+        
+        # Validaciones
+        if not email or not nueva_contrasenia or not repetir_contrasenia:
+            if is_ajax:
+                return JsonResponse({'success': False, 'mensaje': 'Todos los campos son requeridos.'})
+            messages.error(request, 'Todos los campos son requeridos.')
+            return render(request, 'recuperarContrasenia.html')
+        
+        if nueva_contrasenia != repetir_contrasenia:
+            if is_ajax:
+                return JsonResponse({'success': False, 'mensaje': 'Las contraseñas no coinciden.'})
+            messages.error(request, 'Las contraseñas no coinciden.')
+            return render(request, 'recuperarContrasenia.html')
+        
+        if len(nueva_contrasenia) < 6:
+            if is_ajax:
+                return JsonResponse({'success': False, 'mensaje': 'La contraseña debe tener al menos 6 caracteres.'})
+            messages.error(request, 'La contraseña debe tener al menos 6 caracteres.')
+            return render(request, 'recuperarContrasenia.html')
+        
+        try:
+            usuario = Usuario.objects.get(email=email)
+            usuario.contrasenia = nueva_contrasenia
+            usuario.save()
+            
+            if is_ajax:
+                return JsonResponse({'success': True, 'mensaje': 'Contraseña cambiada correctamente'})
+            
+            messages.success(request, 'Contraseña cambiada correctamente. Ya puedes iniciar sesión.')
+            return redirect('login')
+        except Usuario.DoesNotExist:
+            if is_ajax:
+                return JsonResponse({'success': False, 'mensaje': 'No se encontró ningún usuario con ese correo electrónico.'})
+            messages.error(request, 'No se encontró ningún usuario con ese correo electrónico.')
+            return render(request, 'recuperarContrasenia.html')
+    
+    # GET
+    return render(request, 'recuperarContrasenia.html')
