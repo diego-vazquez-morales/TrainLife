@@ -362,14 +362,6 @@ body {
     margin-top: 0.125rem;
 }
 
-<<<<<<< HEAD
-.trip-alert.alert-delayed .trip-alert-title {
-    color: #8d3d00;
-}
-
-.trip-alert.alert-cancelled .trip-alert-title {
-    color: #870000;
-=======
 .trip-alert-delayed i {
     color: var(--warning-color);
 }
@@ -391,13 +383,12 @@ body {
 
 .trip-alert.alert-delayed .trip-alert-title,
 .trip-alert-delayed .trip-alert-text {
-    color: #b45309;
+    color: #8a3c00;
 }
 
 .trip-alert.alert-cancelled .trip-alert-title,
 .trip-alert-canceled .trip-alert-text {
-    color: #b91c1c;
->>>>>>> diego
+    color: #8c0000;
 }
 
 .trip-alert-link {
