@@ -251,63 +251,39 @@ body {
 
 /* Estados de viajes - Adaptables según modo de color */
 .status-confirmado {
-<<<<<<< HEAD
-    background-color: var(--estado-confirmado, var(--success-bg));
-    border-color: var(--estado-confirmado, var(--success-border));
+    background-color: var(--estado-confirmado, #10b981);
+    border-color: var(--estado-confirmado, #059669);
     color: #ffffff;
 }
 
 .status-completado {
-    background-color: var(--estado-completado, var(--success-bg));
-    border-color: var(--estado-completado, var(--success-border));
+    background-color: var(--estado-completado, #6366f1);
+    border-color: var(--estado-completado, #4f46e5);
     color: #ffffff;
 }
 
 .status-programado {
-    background-color: var(--estado-programado, var(--info-bg));
-    border-color: var(--estado-programado, var(--info-border));
+    background-color: var(--estado-programado, #94a3b8);
+    border-color: var(--estado-programado, #64748b);
     color: #ffffff;
-=======
-    background-color: var(--success-bg);
-    border-color: var(--success-border);
-    color: #005020;
-}
-
-.status-completado {
-    background-color: var(--success-bg);
-    border-color: var(--success-border);
-    color: #005020;
-}
-
-.status-programado {
-    background-color: var(--info-bg);
-    border-color: var(--info-border);
-    color: #001f84;
->>>>>>> 0accc57faedb44fc0bf227b9bf8e268c246afc78
 }
 
 .status-retrasado {
-    background-color: var(--warning-bg);
-    border-color: var(--warning-border);
-    color: #8d3d00;
+    background-color: #f59e0b;
+    border-color: #d97706;
+    color: #ffffff;
 }
 
 .status-cancelado {
-<<<<<<< HEAD
-    background-color: var(--estado-cancelado, var(--danger-bg));
-    border-color: var(--estado-cancelado, var(--danger-border));
+    background-color: var(--estado-cancelado, #ef4444);
+    border-color: var(--estado-cancelado, #dc2626);
     color: #ffffff;
-=======
-    background-color: var(--danger-bg);
-    border-color: var(--danger-border);
-    color: #870000;
->>>>>>> 0accc57faedb44fc0bf227b9bf8e268c246afc78
 }
 
 .status-en.curso,
 .status-en-curso {
-    background-color: var(--estado-en-curso, #eff6ff);
-    border-color: var(--estado-en-curso, #3b82f6);
+    background-color: var(--estado-en-curso, #3b82f6);
+    border-color: var(--estado-en-curso, #2563eb);
     color: #ffffff;
 }
 
