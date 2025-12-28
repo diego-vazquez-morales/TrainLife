@@ -285,19 +285,13 @@ function updateItinerary(itinerario) {
 function setupNotificationsToggle() {
   const toggle = document.getElementById('notificationsToggle');
   
-  if (toggle) {
-    toggle.addEventListener('change', function() {
-      notificationsEnabled = this.checked;
-      toggle.setAttribute('aria-checked', toggle.checked ? 'true' : 'false');
-      console.log('Notificaciones:', notificationsEnabled ? 'activadas' : 'desactivadas');
-      
-      // Aquí se podría hacer una llamada al backend para guardar la preferencia
-      // saveNotificationPreference(notificationsEnabled);
-      
-      // Mostrar feedback al usuario (opcional)
-      showNotificationFeedback(notificationsEnabled);
-    });
-  }
+  if (!toggle) return;
+
+  toggle.addEventListener('change', function () {
+    notificationsEnabled = this.checked;
+    toggle.setAttribute('aria-checked', this.checked ? 'true' : 'false');
+    showNotificationFeedback(notificationsEnabled);
+  });
 }
 
 /**

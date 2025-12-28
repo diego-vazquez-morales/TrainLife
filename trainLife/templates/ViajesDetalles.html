@@ -51,7 +51,7 @@
 
                 <!-- Alert Warning -->
                 {% if viaje.estadoViaje == 'retrasado' or viaje.estadoViaje == 'cancelado' %}
-                <div class="alert-box" role="alert" aria-live="assertive">
+                <div class="alert-box" role="alert">
                     <i data-lucide="alert-triangle" class="alert-icon" aria-hidden="true"></i>
                     <div class="alert-content">
                         <p class="alert-title">
@@ -129,13 +129,20 @@
                                 <!-- Notifications Toggle -->
                                 <div class="notifications-toggle">
                                     <i data-lucide="bell" class="toggle-icon" aria-hidden="true"></i>
-                                    <span id="notificationsToggleLabel" class="toggle-label">Notificaciones del viaje</span>
+                                    <span id="notificationsToggleLabel" class="toggle-label">
+                                        Notificaciones del viaje
+                                    </span>
+
                                     <div class="toggle-switch">
-                                        <label for="notificationsToggle">
-                                            <span class="sr-only">Notificaciones del viaje activadas</span>
-                                        </label>
+                                        <input
+                                        id="notificationsToggle"
+                                        type="checkbox"
+                                        aria-labelledby="notificationsToggleLabel"
+                                        class="sr-only"
+                                        />
                                     </div>
                                 </div>
+
                             </div>
 
                             <!-- Right Column - Itinerary -->

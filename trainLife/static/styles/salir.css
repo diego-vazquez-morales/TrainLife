@@ -199,17 +199,18 @@ body {
 
 .btn span {
     overflow: hidden;
-    text-overflow: ellipsis;
+    text-overflow: el   lipsis;
     white-space: nowrap;
 }
 
 .btn-danger {
     background-color: var(--color-red-700);
     color: var(--color-white);
+    background-color: #ae0000;
 }
 
 .btn-danger:hover {
-    background-color: #991b1b;
+    background-color: #7a0303;
 }
 
 .btn-secondary {

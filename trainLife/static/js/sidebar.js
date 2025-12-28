@@ -12,7 +12,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (mobileToggle && sidebar) {
     mobileToggle.addEventListener('click', () => {
-      sidebar.classList.toggle('active');
+      const isOpen = sidebar.classList.toggle('active');
+      mobileToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
     });
 
     // Cerrar sidebar al hacer click fuera (solo en móvil)
@@ -23,14 +24,16 @@ document.addEventListener("DOMContentLoaded", function () {
         !mobileToggle.contains(e.target)
       ) {
         sidebar.classList.remove('active');
+        mobileToggle.setAttribute('aria-expanded', 'false');
       }
     });
   }
 
   // Cerrar sidebar automáticamente si se pasa a escritorio
   window.addEventListener('resize', () => {
-    if (window.innerWidth > 1024 && sidebar) {
+    if (window.innerWidth > 1024 && sidebar && mobileToggle) {
       sidebar.classList.remove('active');
+      mobileToggle.setAttribute('aria-expanded', 'false');
     }
   });
 });

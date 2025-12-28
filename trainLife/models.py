@@ -39,21 +39,28 @@ class Usuario(models.Model):
 
 
 class Viaje(models.Model):
-    # Relación con usuario
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='viajes')
+    ESTADO_CHOICES = [
+        ('confirmado', 'Confirmado'),
+        ('retrasado', 'Retrasado'),
+        ('cancelado', 'Cancelado'),
+        ('disponible', 'Disponible'),
+    ]
+    
+    # Relación con usuario (NULL = viaje disponible sin asignar)
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='viajes', null=True, blank=True)
     
     # Información del pasajero
-    nombrePasajero = models.CharField(max_length=200)
+    nombrePasajero = models.CharField(max_length=200, blank=True, null=True)
     
     # Información del billete
-    coche = models.CharField(max_length=10)  # Ej: "04"
-    asiento = models.CharField(max_length=10)  # Ej: "12A"
+    coche = models.CharField(max_length=10, blank=True, null=True)  # Ej: "04"
+    asiento = models.CharField(max_length=10, blank=True, null=True)  # Ej: "12A"
     clase = models.CharField(max_length=50, default="Turista")  # Ej: "Turista", "Preferente"
     
     # Origen
     origenEstacion = models.CharField(max_length=200)  # Ej: "Madrid - Puerta de Atocha"
     horaSalidaOrigen = models.TimeField()  # Ej: "14:30"
-    andenOrigen = models.CharField(max_length=10)  # Ej: "12"
+    andenOrigen = models.CharField(max_length=10, blank=True, null=True)  # Ej: "12"
     
     # Destino final
     destinoEstacion = models.CharField(max_length=200)  # Ej: "Barcelona - Sants"
@@ -65,7 +72,7 @@ class Viaje(models.Model):
     # Fecha de creación
     fechaCreacion = models.DateTimeField(auto_now_add=True)
 
-    estadoViaje = models.CharField(max_length=50, default="confirmado")  # Ej: "Programado", "Completado", "Cancelado"
+    estadoViaje = models.CharField(max_length=50, choices=ESTADO_CHOICES, default="confirmado")
 
     class Meta:
         ordering = ['-fechaViaje', '-horaSalidaOrigen']
@@ -73,7 +80,29 @@ class Viaje(models.Model):
         verbose_name_plural = 'Viajes'
 
     def __str__(self):
-        return f"{self.origenEstacion} → {self.destinoEstacion} - {self.fechaViaje} ({self.nombrePasajero})"
+        if self.usuario and self.nombrePasajero:
+            return f"{self.origenEstacion} → {self.destinoEstacion} - {self.fechaViaje} ({self.nombrePasajero})"
+        else:
+            return f"Tren - {self.origenEstacion} → {self.destinoEstacion} - {self.fechaViaje}"
+    
+    def es_disponible(self):
+        """Retorna True si es un viaje disponible (sin usuario asignado)"""
+        return self.usuario is None
+    
+    def asignar_a_usuario(self, usuario, nombre_pasajero, coche=None, asiento=None):
+        """Asigna este viaje disponible a un usuario"""
+        if not self.es_disponible():
+            return False
+        
+        self.usuario = usuario
+        self.nombrePasajero = nombre_pasajero
+        if coche:
+            self.coche = coche
+        if asiento:
+            self.asiento = asiento
+        self.estadoViaje = 'confirmado'
+        self.save()
+        return True
     
 
 class Ruta(models.Model):
@@ -211,6 +240,10 @@ def notificar_viaje_guardado(sender, instance, created, **kwargs):
     Crea notificación cuando se crea o modifica un viaje.
     Solo si el usuario tiene notificaciones de viajes activas.
     """
+    # Si es un viaje sin usuario (disponible), no crear notificación
+    if not instance.usuario:
+        return
+    
     if not instance.usuario.notificacionesViajes:
         return
     
@@ -263,6 +296,10 @@ def notificar_cambios_viaje(sender, instance, created, **kwargs):
     """
     Crea notificaciones específicas basadas en los cambios detectados.
     """
+    # Si es un viaje sin usuario (disponible), no crear notificación
+    if not instance.usuario:
+        return
+    
     if created or not instance.usuario.notificacionesViajes:
         return
     

@@ -23,7 +23,10 @@
     <a href="#contenido-principal" class="skip-link">Saltar al contenido principal</a>
     <div class="dashboard-container">
         <!-- Mobile Menu Toggle -->
-        <button class="mobile-menu-toggle" aria-label="Toggle menu">
+        <button class="mobile-menu-toggle" 
+                aria-label="Abrir menú de navegación"
+                aria-expanded="false"   
+                aria-controls="sidebar-principal">
             <i data-lucide="menu"></i>
         </button>
 
@@ -87,14 +90,14 @@
                             </div>
 
                             <!-- Content -->
-                            <h2 class="card-title">Añadir Nuevo Billete</h2>
+                            <h2 class="card-title">Comprar Billetes</h2>
                             <p class="card-description">
                                 Añade tus billetes comprados para gestionar todos tus viajes en un solo lugar.
                             </p>
 
                             <!-- Button -->
-                            <button class="card-btn" onclick="window.location.href='{% url 'aniadir_billete' usuario.id %}'" aria-label="Añadir un nuevo billete de tren">
-                                <span>Añadir nuevo billete</span>
+                            <button class="card-btn" onclick="window.location.href='{% url 'aniadir_billete' usuario.id %}'" aria-label="Comprar billetes de tren">
+                                <span>Comprar billetes</span>
                                 <i data-lucide="arrow-right"></i>
                             </button>
                         </div>
