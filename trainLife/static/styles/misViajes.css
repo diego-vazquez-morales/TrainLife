@@ -249,8 +249,25 @@ body {
     height: 1rem;
 }
 
-/* Estados de viajes */
+/* Estados de viajes - Adaptables según modo de color */
 .status-confirmado {
+<<<<<<< HEAD
+    background-color: var(--estado-confirmado, var(--success-bg));
+    border-color: var(--estado-confirmado, var(--success-border));
+    color: #ffffff;
+}
+
+.status-completado {
+    background-color: var(--estado-completado, var(--success-bg));
+    border-color: var(--estado-completado, var(--success-border));
+    color: #ffffff;
+}
+
+.status-programado {
+    background-color: var(--estado-programado, var(--info-bg));
+    border-color: var(--estado-programado, var(--info-border));
+    color: #ffffff;
+=======
     background-color: var(--success-bg);
     border-color: var(--success-border);
     color: #005020;
@@ -266,6 +283,7 @@ body {
     background-color: var(--info-bg);
     border-color: var(--info-border);
     color: #001f84;
+>>>>>>> 0accc57faedb44fc0bf227b9bf8e268c246afc78
 }
 
 .status-retrasado {
@@ -275,16 +293,22 @@ body {
 }
 
 .status-cancelado {
+<<<<<<< HEAD
+    background-color: var(--estado-cancelado, var(--danger-bg));
+    border-color: var(--estado-cancelado, var(--danger-border));
+    color: #ffffff;
+=======
     background-color: var(--danger-bg);
     border-color: var(--danger-border);
     color: #870000;
+>>>>>>> 0accc57faedb44fc0bf227b9bf8e268c246afc78
 }
 
 .status-en.curso,
 .status-en-curso {
-    background-color: #eff6ff;
-    border-color: #3b82f6;
-    color: #1e40af;
+    background-color: var(--estado-en-curso, #eff6ff);
+    border-color: var(--estado-en-curso, #3b82f6);
+    color: #ffffff;
 }
 
 /* Compatibilidad con nombres en inglés (legacy) */
@@ -362,14 +386,6 @@ body {
     margin-top: 0.125rem;
 }
 
-<<<<<<< HEAD
-.trip-alert.alert-delayed .trip-alert-title {
-    color: #8d3d00;
-}
-
-.trip-alert.alert-cancelled .trip-alert-title {
-    color: #870000;
-=======
 .trip-alert-delayed i {
     color: var(--warning-color);
 }
@@ -391,13 +407,12 @@ body {
 
 .trip-alert.alert-delayed .trip-alert-title,
 .trip-alert-delayed .trip-alert-text {
-    color: #b45309;
+    color: #8a3c00;
 }
 
 .trip-alert.alert-cancelled .trip-alert-title,
 .trip-alert-canceled .trip-alert-text {
-    color: #b91c1c;
->>>>>>> diego
+    color: #8c0000;
 }
 
 .trip-alert-link {

@@ -4,12 +4,15 @@ from .models import Usuario, Viaje, Ruta, Trayecto, Notificacion, Aviso
 
 @admin.register(Usuario)
 class UsuarioAdmin(admin.ModelAdmin):
-	list_display = ('nombreUsuario', 'apellido1', 'apellido2', 'email', 'numeroTelefono', 'notificacionesViajes', 'notificacionesRutas', 'notificacionesAvisos')
-	list_filter = ('notificacionesViajes', 'notificacionesRutas', 'notificacionesAvisos')
+	list_display = ('nombreUsuario', 'apellido1', 'apellido2', 'email', 'numeroTelefono', 'color_mode', 'notificacionesViajes', 'notificacionesRutas', 'notificacionesAvisos')
+	list_filter = ('color_mode', 'notificacionesViajes', 'notificacionesRutas', 'notificacionesAvisos')
 	search_fields = ('nombreUsuario', 'apellido1', 'email')
 	fieldsets = (
 		('Información Personal', {
 			'fields': ('nombreUsuario', 'apellido1', 'apellido2', 'email', 'numeroTelefono', 'contrasenia')
+		}),
+		('Accesibilidad', {
+			'fields': ('color_mode',)
 		}),
 		('Preferencias de Notificaciones', {
 			'fields': ('notificacionesViajes', 'notificacionesRutas', 'notificacionesAvisos')

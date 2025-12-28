@@ -57,7 +57,7 @@ function mostrarAlternativas(data) {
         alerta.innerHTML = `
             <div class="alert-icon">⚠️</div>
             <div class="alert-content">
-                <h3>Incidencia detectada en ${data.viaje.origen} → ${data.viaje.destino}</h3>
+                <h2 id="incidencia-title">Incidencia detectada en ${data.viaje.origen} → ${data.viaje.destino}</h2>
                 <p>${incidencia.descripcion}</p>
             </div>
         `;

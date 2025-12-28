@@ -8,10 +8,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;700;900&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
     
-    <link rel="stylesheet" href="../static/styles/home.css"/>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles/home.css' %}"/>
+    <link rel="stylesheet" href="{% static 'styles/color-modes.css' %}"/>
 
 </head>
-<body class="page-body">
+<body class="page-body" data-color-mode="{{ color_mode|default:'normal' }}">
     <a href="#contenido-principal" class="skip-link">Saltar al contenido principal</a>
     <div class="main-root">
         <div class="hero-section" data-alt="High-speed train on a modern railway track with a dark blue overlay">

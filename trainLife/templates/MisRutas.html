@@ -15,13 +15,14 @@
     <link rel="stylesheet" href="{% static 'styles/sidebar.css' %}">
     <link rel="stylesheet" href="{% static 'styles/misRutas.css' %}">
     <link rel="stylesheet" href="{% static 'styles/confirmModal.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/color-modes.css' %}">
 
     
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
-<body>
+<body data-color-mode="{{ color_mode }}">
     <a href="#contenido-principal" class="skip-link">Saltar al contenido principal</a>
      <div class="dashboard-container">
         <!-- Mobile Menu Toggle -->

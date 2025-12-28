@@ -1,0 +1,463 @@
+/* 
+ * TrainLife - Modos de Color para Daltonismo
+ * Paletas de colores accesibles según tipo de visión
+ */
+
+/* ============================================
+   VARIABLES CSS POR DEFECTO (MODO NORMAL)
+   ============================================ */
+:root {
+    /* Colores principales */
+    --color-primary: #3b82f6;
+    --color-primary-hover: #2563eb;
+    --color-success: #10b981;
+    --color-success-hover: #059669;
+    --color-danger: #ef4444;
+    --color-danger-hover: #dc2626;
+    --color-warning: #f59e0b;
+    --color-warning-hover: #d97706;
+    --color-info: #06b6d4;
+    --color-info-hover: #0891b2;
+    
+    /* Estados de viaje */
+    --estado-programado: #94a3b8;
+    --estado-confirmado: #10b981;
+    --estado-en-curso: #3b82f6;
+    --estado-completado: #6366f1;
+    --estado-cancelado: #ef4444;
+    
+    /* Notificaciones */
+    --notif-cambio-viaje: #f59e0b;
+    --notif-nuevo-viaje: #10b981;
+    --notif-cancelacion: #ef4444;
+    --notif-recordatorio: #06b6d4;
+    --notif-cambio-anden: #f59e0b;
+    --notif-cambio-hora: #f97316;
+    --notif-alerta: #dc2626;
+    --notif-info: #3b82f6;
+    
+    /* Badges */
+    --badge-bg-primary: #dbeafe;
+    --badge-text-primary: #1e40af;
+    --badge-bg-success: #d1fae5;
+    --badge-text-success: #065f46;
+    --badge-bg-danger: #fee2e2;
+    --badge-text-danger: #991b1b;
+    --badge-bg-warning: #fef3c7;
+    --badge-text-warning: #92400e;
+}
+
+
+/* ============================================
+   MODO: PROTANOPIA (Deficiencia Rojo-Verde tipo 1)
+   Evita rojo/verde, usa azul/amarillo/naranja
+   ============================================ */
+body[data-color-mode="protanopia"] {
+    /* Colores principales */
+    --color-primary: #0ea5e9;
+    --color-primary-hover: #0284c7;
+    --color-success: #0891b2;  /* Cian en lugar de verde */
+    --color-success-hover: #0e7490;
+    --color-danger: #f97316;  /* Naranja en lugar de rojo */
+    --color-danger-hover: #ea580c;
+    --color-warning: #eab308;  /* Amarillo brillante */
+    --color-warning-hover: #ca8a04;
+    --color-info: #0ea5e9;
+    --color-info-hover: #0284c7;
+    
+    /* Estados de viaje */
+    --estado-programado: #94a3b8;
+    --estado-confirmado: #0891b2;  /* Cian */
+    --estado-en-curso: #0ea5e9;   /* Azul */
+    --estado-completado: #6366f1;  /* Índigo */
+    --estado-cancelado: #f97316;   /* Naranja */
+    
+    /* Notificaciones */
+    --notif-cambio-viaje: #eab308;
+    --notif-nuevo-viaje: #0891b2;
+    --notif-cancelacion: #f97316;
+    --notif-recordatorio: #0ea5e9;
+    --notif-cambio-anden: #eab308;
+    --notif-cambio-hora: #f59e0b;
+    --notif-alerta: #f97316;
+    --notif-info: #0ea5e9;
+    
+    /* Badges */
+    --badge-bg-primary: #e0f2fe;
+    --badge-text-primary: #075985;
+    --badge-bg-success: #cffafe;
+    --badge-text-success: #155e75;
+    --badge-bg-danger: #ffedd5;
+    --badge-text-danger: #9a3412;
+    --badge-bg-warning: #fef9c3;
+    --badge-text-warning: #854d0e;
+}
+
+
+/* ============================================
+   MODO: DEUTERANOPIA (Deficiencia Rojo-Verde tipo 2)
+   Similar a protanopia, evita rojo/verde
+   ============================================ */
+body[data-color-mode="deuteranopia"] {
+    /* Colores principales */
+    --color-primary: #0ea5e9;
+    --color-primary-hover: #0284c7;
+    --color-success: #14b8a6;  /* Teal */
+    --color-success-hover: #0d9488;
+    --color-danger: #fb923c;  /* Naranja suave */
+    --color-danger-hover: #f97316;
+    --color-warning: #fbbf24;  /* Amarillo dorado */
+    --color-warning-hover: #f59e0b;
+    --color-info: #06b6d4;
+    --color-info-hover: #0891b2;
+    
+    /* Sobrescribir variables locales */
+    --primary-color: #0ea5e9;
+    --primary-hover: #0284c7;
+    --success-color: #14b8a6;
+    --danger-color: #fb923c;
+    --warning-color: #fbbf24;
+    
+    /* Estados de viaje */
+    --estado-programado: #94a3b8;
+    --estado-confirmado: #14b8a6;  /* Teal */
+    --estado-en-curso: #0ea5e9;   /* Azul cielo */
+    --estado-completado: #8b5cf6;  /* Violeta */
+    --estado-cancelado: #fb923c;   /* Naranja */
+    
+    /* Notificaciones */
+    --notif-cambio-viaje: #fbbf24;
+    --notif-nuevo-viaje: #14b8a6;
+    --notif-cancelacion: #fb923c;
+    --notif-recordatorio: #06b6d4;
+    --notif-cambio-anden: #fbbf24;
+    --notif-cambio-hora: #f59e0b;
+    --notif-alerta: #fb923c;
+    --notif-info: #0ea5e9;
+    
+    /* Badges */
+    --badge-bg-primary: #e0f2fe;
+    --badge-text-primary: #075985;
+    --badge-bg-success: #ccfbf1;
+    --badge-text-success: #134e4a;
+    --badge-bg-danger: #fed7aa;
+    --badge-text-danger: #9a3412;
+    --badge-bg-warning: #fef3c7;
+    --badge-text-warning: #78350f;
+}
+
+
+/* ============================================
+   MODO: TRITANOPIA (Deficiencia Azul-Amarillo)
+   Evita azul/amarillo, usa rojo/verde/magenta
+   ============================================ */
+body[data-color-mode="tritanopia"] {
+    /* Colores principales */
+    --color-primary: #ec4899;  /* Rosa/magenta */
+    --color-primary-hover: #db2777;
+    --color-success: #10b981;  /* Verde mantiene buen contraste */
+    --color-success-hover: #059669;
+    --color-danger: #dc2626;   /* Rojo */
+    --color-danger-hover: #b91c1c;
+    --color-warning: #f43f5e;  /* Rosa */
+    --color-warning-hover: #e11d48;
+    --color-info: #d946ef;     /* Magenta */
+    --color-info-hover: #c026d3;
+    
+    /* Sobrescribir variables locales */
+    --primary-color: #ec4899;
+    --primary-hover: #db2777;
+    --success-color: #10b981;
+    --danger-color: #dc2626;
+    --warning-color: #f43f5e;
+    
+    /* Estados de viaje */
+    --estado-programado: #94a3b8;
+    --estado-confirmado: #10b981;  /* Verde */
+    --estado-en-curso: #ec4899;   /* Rosa */
+    --estado-completado: #6366f1;  /* Púrpura */
+    --estado-cancelado: #dc2626;   /* Rojo */
+    
+    /* Notificaciones */
+    --notif-cambio-viaje: #f43f5e;
+    --notif-nuevo-viaje: #10b981;
+    --notif-cancelacion: #dc2626;
+    --notif-recordatorio: #ec4899;
+    --notif-cambio-anden: #f43f5e;
+    --notif-cambio-hora: #f97316;
+    --notif-alerta: #dc2626;
+    --notif-info: #d946ef;
+    
+    /* Badges */
+    --badge-bg-primary: #fce7f3;
+    --badge-text-primary: #9f1239;
+    --badge-bg-success: #d1fae5;
+    --badge-text-success: #065f46;
+    --badge-bg-danger: #fee2e2;
+    --badge-text-danger: #991b1b;
+    --badge-bg-warning: #ffe4e6;
+    --badge-text-warning: #9f1239;
+}
+
+
+/* ============================================
+   MODO: ALTO CONTRASTE
+   Máximo contraste para mejor legibilidad
+   ============================================ */
+body[data-color-mode="high_contrast"] {
+    /* Colores principales con máximo contraste */
+    --color-primary: #0066cc;
+    --color-primary-hover: #004499;
+    --color-success: #008800;
+    --color-success-hover: #006600;
+    --color-danger: #cc0000;
+    --color-danger-hover: #990000;
+    --color-warning: #ff8800;
+    --color-warning-hover: #cc6600;
+    --color-info: #0099cc;
+    --color-info-hover: #006699;
+    
+    /* Sobrescribir variables locales */
+    --primary-color: #0066cc;
+    --primary-hover: #004499;
+    --success-color: #008800;
+    --danger-color: #cc0000;
+    --warning-color: #ff8800;
+    
+    /* Estados de viaje */
+    --estado-programado: #666666;
+    --estado-confirmado: #008800;
+    --estado-en-curso: #0066cc;
+    --estado-completado: #6600cc;
+    --estado-cancelado: #cc0000;
+    
+    /* Notificaciones */
+    --notif-cambio-viaje: #ff8800;
+    --notif-nuevo-viaje: #008800;
+    --notif-cancelacion: #cc0000;
+    --notif-recordatorio: #0099cc;
+    --notif-cambio-anden: #ff8800;
+    --notif-cambio-hora: #ff6600;
+    --notif-alerta: #cc0000;
+    --notif-info: #0066cc;
+    
+    /* Badges con mayor contraste */
+    --badge-bg-primary: #cce6ff;
+    --badge-text-primary: #003366;
+    --badge-bg-success: #ccffcc;
+    --badge-text-success: #004400;
+    --badge-bg-danger: #ffcccc;
+    --badge-text-danger: #660000;
+    --badge-bg-warning: #ffe6cc;
+    --badge-text-warning: #663300;
+}
+
+
+/* ============================================
+   APLICACIÓN DE ESTILOS BASADOS EN VARIABLES
+   ============================================ */
+
+/* Botones principales */
+.btn-primary,
+.save-btn,
+.primary-btn,
+.btn-primary-custom {
+    background-color: var(--color-primary) !important;
+    border-color: var(--color-primary) !important;
+}
+
+.btn-primary:hover,
+.save-btn:hover,
+.primary-btn:hover,
+.btn-primary-custom:hover {
+    background-color: var(--color-primary-hover) !important;
+    border-color: var(--color-primary-hover) !important;
+}
+
+.btn-success {
+    background-color: var(--color-success) !important;
+    border-color: var(--color-success) !important;
+}
+
+.btn-success:hover {
+    background-color: var(--color-success-hover) !important;
+    border-color: var(--color-success-hover) !important;
+}
+
+.btn-danger {
+    background-color: var(--color-danger) !important;
+    border-color: var(--color-danger) !important;
+}
+
+.btn-danger:hover {
+    background-color: var(--color-danger-hover) !important;
+    border-color: var(--color-danger-hover) !important;
+}
+
+.btn-warning {
+    background-color: var(--color-warning) !important;
+    border-color: var(--color-warning) !important;
+}
+
+.btn-warning:hover {
+    background-color: var(--color-warning-hover) !important;
+    border-color: var(--color-warning-hover) !important;
+}
+
+/* Badges de estado de viaje */
+.badge.estado-programado,
+.estado-programado {
+    background-color: var(--estado-programado) !important;
+    color: #fff !important;
+}
+
+.badge.estado-confirmado,
+.estado-confirmado {
+    background-color: var(--estado-confirmado) !important;
+    color: #fff !important;
+}
+
+.badge.estado-en-curso,
+.estado-en-curso {
+    background-color: var(--estado-en-curso) !important;
+    color: #fff !important;
+}
+
+.badge.estado-completado,
+.estado-completado {
+    background-color: var(--estado-completado) !important;
+    color: #fff !important;
+}
+
+.badge.estado-cancelado,
+.estado-cancelado {
+    background-color: var(--estado-cancelado) !important;
+    color: #fff !important;
+}
+
+/* Notificaciones por tipo */
+.notif-cambio-viaje {
+    border-left-color: var(--notif-cambio-viaje) !important;
+}
+
+.notif-nuevo-viaje {
+    border-left-color: var(--notif-nuevo-viaje) !important;
+}
+
+.notif-cancelacion {
+    border-left-color: var(--notif-cancelacion) !important;
+}
+
+.notif-recordatorio {
+    border-left-color: var(--notif-recordatorio) !important;
+}
+
+.notif-cambio-anden {
+    border-left-color: var(--notif-cambio-anden) !important;
+}
+
+.notif-cambio-hora {
+    border-left-color: var(--notif-cambio-hora) !important;
+}
+
+.notif-alerta {
+    border-left-color: var(--notif-alerta) !important;
+}
+
+.notif-info {
+    border-left-color: var(--notif-info) !important;
+}
+
+/* Enlaces */
+a:not(.btn) {
+    color: var(--color-primary);
+}
+
+a:not(.btn):hover {
+    color: var(--color-primary-hover);
+}
+
+/* Alertas de Bootstrap */
+.alert-success {
+    background-color: var(--badge-bg-success) !important;
+    color: var(--badge-text-success) !important;
+    border-color: var(--color-success) !important;
+}
+
+.alert-danger {
+    background-color: var(--badge-bg-danger) !important;
+    color: var(--badge-text-danger) !important;
+    border-color: var(--color-danger) !important;
+}
+
+.alert-warning {
+    background-color: var(--badge-bg-warning) !important;
+    color: var(--badge-text-warning) !important;
+    border-color: var(--color-warning) !important;
+}
+
+.alert-info,
+.alert-primary {
+    background-color: var(--badge-bg-primary) !important;
+    color: var(--badge-text-primary) !important;
+    border-color: var(--color-primary) !important;
+}
+
+/* Badges genéricos */
+.badge-primary {
+    background-color: var(--badge-bg-primary) !important;
+    color: var(--badge-text-primary) !important;
+}
+
+.badge-success {
+    background-color: var(--badge-bg-success) !important;
+    color: var(--badge-text-success) !important;
+}
+
+.badge-danger {
+    background-color: var(--badge-bg-danger) !important;
+    color: var(--badge-text-danger) !important;
+}
+
+.badge-warning {
+    background-color: var(--badge-bg-warning) !important;
+    color: var(--badge-text-warning) !important;
+}
+
+/* Inputs y selects en focus */
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--color-primary) !important;
+    box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25) !important;
+}
+
+/* Checkboxes y radios checked */
+input[type="checkbox"]:checked,
+input[type="radio"]:checked {
+    background-color: var(--color-primary) !important;
+    border-color: var(--color-primary) !important;
+}
+
+/* Toggle switches */
+.toggle-input:checked + .toggle-switch {
+    background-color: var(--color-success) !important;
+}
+
+/* Modo alto contraste: aumentar bordes y tamaños */
+body[data-color-mode="high_contrast"] {
+    --border-width: 2px;
+}
+
+body[data-color-mode="high_contrast"] .btn,
+body[data-color-mode="high_contrast"] .badge,
+body[data-color-mode="high_contrast"] input,
+body[data-color-mode="high_contrast"] select {
+    border-width: 2px !important;
+    font-weight: 600 !important;
+}
+
+body[data-color-mode="high_contrast"] a {
+    text-decoration: underline;
+    font-weight: 600;
+}

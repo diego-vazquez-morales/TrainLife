@@ -18,8 +18,11 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'styles/homeUsuario.css' %}"/>
     <link rel="stylesheet" href="{% static 'styles/sidebar.css' %}">
+    
+    <!-- Color Modes CSS - DEBE IR AL FINAL para máxima prioridad -->
+    <link rel="stylesheet" href="{% static 'styles/color-modes.css' %}?v=2.0">
 </head>
-<body>
+<body data-color-mode="{{ color_mode }}">
     <a href="#contenido-principal" class="skip-link">Saltar al contenido principal</a>
     <div class="dashboard-container">
         <!-- Mobile Menu Toggle -->

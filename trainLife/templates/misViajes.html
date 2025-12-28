@@ -18,8 +18,9 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'styles/misViajes.css' %}"/>
     <link rel="stylesheet" href="{% static 'styles/sidebar.css' %}"/>
+    <link rel="stylesheet" href="{% static 'styles/color-modes.css' %}">
 </head>
-<body>
+<body data-color-mode="{{ color_mode }}">
     <a href="#contenido-principal" class="skip-link">Saltar al contenido principal</a>
     <div class="dashboard-container">
         <!-- Mobile Menu Toggle -->

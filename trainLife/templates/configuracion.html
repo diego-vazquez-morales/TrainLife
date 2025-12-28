@@ -14,10 +14,13 @@
     <link rel="stylesheet" href="{% static 'styles/sidebar.css' %}">
     <link rel="stylesheet" href="{% static 'styles/confirmModal.css' %}">
     
+    <!-- Color Modes CSS - DEBE IR AL FINAL -->
+    <link rel="stylesheet" href="{% static 'styles/color-modes.css' %}">
+    
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body>
+<body data-color-mode="{{ color_mode }}">
     <a href="#contenido-principal" class="skip-link">Saltar al contenido principal</a>
     <div class="dashboard-container">
         <!-- Mobile Menu Toggle -->
@@ -249,6 +252,60 @@
                     </div>
                 </div>
                     </form>
+
+                <!-- Accessibility Section -->
+                <h2 class="section-title section-title-spaced">Accesibilidad</h2>
+                <p class="section-subtitle">
+                    Personaliza la visualización de colores para mejorar tu experiencia.
+                </p>
+
+                <!-- Color Mode Settings Card -->
+                <div class="settings-card" role="group" aria-labelledby="color-mode-heading">
+                    <h3 class="settings-heading" id="color-mode-heading">
+                        Modo de Color
+                    </h3>
+                    
+                    <div class="toggle-item">
+                        <div class="toggle-content" style="flex: 1;">
+                            <label for="colorModeSelect" class="toggle-label">
+                                Esquema de Colores
+                            </label>
+                            <p class="toggle-description">
+                                Selecciona un modo de color adaptado a tus necesidades visuales.
+                            </p>
+                            
+                            <select 
+                                id="colorModeSelect" 
+                                name="color_mode" 
+                                form="personalInfoForm"
+                                class="form-input"
+                                style="margin-top: 12px; max-width: 400px;"
+                                aria-describedby="color-mode-description"
+                            >
+                                <option value="normal" {% if usuario.color_mode == 'normal' %}selected{% endif %}>
+                                    Normal - Colores estándar
+                                </option>
+                                <option value="protanopia" {% if usuario.color_mode == 'protanopia' %}selected{% endif %}>
+                                    Protanopia - Deficiencia rojo-verde (tipo 1)
+                                </option>
+                                <option value="deuteranopia" {% if usuario.color_mode == 'deuteranopia' %}selected{% endif %}>
+                                    Deuteranopia - Deficiencia rojo-verde (tipo 2)
+                                </option>
+                                <option value="tritanopia" {% if usuario.color_mode == 'tritanopia' %}selected{% endif %}>
+                                    Tritanopia - Deficiencia azul-amarillo
+                                </option>
+                                <option value="high_contrast" {% if usuario.color_mode == 'high_contrast' %}selected{% endif %}>
+                                    Alto Contraste - Mayor legibilidad
+                                </option>
+                            </select>
+                            
+                            <p id="color-mode-description" class="toggle-description" style="margin-top: 12px; font-size: 13px; color: #64748b;">
+                                <strong>Información:</strong> Los modos de daltonismo ajustan la paleta de colores para mejorar 
+                                la distinción entre elementos. El modo de alto contraste aumenta la legibilidad general.
+                            </p>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- Save Button -->
                 <div class="button-container">

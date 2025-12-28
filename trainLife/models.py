@@ -5,6 +5,14 @@ from datetime import datetime, timedelta
 
 # Create your models here.
 class Usuario(models.Model):
+    COLOR_MODE_CHOICES = [
+        ('normal', 'Normal'),
+        ('protanopia', 'Protanopia (Rojo-Verde)'),
+        ('deuteranopia', 'Deuteranopia (Rojo-Verde)'),
+        ('tritanopia', 'Tritanopia (Azul-Amarillo)'),
+        ('high_contrast', 'Alto Contraste'),
+    ]
+    
     nombreUsuario = models.CharField(max_length=100)
     apellido1 = models.CharField(max_length=100)
     apellido2 = models.CharField(max_length=100, blank=True, null=True)
@@ -16,6 +24,14 @@ class Usuario(models.Model):
     notificacionesViajes = models.BooleanField(default=True)
     notificacionesRutas = models.BooleanField(default=True)
     notificacionesAvisos = models.BooleanField(default=True)
+    
+    # Preferencia de modo de color (accesibilidad)
+    color_mode = models.CharField(
+        max_length=20,
+        choices=COLOR_MODE_CHOICES,
+        default='normal',
+        verbose_name='Modo de Color'
+    )
 
     def __str__(self):
         # Muestra un nombre legible en el admin y en representaciones
