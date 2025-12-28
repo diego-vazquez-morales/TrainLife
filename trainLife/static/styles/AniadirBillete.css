@@ -487,7 +487,9 @@
 .mensaje-info i {
     width: 1.5rem;
     height: 1.5rem;
+}
 
+.section-title {
     gap: 0.5rem;
     font-size: 1.25rem;
     font-weight: 600;
