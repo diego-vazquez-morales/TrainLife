@@ -13,11 +13,12 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'styles/confirmModal.css' %}">
     <link rel="stylesheet" href="{% static 'styles/ConfirmacionTarea.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/color-modes.css' %}">
     
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body>
+<body data-color-mode="{{ color_mode|default:'normal' }}">
     <div class="demo-container" role="main" aria-labelledby="demo-title">
         <h1 class="demo-title" id="demo-title">Modal de Confirmación - Demo</h1>
         <p class="demo-subtitle">

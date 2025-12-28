@@ -521,6 +521,11 @@ def configuracion(request, usuario_id):
         usuario.notificacionesRutas = 'notificacionesRutas' in request.POST
         usuario.notificacionesAvisos = 'notificacionesAvisos' in request.POST
         
+        # Actualizar modo de color (accesibilidad)
+        color_mode = request.POST.get('color_mode', 'normal')
+        if color_mode in dict(Usuario.COLOR_MODE_CHOICES):
+            usuario.color_mode = color_mode
+        
         # Guardar cambios
         usuario.save()
         

@@ -62,6 +62,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'trainLife.context_processors.color_mode',  # Context processor para modo daltónico
             ],
         },
     },

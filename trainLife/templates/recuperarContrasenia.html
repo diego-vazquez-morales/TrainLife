@@ -20,9 +20,10 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'styles/recuperarContrasenia.css' %}" />
     <link rel="stylesheet" href="{% static 'styles/confirmModal.css' %}" />
+    <link rel="stylesheet" href="{% static 'styles/color-modes.css' %}" />
 </head>
 
-<body>
+<body data-color-mode="{{ color_mode }}">
     <main role="main" aria-label="Página de recuperación de contraseña">
         <div class="recovery-container">
             <!-- Background Image with Overlay -->

@@ -2,8 +2,8 @@
 
 /* === Variables CSS === */
 :root {
-    --primary-color: #0f49bd;
-    --primary-hover: rgba(15, 73, 189, 0.9);
+    --primary-color: var(--color-primary, #0f49bd);
+    --primary-hover: var(--color-primary-hover, rgba(15, 73, 189, 0.9));
     --bg-light: #ffffff;
     --bg-dark: #101922;
     --text-dark: #0d141b;
@@ -13,7 +13,7 @@
     --border-dark: #334155;
     --input-bg: #f1f5f9;
     --input-bg-dark: rgba(51, 65, 85, 0.5);
-    --error-color: #dc2626;
+    --error-color: var(--color-danger, #dc2626);
     --error-bg: #fef2f2;
     --error-bg-dark: rgba(220, 38, 38, 0.1);
     --overlay-color: rgba(17, 24, 39, 0.6);
@@ -312,9 +312,9 @@ body {
     gap: 0.5rem;
     margin-top: 0.5rem;
     padding: 0.75rem;
-    background-color: #f0fdf4;
+    background-color: var(--color-success-bg, #f0fdf4);
     border-radius: 0.5rem;
-    color: #15803d;
+    color: var(--color-success, #15803d);
     font-size: 0.875rem;
     animation: slideDown 0.3s ease-out;
 }
