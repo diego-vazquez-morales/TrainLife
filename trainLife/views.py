@@ -380,8 +380,8 @@ def api_buscar_rutas(request, usuario_id):
     return JsonResponse({'rutas': rutas_data})
 
 
-def aniadirBillete(request, usuario_id):
-    """Vista para comprar billetes - mostrar viajes disponibles."""
+def comprarViaje(request, usuario_id):
+    """Vista para comprar viajes - mostrar viajes disponibles."""
     # Verificar que el usuario de la sesión coincida con el de la URL
     session_usuario_id = request.session.get('usuario_id')
     if not session_usuario_id or session_usuario_id != usuario_id:
@@ -400,7 +400,7 @@ def aniadirBillete(request, usuario_id):
         estaciones_destino.add(viaje.destinoEstacion)
     
     # GET - Mostrar viajes disponibles
-    return render(request, 'AniadirBillete.html', {
+    return render(request, 'ComprarViaje.html', {
         'usuario': usuario,
         'estaciones_origen': sorted(estaciones_origen),
         'estaciones_destino': sorted(estaciones_destino),

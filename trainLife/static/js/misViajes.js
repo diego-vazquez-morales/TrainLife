@@ -35,7 +35,10 @@ function setupEventListeners() {
     const btnSearchNew = document.getElementById('btnSearchNew');
     if (btnSearchNew) {
         btnSearchNew.addEventListener('click', () => {
-            window.location.href = '/buscarRutas';
+            const usuarioId = btnSearchNew.getAttribute('data-usuario-id');
+            if (usuarioId) {
+                window.location.href = `/comprarViaje/${usuarioId}/`;
+            }
         });
     }
 
@@ -43,7 +46,10 @@ function setupEventListeners() {
     const btnEmptySearch = document.getElementById('btnEmptySearch');
     if (btnEmptySearch) {
         btnEmptySearch.addEventListener('click', () => {
-            window.location.href = '/buscarRutas';
+            const usuarioId = btnEmptySearch.getAttribute('data-usuario-id') || btnSearchNew?.getAttribute('data-usuario-id');
+            if (usuarioId) {
+                window.location.href = `/comprarViaje/${usuarioId}/`;
+            }
         });
     }
 }

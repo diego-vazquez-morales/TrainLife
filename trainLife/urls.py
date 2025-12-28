@@ -19,7 +19,7 @@ urlpatterns = [
     path('eliminarRutaFavorito/<int:usuario_id>/<int:ruta_id>/', views.eliminarRutaFavorito, name='eliminar_ruta_favorito'),
     path('crearUsuario/', views.crearUsuario, name='crear_usuario'),
     path('api/buscarRutas/<int:usuario_id>/', views.api_buscar_rutas, name='api_buscar_rutas'),
-    path('aniadirBillete/<int:usuario_id>/', views.aniadirBillete, name='aniadir_billete'),
+    path('comprarViaje/<int:usuario_id>/', views.comprarViaje, name='comprar_viaje'),
     
     # Notificaciones
     path('notificaciones/<int:usuario_id>/', views.notificaciones, name='notificaciones'),
@@ -40,7 +40,7 @@ urlpatterns = [
     path('alternativas/viaje/<int:usuario_id>/<int:viaje_id>/', views.ver_alternativas_viaje, name='ver_alternativas_viaje'),
     path('api/incidencias/ruta/<int:usuario_id>/<int:ruta_id>/', views.api_incidencias_ruta, name='api_incidencias_ruta'),
     
-    # Comprar billetes (viajes disponibles)
+    # Comprar viajes (viajes disponibles)
     path('api/viajes-disponibles/<int:usuario_id>/', views.api_viajes_disponibles, name='api_viajes_disponibles'),
     path('api/comprar-viaje/<int:usuario_id>/<int:viaje_id>/', views.api_comprar_viaje, name='api_comprar_viaje'),
     

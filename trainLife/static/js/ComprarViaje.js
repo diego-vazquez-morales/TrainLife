@@ -134,7 +134,7 @@ function crearTarjetaViaje(viaje) {
         
         <button class="btn-comprar">
             <i data-lucide="shopping-cart"></i>
-            Comprar Billete
+            Comprar Viaje
         </button>
     `;
     

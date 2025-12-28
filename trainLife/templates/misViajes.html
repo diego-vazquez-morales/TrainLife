@@ -67,6 +67,7 @@
                         />
                     </div>
                     <button class="btn-search-new" id="btnSearchNew" type="button"
+                            data-usuario-id="{{ usuario.id }}"
                             aria-label="Buscar y comprar un nuevo viaje">
                         <i data-lucide="search"></i>
                         <span>Buscar nuevo viaje</span>
@@ -182,6 +183,6 @@
      
     <!-- Custom JavaScript -->
     <script src="{% static 'js/sidebar.js' %}"></script>
-    <script src="{% static 'js/misViajes.js' %}"></script>
+    <script src="{% static 'js/misViajes.js' %}?v=2"></script>
 </body>
 </html>
