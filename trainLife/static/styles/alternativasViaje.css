@@ -6,7 +6,7 @@
     --primary-hover: var(--color-primary-hover, #0d3a9a);
     --success-color: var(--color-success, #10b981);
     --text-dark: #1a1a1a;
-    --text-secondary: #6b7280;
+    --text-secondary: #52555b;
     --bg-main: #f5f5f5;
     --bg-white: #ffffff;
     --border-color: #e5e5e5;
@@ -14,6 +14,38 @@
     --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
     --sidebar-width: 280px;
 }
+
+.skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 10px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    background: #183699;      
+    color: #ffffff;
+    padding: 0.75rem 1rem;
+    text-decoration: none;
+    font-weight: 600;
+    z-index: 9999;
+}
+
+.skip-link:focus {
+    left: 20px;
+    width: auto;
+    height: auto;
+    border-radius: 4px;
+    border: 2px solid #fbbf24;
+}
+
+.modal-close-btn:focus,
+.btn-modal:focus,
+.btn-ver-detalles:focus,
+.mobile-menu-toggle:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
 
 /* === Reset y Base === */
 * {
@@ -240,7 +272,7 @@ h1 {
     flex-shrink: 0;
 }
 
-.alert-content h3 {
+.alert-content h2 {
     font-size: 1.125rem;
     font-weight: 600;
     color: var(--text-dark);
@@ -367,7 +399,7 @@ h1 {
     color: var(--color-success, #10b981);
 }
 
-.modal-content h3 {
+.modal-content h2 {
     font-size: 1.25rem;
     font-weight: 600;
     color: var(--text-dark);
