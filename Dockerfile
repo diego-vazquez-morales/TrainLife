@@ -10,7 +10,7 @@ ENV PYTHONDONTWRITEBYTECODE=1
 # Asegura que la salida de logs se vea inmediatamente en la consola
 ENV PYTHONUNBUFFERED=1
 
-# Instalamos las dependencias del sistema necesarias (opcional, pero recomendado para Pillow)
+# Instalamos las dependencias del sistema necesarias
 RUN apt-get update && apt-get install -y \
     libjpeg-dev \
     zlib1g-dev \
@@ -20,11 +20,21 @@ RUN apt-get update && apt-get install -y \
 COPY requirements.txt /app/
 
 # Instalamos las dependencias del proyecto
-# Basado en tu archivo requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
 
 # Copiamos el resto del código del proyecto al contenedor
 COPY . /app/
+
+# Creamos directorios necesarios para archivos estáticos y media
+RUN mkdir -p /app/staticfiles /app/media
+
+# Creamos un usuario no-root para ejecutar la aplicación (seguridad)
+RUN useradd -m -u 1000 django && \
+    chown -R django:django /app
+
+# Cambiamos al usuario no-root
+USER django
 
 # Exponemos el puerto 8000 (el puerto por defecto de Django)
 EXPOSE 8000

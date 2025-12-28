@@ -391,9 +391,19 @@ def aniadirBillete(request, usuario_id):
     if not usuario:
         return redirect('login')
     
+    # Obtener todas las estaciones únicas de la base de datos
+    estaciones_origen = set()
+    estaciones_destino = set()
+    viajes = Viaje.objects.all()
+    for viaje in viajes:
+        estaciones_origen.add(viaje.origenEstacion)
+        estaciones_destino.add(viaje.destinoEstacion)
+    
     # GET - Mostrar viajes disponibles
     return render(request, 'AniadirBillete.html', {
         'usuario': usuario,
+        'estaciones_origen': sorted(estaciones_origen),
+        'estaciones_destino': sorted(estaciones_destino),
     })
 
 
@@ -863,8 +873,7 @@ def api_viajes_disponibles(request, usuario_id):
         
         # Obtener TODOS los viajes disponibles (sin usuario asignado)
         viajes_disponibles = Viaje.objects.filter(
-            usuario__isnull=True,
-            estadoViaje='disponible'
+            usuario__isnull=True
         )
         
         # Aplicar filtros si se proporcionan

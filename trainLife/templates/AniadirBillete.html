@@ -62,11 +62,21 @@
                     <div class="search-fields">
                         <div class="search-field">
                             <label for="origen">Estación de Origen</label>
-                            <input type="text" id="origen" placeholder="Ej: Madrid, Barcelona..." />
+                            <select id="origen">
+                                <option value="">Todas las estaciones</option>
+                                {% for estacion in estaciones_origen %}
+                                <option value="{{ estacion }}">{{ estacion }}</option>
+                                {% endfor %}
+                            </select>
                         </div>
                         <div class="search-field">
                             <label for="destino">Estación de Destino</label>
-                            <input type="text" id="destino" placeholder="Ej: Valencia, Sevilla..." />
+                            <select id="destino">
+                                <option value="">Todas las estaciones</option>
+                                {% for estacion in estaciones_destino %}
+                                <option value="{{ estacion }}">{{ estacion }}</option>
+                                {% endfor %}
+                            </select>
                         </div>
                         <div class="search-field">
                             <label for="fecha">Fecha</label>

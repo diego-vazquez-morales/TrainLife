@@ -1,12 +1,51 @@
+# Python
 __pycache__
 *.pyc
 *.pyo
 *.pyd
+*.py[cod]
+*$py.class
+*.so
 .Python
 env/
 venv/
-.env
+ENV/
+build/
+*.egg-info/
+
+# Django
+*.log
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+*.pot
+
+# Git
 .git
 .gitignore
-db.sqlite3
-media/
+.gitattributes
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker files
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Documentación
+*.md
+README.txt
+docs/
+
+# Scripts de desarrollo
+setup_viajes_laura.py

@@ -149,15 +149,19 @@
     color: var(--text-secondary);
 }
 
-.search-field input {
+.search-field input,
+.search-field select {
     padding: 0.625rem 0.875rem;
     border: 1px solid var(--border-color);
     border-radius: 0.5rem;
     font-size: 0.9375rem;
     transition: border-color 0.2s;
+    background-color: var(--bg-white);
+    width: 100%;
 }
 
-.search-field input:focus {
+.search-field input:focus,
+.search-field select:focus {
     outline: none;
     border-color: var(--primary-color);
 }
