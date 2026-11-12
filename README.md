@@ -1,32 +1,32 @@
 # TrainLife
 
-Web app for managing train travel: buy tickets, follow your trips, save favourite routes and get notified when a train is delayed or cancelled, with alternative trips offered automatically.
+App web para gestionar viajes en tren: comprar billetes, seguir tus viajes, guardar rutas favoritas y recibir avisos cuando un tren se retrasa o se cancela, con trenes alternativos propuestos automáticamente.
 
-Built as a team project for the *Human-Computer Interaction* (IPO) course in Computer Engineering at Universidad Francisco de Vitoria (2025).
+Práctica final en equipo de la asignatura *Interacción Persona-Ordenador* (IPO) del Grado en Ingeniería Informática de la Universidad Francisco de Vitoria (2025). El objetivo era construir una aplicación que integrara lo aprendido en la asignatura, como el uso de ARIA y las paletas de color accesibles.
 
-**Stack:** Python · Django 5.2 · SQLite · HTML/CSS/JavaScript · Bootstrap · Docker
+**Tecnologías:** Python · Django 5.2 · SQLite · HTML/CSS/JavaScript · Bootstrap · Docker
 
-## Features
+## Funcionalidades
 
-- **Ticket purchase**: search available trips by origin and destination and buy a seat.
-- **My trips**: upcoming and past trips with status (scheduled, confirmed, delayed, cancelled) and trip details.
-- **Disruptions and alternatives**: when a trip is delayed or cancelled, the app lists alternative trains and lets the user switch in one click.
-- **Routes**: search routes, save favourites, see incidents affecting them.
-- **Notifications**: per-user notifications for trips, routes and service notices, with read/unread state.
-- **Account**: sign up, log in, password recovery and password change.
-- **Accessibility**: colour-blind modes (protanopia, deuteranopia, tritanopia) and a high-contrast mode, saved per user and applied across the whole app.
+- **Compra de billetes**: búsqueda de viajes disponibles por origen y destino y compra de plaza.
+- **Mis viajes**: viajes próximos y pasados con su estado (programado, confirmado, retrasado, cancelado) y su detalle.
+- **Incidencias y alternativas**: si un viaje se retrasa o se cancela, la app muestra trenes alternativos y permite cambiarse con un clic.
+- **Rutas**: búsqueda de rutas, favoritas e incidencias que les afectan.
+- **Notificaciones**: avisos por usuario sobre viajes, rutas y avisos del servicio, con estado leído/no leído.
+- **Cuenta**: registro, inicio de sesión, recuperación y cambio de contraseña.
+- **Accesibilidad**: modos para daltónicos (protanopia, deuteranopia, tritanopia) y modo de alto contraste, guardados por usuario y aplicados en toda la app.
 
-## Run it
+## Cómo arrancarlo
 
-With Docker:
+Con Docker:
 
 ```bash
 docker compose up --build
 ```
 
-Then open http://localhost:8000. On start the container applies the migrations and loads demo data (this resets the demo data on every start).
+Abre http://localhost:8000. Al arrancar, el contenedor aplica las migraciones y carga los datos de demo (se restablecen en cada arranque).
 
-Without Docker:
+Sin Docker:
 
 ```bash
 pip install -r requirements.txt
@@ -35,31 +35,31 @@ python manage.py loaddata demo
 python manage.py runserver
 ```
 
-**Demo account:** `demo@trainlife.app` / `demo1234`
+**Cuenta de demo:** `demo@trainlife.app` / `demo1234`
 
-## Project structure
+## Estructura
 
 ```
-proyecto/            Django project settings and root URLs
+proyecto/            Configuración de Django y URLs raíz
 trainLife/
   models.py          Usuario, Viaje, Ruta, Trayecto, Notificacion, Aviso
-  views.py           Page views and JSON endpoints (/api/...)
-  templates/         Server-rendered pages
-  static/            CSS and JavaScript per page
-  fixtures/demo.json Demo data
-docs/                Feature notes, endpoints and data model (Spanish)
+  views.py           Vistas y endpoints JSON (/api/...)
+  templates/         Páginas renderizadas en servidor
+  static/            CSS y JavaScript de cada página
+  fixtures/demo.json Datos de demo
+docs/                Notas de funcionalidades, endpoints y modelo de datos
 ```
 
-## My contributions
+## Mi parte
 
-Team of three (GitHub: diego-vazquez-morales, soff1809, BORJA). My part:
+Equipo de tres (GitHub: diego-vazquez-morales, soff1809, BORJA). Me encargué de:
 
-- **Ticket purchase flow**: turned the "add ticket" page into a full purchase flow with trip search (views, JSON endpoints, templates, JS).
-- **Alternatives for disrupted trips**: listing alternative trains for delayed or cancelled trips and applying the switch.
-- **Notifications and settings** pages.
-- **Password change**.
-- **Docker setup** fixes and general bug fixing across views, URLs and models.
+- **Flujo de compra de billetes**: convertí la página de "añadir billete" en un flujo de compra completo con búsqueda de viajes (vistas, endpoints JSON, plantillas y JS).
+- **Alternativas para viajes con incidencias**: listado de trenes alternativos para viajes retrasados o cancelados y aplicación del cambio.
+- Páginas de **notificaciones y configuración**.
+- **Cambio de contraseña**.
+- Arreglos del **Docker** y corrección de errores en vistas, URLs y modelos.
 
-## Note
+## Nota
 
-This is a course project meant to run locally: `DEBUG` is on and authentication is simplified (custom user model, no hashed passwords). Not intended for production.
+Es un proyecto académico pensado para ejecutarse en local: `DEBUG` está activado y la autenticación está simplificada (modelo de usuario propio, contraseñas sin hash). No está preparado para producción.
