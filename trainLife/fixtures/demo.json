@@ -1,0 +1,513 @@
+[
+  {
+    "model": "trainLife.usuario",
+    "pk": 1,
+    "fields": {
+      "nombreUsuario": "Laura",
+      "apellido1": "Demo",
+      "apellido2": "User",
+      "email": "demo@trainlife.app",
+      "numeroTelefono": "600000000",
+      "contrasenia": "demo1234",
+      "notificacionesViajes": true,
+      "notificacionesRutas": true,
+      "notificacionesAvisos": true,
+      "color_mode": "normal"
+    }
+  },
+  {
+    "model": "trainLife.viaje",
+    "pk": 41,
+    "fields": {
+      "usuario": 1,
+      "nombrePasajero": "Laura García",
+      "coche": "03",
+      "asiento": "15A",
+      "clase": "Turista",
+      "origenEstacion": "Barcelona - Sants",
+      "horaSalidaOrigen": "09:30:00",
+      "andenOrigen": "6",
+      "destinoEstacion": "Valencia - Joaquín Sorolla",
+      "horaLlegadaDestino": "12:45:00",
+      "fechaViaje": "2026-03-15",
+      "fechaCreacion": "2025-12-28T21:07:28.145Z",
+      "estadoViaje": "confirmado"
+    }
+  },
+  {
+    "model": "trainLife.viaje",
+    "pk": 42,
+    "fields": {
+      "usuario": 1,
+      "nombrePasajero": "Laura García",
+      "coche": "05",
+      "asiento": "22B",
+      "clase": "Preferente",
+      "origenEstacion": "Madrid - Puerta de Atocha",
+      "horaSalidaOrigen": "16:30:00",
+      "andenOrigen": "11",
+      "destinoEstacion": "Málaga - María Zambrano",
+      "horaLlegadaDestino": "19:15:00",
+      "fechaViaje": "2026-03-20",
+      "fechaCreacion": "2025-12-28T21:07:28.152Z",
+      "estadoViaje": "cancelado"
+    }
+  },
+  {
+    "model": "trainLife.viaje",
+    "pk": 43,
+    "fields": {
+      "usuario": null,
+      "nombrePasajero": null,
+      "coche": "02",
+      "asiento": "10A",
+      "clase": "Turista",
+      "origenEstacion": "Madrid - Puerta de Atocha",
+      "horaSalidaOrigen": "14:30:00",
+      "andenOrigen": "8",
+      "destinoEstacion": "Málaga - María Zambrano",
+      "horaLlegadaDestino": "17:15:00",
+      "fechaViaje": "2026-03-20",
+      "fechaCreacion": "2025-12-28T21:07:28.161Z",
+      "estadoViaje": "disponible"
+    }
+  },
+  {
+    "model": "trainLife.viaje",
+    "pk": 44,
+    "fields": {
+      "usuario": null,
+      "nombrePasajero": null,
+      "coche": "04",
+      "asiento": "15C",
+      "clase": "Turista Plus",
+      "origenEstacion": "Madrid - Puerta de Atocha",
+      "horaSalidaOrigen": "15:45:00",
+      "andenOrigen": "9",
+      "destinoEstacion": "Málaga - María Zambrano",
+      "horaLlegadaDestino": "18:30:00",
+      "fechaViaje": "2026-03-20",
+      "fechaCreacion": "2025-12-28T21:07:28.165Z",
+      "estadoViaje": "disponible"
+    }
+  },
+  {
+    "model": "trainLife.viaje",
+    "pk": 45,
+    "fields": {
+      "usuario": null,
+      "nombrePasajero": null,
+      "coche": "01",
+      "asiento": "5B",
+      "clase": "Preferente",
+      "origenEstacion": "Madrid - Puerta de Atocha",
+      "horaSalidaOrigen": "17:15:00",
+      "andenOrigen": "10",
+      "destinoEstacion": "Málaga - María Zambrano",
+      "horaLlegadaDestino": "20:00:00",
+      "fechaViaje": "2026-03-20",
+      "fechaCreacion": "2025-12-28T21:07:28.169Z",
+      "estadoViaje": "disponible"
+    }
+  },
+  {
+    "model": "trainLife.viaje",
+    "pk": 46,
+    "fields": {
+      "usuario": null,
+      "nombrePasajero": null,
+      "coche": "03",
+      "asiento": "20D",
+      "clase": "Turista",
+      "origenEstacion": "Madrid - Puerta de Atocha",
+      "horaSalidaOrigen": "18:30:00",
+      "andenOrigen": "11",
+      "destinoEstacion": "Málaga - María Zambrano",
+      "horaLlegadaDestino": "21:15:00",
+      "fechaViaje": "2026-03-20",
+      "fechaCreacion": "2025-12-28T21:07:28.172Z",
+      "estadoViaje": "disponible"
+    }
+  },
+  {
+    "model": "trainLife.viaje",
+    "pk": 47,
+    "fields": {
+      "usuario": null,
+      "nombrePasajero": null,
+      "coche": "02",
+      "asiento": "12B",
+      "clase": "Turista Plus",
+      "origenEstacion": "Madrid - Puerta de Atocha",
+      "horaSalidaOrigen": "20:00:00",
+      "andenOrigen": "7",
+      "destinoEstacion": "Málaga - María Zambrano",
+      "horaLlegadaDestino": "22:45:00",
+      "fechaViaje": "2026-03-20",
+      "fechaCreacion": "2025-12-28T21:07:28.175Z",
+      "estadoViaje": "disponible"
+    }
+  },
+  {
+    "model": "trainLife.viaje",
+    "pk": 48,
+    "fields": {
+      "usuario": 1,
+      "nombrePasajero": "Laura García",
+      "coche": "02",
+      "asiento": "8C",
+      "clase": "Turista Plus",
+      "origenEstacion": "Sevilla - Santa Justa",
+      "horaSalidaOrigen": "10:45:00",
+      "andenOrigen": "4",
+      "destinoEstacion": "Madrid - Puerta de Atocha",
+      "horaLlegadaDestino": "13:20:00",
+      "fechaViaje": "2026-03-25",
+      "fechaCreacion": "2025-12-28T21:07:28.178Z",
+      "estadoViaje": "retrasado"
+    }
+  },
+  {
+    "model": "trainLife.viaje",
+    "pk": 49,
+    "fields": {
+      "usuario": null,
+      "nombrePasajero": null,
+      "coche": "05",
+      "asiento": "18A",
+      "clase": "Turista",
+      "origenEstacion": "Sevilla - Santa Justa",
+      "horaSalidaOrigen": "11:30:00",
+      "andenOrigen": "2",
+      "destinoEstacion": "Madrid - Puerta de Atocha",
+      "horaLlegadaDestino": "14:05:00",
+      "fechaViaje": "2026-03-25",
+      "fechaCreacion": "2025-12-28T21:07:28.187Z",
+      "estadoViaje": "disponible"
+    }
+  },
+  {
+    "model": "trainLife.viaje",
+    "pk": 50,
+    "fields": {
+      "usuario": null,
+      "nombrePasajero": null,
+      "coche": "03",
+      "asiento": "9B",
+      "clase": "Turista Plus",
+      "origenEstacion": "Sevilla - Santa Justa",
+      "horaSalidaOrigen": "12:15:00",
+      "andenOrigen": "3",
+      "destinoEstacion": "Madrid - Puerta de Atocha",
+      "horaLlegadaDestino": "14:50:00",
+      "fechaViaje": "2026-03-25",
+      "fechaCreacion": "2025-12-28T21:07:28.191Z",
+      "estadoViaje": "disponible"
+    }
+  },
+  {
+    "model": "trainLife.viaje",
+    "pk": 51,
+    "fields": {
+      "usuario": null,
+      "nombrePasajero": null,
+      "coche": "01",
+      "asiento": "4A",
+      "clase": "Preferente",
+      "origenEstacion": "Sevilla - Santa Justa",
+      "horaSalidaOrigen": "13:00:00",
+      "andenOrigen": "5",
+      "destinoEstacion": "Madrid - Puerta de Atocha",
+      "horaLlegadaDestino": "15:35:00",
+      "fechaViaje": "2026-03-25",
+      "fechaCreacion": "2025-12-28T21:07:28.194Z",
+      "estadoViaje": "disponible"
+    }
+  },
+  {
+    "model": "trainLife.viaje",
+    "pk": 52,
+    "fields": {
+      "usuario": null,
+      "nombrePasajero": null,
+      "coche": "04",
+      "asiento": "22C",
+      "clase": "Turista",
+      "origenEstacion": "Sevilla - Santa Justa",
+      "horaSalidaOrigen": "14:45:00",
+      "andenOrigen": "6",
+      "destinoEstacion": "Madrid - Puerta de Atocha",
+      "horaLlegadaDestino": "17:20:00",
+      "fechaViaje": "2026-03-25",
+      "fechaCreacion": "2025-12-28T21:07:28.198Z",
+      "estadoViaje": "disponible"
+    }
+  },
+  {
+    "model": "trainLife.viaje",
+    "pk": 53,
+    "fields": {
+      "usuario": null,
+      "nombrePasajero": null,
+      "coche": "02",
+      "asiento": "11D",
+      "clase": "Turista Plus",
+      "origenEstacion": "Sevilla - Santa Justa",
+      "horaSalidaOrigen": "16:30:00",
+      "andenOrigen": "4",
+      "destinoEstacion": "Madrid - Puerta de Atocha",
+      "horaLlegadaDestino": "19:05:00",
+      "fechaViaje": "2026-03-25",
+      "fechaCreacion": "2025-12-28T21:07:28.201Z",
+      "estadoViaje": "disponible"
+    }
+  },
+  {
+    "model": "trainLife.viaje",
+    "pk": 54,
+    "fields": {
+      "usuario": 1,
+      "nombrePasajero": "Laura García",
+      "coche": "01",
+      "asiento": "3A",
+      "clase": "Preferente",
+      "origenEstacion": "Valencia - Joaquín Sorolla",
+      "horaSalidaOrigen": "14:15:00",
+      "andenOrigen": "2",
+      "destinoEstacion": "Alicante - Terminal",
+      "horaLlegadaDestino": "16:00:00",
+      "fechaViaje": "2026-04-05",
+      "fechaCreacion": "2025-12-28T21:07:28.205Z",
+      "estadoViaje": "confirmado"
+    }
+  },
+  {
+    "model": "trainLife.viaje",
+    "pk": 55,
+    "fields": {
+      "usuario": 1,
+      "nombrePasajero": "Laura García",
+      "coche": "06",
+      "asiento": "25B",
+      "clase": "Turista",
+      "origenEstacion": "Madrid - Chamartín Clara Campoamor",
+      "horaSalidaOrigen": "08:00:00",
+      "andenOrigen": "15",
+      "destinoEstacion": "Barcelona - Sants",
+      "horaLlegadaDestino": "10:45:00",
+      "fechaViaje": "2026-04-10",
+      "fechaCreacion": "2025-12-28T21:07:28.212Z",
+      "estadoViaje": "confirmado"
+    }
+  },
+  {
+    "model": "trainLife.ruta",
+    "pk": 1,
+    "fields": {
+      "nombre": "De Pacifico a Aravaca",
+      "descripcion": "Estacion Central a Distrito Financiero",
+      "fechaCreacion": "2025-11-18T09:19:02.637Z",
+      "fechaActualizacion": "2025-11-22T14:53:45.328Z",
+      "usuarios": [
+        1
+      ]
+    }
+  },
+  {
+    "model": "trainLife.ruta",
+    "pk": 2,
+    "fields": {
+      "nombre": "De Cuatro Caminos a Plaza Castilla",
+      "descripcion": "ruta para ir de Cuatro Caminos a Plaza Castilla",
+      "fechaCreacion": "2025-11-22T14:19:33.321Z",
+      "fechaActualizacion": "2025-11-22T14:53:23.947Z",
+      "usuarios": [
+        1
+      ]
+    }
+  },
+  {
+    "model": "trainLife.trayecto",
+    "pk": 1,
+    "fields": {
+      "ruta": 1,
+      "orden": 1,
+      "estacionSalida": "Pácifico",
+      "andenSalida": "1A",
+      "estacionLlegada": "Atocha",
+      "andenLlegada": "3B",
+      "horaSalida": "08:00:00",
+      "horaLlegada": "08:25:00",
+      "nombreLinea": "Línea 1",
+      "colorLinea": "azul",
+      "imagenMapa": "trayectos/mapas/Pacifico-Atocha.png",
+      "fechaCreacion": "2025-11-18T10:42:17.158Z"
+    }
+  },
+  {
+    "model": "trainLife.trayecto",
+    "pk": 2,
+    "fields": {
+      "ruta": 1,
+      "orden": 2,
+      "estacionSalida": "Atocha",
+      "andenSalida": "5C",
+      "estacionLlegada": "Aravaca",
+      "andenLlegada": "2D",
+      "horaSalida": "05:35:00",
+      "horaLlegada": "08:50:00",
+      "nombreLinea": "C10",
+      "colorLinea": "Verde",
+      "imagenMapa": "trayectos/mapas/mendezAlvaro-AravacaMoncloa.png",
+      "fechaCreacion": "2025-11-18T10:43:41.937Z"
+    }
+  },
+  {
+    "model": "trainLife.trayecto",
+    "pk": 3,
+    "fields": {
+      "ruta": 2,
+      "orden": 1,
+      "estacionSalida": "Cuatro Caminos",
+      "andenSalida": "2",
+      "estacionLlegada": "Plaza Castilla",
+      "andenLlegada": "2",
+      "horaSalida": "14:16:33",
+      "horaLlegada": "14:30:00",
+      "nombreLinea": "Línea 1",
+      "colorLinea": "azul",
+      "imagenMapa": "trayectos/mapas/cuatroCaminos-plazaCastilla_9TYozK6.png",
+      "fechaCreacion": "2025-11-22T14:17:33.815Z"
+    }
+  },
+  {
+    "model": "trainLife.notificacion",
+    "pk": 2,
+    "fields": {
+      "usuario": 1,
+      "tipo": "aviso_general",
+      "titulo": "Semana santa",
+      "mensaje": "Se van a reducir el número de trenes",
+      "viaje": null,
+      "ruta": null,
+      "aviso": 1,
+      "leida": true,
+      "importante": true,
+      "fechaCreacion": "2025-11-20T18:15:02.145Z",
+      "fechaLeida": "2025-11-20T19:15:05.392Z"
+    }
+  },
+  {
+    "model": "trainLife.notificacion",
+    "pk": 4,
+    "fields": {
+      "usuario": 1,
+      "tipo": "cambio_ruta",
+      "titulo": "Nuevo trayecto en ruta \"Casa al Trabajo\"",
+      "mensaje": "Se ha añadido un nuevo trayecto: Cuatro Caminos → Plaza Castilla (Línea 1)",
+      "viaje": null,
+      "ruta": 1,
+      "aviso": null,
+      "leida": true,
+      "importante": false,
+      "fechaCreacion": "2025-11-22T14:17:33.817Z",
+      "fechaLeida": "2025-11-24T18:00:26.959Z"
+    }
+  },
+  {
+    "model": "trainLife.notificacion",
+    "pk": 20,
+    "fields": {
+      "usuario": 1,
+      "tipo": "nuevo_viaje",
+      "titulo": "Nuevo viaje añadido",
+      "mensaje": "Se ha añadido un nuevo viaje: Barcelona - Sants → Valencia - Joaquín Sorolla el 15/03/2026 a las 09:30",
+      "viaje": 41,
+      "ruta": null,
+      "aviso": null,
+      "leida": false,
+      "importante": false,
+      "fechaCreacion": "2025-12-28T21:07:28.148Z",
+      "fechaLeida": null
+    }
+  },
+  {
+    "model": "trainLife.notificacion",
+    "pk": 21,
+    "fields": {
+      "usuario": 1,
+      "tipo": "nuevo_viaje",
+      "titulo": "Nuevo viaje añadido",
+      "mensaje": "Se ha añadido un nuevo viaje: Madrid - Puerta de Atocha → Málaga - María Zambrano el 20/03/2026 a las 16:30",
+      "viaje": 42,
+      "ruta": null,
+      "aviso": null,
+      "leida": false,
+      "importante": false,
+      "fechaCreacion": "2025-12-28T21:07:28.156Z",
+      "fechaLeida": null
+    }
+  },
+  {
+    "model": "trainLife.notificacion",
+    "pk": 22,
+    "fields": {
+      "usuario": 1,
+      "tipo": "nuevo_viaje",
+      "titulo": "Nuevo viaje añadido",
+      "mensaje": "Se ha añadido un nuevo viaje: Sevilla - Santa Justa → Madrid - Puerta de Atocha el 25/03/2026 a las 10:45",
+      "viaje": 48,
+      "ruta": null,
+      "aviso": null,
+      "leida": false,
+      "importante": false,
+      "fechaCreacion": "2025-12-28T21:07:28.182Z",
+      "fechaLeida": null
+    }
+  },
+  {
+    "model": "trainLife.notificacion",
+    "pk": 23,
+    "fields": {
+      "usuario": 1,
+      "tipo": "nuevo_viaje",
+      "titulo": "Nuevo viaje añadido",
+      "mensaje": "Se ha añadido un nuevo viaje: Valencia - Joaquín Sorolla → Alicante - Terminal el 05/04/2026 a las 14:15",
+      "viaje": 54,
+      "ruta": null,
+      "aviso": null,
+      "leida": false,
+      "importante": false,
+      "fechaCreacion": "2025-12-28T21:07:28.208Z",
+      "fechaLeida": null
+    }
+  },
+  {
+    "model": "trainLife.notificacion",
+    "pk": 24,
+    "fields": {
+      "usuario": 1,
+      "tipo": "nuevo_viaje",
+      "titulo": "Nuevo viaje añadido",
+      "mensaje": "Se ha añadido un nuevo viaje: Madrid - Chamartín Clara Campoamor → Barcelona - Sants el 10/04/2026 a las 08:00",
+      "viaje": 55,
+      "ruta": null,
+      "aviso": null,
+      "leida": false,
+      "importante": false,
+      "fechaCreacion": "2025-12-28T21:07:28.215Z",
+      "fechaLeida": null
+    }
+  },
+  {
+    "model": "trainLife.aviso",
+    "pk": 1,
+    "fields": {
+      "nombreAviso": "Semana santa",
+      "fechaAviso": "2025-11-20",
+      "horaAviso": "18:14:43",
+      "informacion": "Se van a reducir el número de trenes",
+      "fechaCreacion": "2025-11-20T18:15:02.143Z"
+    }
+  }
+]

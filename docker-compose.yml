@@ -10,6 +10,7 @@ services:
     # Esto asegura que las migraciones se ejecuten antes de iniciar
     command: >
       sh -c "python manage.py migrate &&
+             python manage.py loaddata demo &&
              python manage.py runserver 0.0.0.0:8000"
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000')"]
